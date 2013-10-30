@@ -1,2 +1,4 @@
-Leikjaforritun HÍ 2013
-======================
+TETRIS
+======
+
+Verkefni í Leikjaforritun við HÍ haustið 2013
