@@ -48,6 +48,18 @@ with it correctly, so that they can participate in collisions.
     
 // }
 
+var playField = new Field(8, 24);
+
+var testObject = {
+    form :  [[0,1,0],
+            [1,1,1]],
+    posX:   0,
+    posY:   4,
+    color:  'blue'
+}
+
+playField.activeBlock = testObject;
+
 // =============
 // GATHER INPUTS
 // =============
@@ -70,12 +82,15 @@ function gatherInputs() {
 // It then delegates the game-specific logic to `updateSimulation`
 
 
+
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
     
     processDiagnostics();
     
+    playField.update(testObject);
+
     entityManager.update(du);
 
     // // Prevent perpetual firing!
@@ -111,9 +126,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_GRAVITY)) g_useGravity = !g_useGravity;
 
-    // if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
+    if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
-    // if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     // if (eatKey(KEY_HALT)) entityManager.haltShips();
 
@@ -156,6 +171,8 @@ function processDiagnostics() {
 function renderSimulation(ctx) {
 
     entityManager.render(ctx);
+
+    playField.render();
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
