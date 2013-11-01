@@ -1,27 +1,9 @@
-// =========
-// ASTEROIDS
-// =========
+// ======
+// TETRIS
+// ======
 /*
 
 A sort-of-playable version of the classic arcade game.
-
-
-HOMEWORK INSTRUCTIONS:
-
-You have some "TODO"s to fill in again, particularly in:
-
-spatialManager.js
-
-But also, to a lesser extent, in:
-
-Rock.js
-Bullet.js
-Ship.js
-
-
-...Basically, you need to implement the core of the spatialManager,
-and modify the Rock/Bullet/Ship so that the register (and unregister)
-with it correctly, so that they can participate in collisions.
 
 */
 
@@ -34,19 +16,6 @@ with it correctly, so that they can participate in collisions.
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
 
-
-// // ====================
-// // CREATE INITIAL SHIPS
-// // ====================
-
-// function createInitialShips() {
-
-//     // entityManager.generateShip({
-//     //     cx : 200,
-//     //     cy : 200
-//     // });
-    
-// }
 
 // =============
 // GATHER INPUTS

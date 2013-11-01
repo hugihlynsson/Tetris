@@ -129,6 +129,8 @@ main.init = function () {
     // so let's use a fillStyle which works against that...
     //
     g_ctx.fillStyle = "white";
+    
+    console.log('All systems online.')
 
     this._requestNextIteration();
 };

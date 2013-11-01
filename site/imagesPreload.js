@@ -69,6 +69,8 @@ function imagesPreload(requiredImages,
     // "*OWN* enumerable properties" i.e. doesn't traverse the prototype chain
     numImagesRequired = Object.keys(requiredImages).length;
 
+    // If there is nothing to preload, skip directly to callback:
+    if (!numImagesRequired) completionCallback();
     // A handler which will be called when our required images are finally
     // loaded (or when the fail to load).
     //
@@ -90,6 +92,8 @@ function imagesPreload(requiredImages,
 
         numImagesHandled += 1;
 
+        console.log('Preloading images...')
+
         if (numImagesHandled === numImagesRequired) {
             console.log("all preload images handled");
             console.log("loadedImages=", loadedImages);
@@ -107,6 +111,9 @@ function imagesPreload(requiredImages,
     // of an object, in arbitrary order." 
     // -- unlike `Object.keys`, it traverses the prototype chain
     //
+
+
+
     for (currentName in requiredImages) {
 
         // Skip inherited properties from the prototype chain,
