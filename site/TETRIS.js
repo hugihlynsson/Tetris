@@ -1,27 +1,9 @@
-// =========
-// ASTEROIDS
-// =========
+// ======
+// TETRIS
+// ======
 /*
 
 A sort-of-playable version of the classic arcade game.
-
-
-HOMEWORK INSTRUCTIONS:
-
-You have some "TODO"s to fill in again, particularly in:
-
-spatialManager.js
-
-But also, to a lesser extent, in:
-
-Rock.js
-Bullet.js
-Ship.js
-
-
-...Basically, you need to implement the core of the spatialManager,
-and modify the Rock/Bullet/Ship so that the register (and unregister)
-with it correctly, so that they can participate in collisions.
 
 */
 
@@ -35,6 +17,7 @@ with it correctly, so that they can participate in collisions.
 */
 
 
+<<<<<<< HEAD
 // // ====================
 // // CREATE INITIAL SHIPS
 // // ====================
@@ -60,6 +43,8 @@ var testObject = {
 
 playField.activeBlock = testObject;
 
+=======
+>>>>>>> ac8b0c39e7ca2d2da07d88f923b54770cdfe5a55
 // =============
 // GATHER INPUTS
 // =============

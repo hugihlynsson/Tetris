@@ -87,7 +87,7 @@ KILL_ME_NOW : -1,
 // i.e. thing which need `this` to be defined.
 //
 deferredSetup : function () {
-    this._categories = [this._rocks, this._bullets, this._ships];
+    this._categories = [];
 },
 
 init: function() {
@@ -180,7 +180,7 @@ render: function(ctx) {
         for (var i = 0; i < aCategory.length; ++i) {
 
             aCategory[i].render(ctx);
-            //debug.text(".", debugX + i * 10, debugY);
+            // debug.text(".", debugX + i * 10, debugY);
 
         }
         debugY += 10;
