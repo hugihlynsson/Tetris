@@ -27,22 +27,16 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-// _rocks   : [],
-// _bullets : [],
-// _ships   : [],
+ _bricks   : [],
 
 // _bShowRocks : true,
 
 // "PRIVATE" METHODS
 
-// _generateRocks : function() {
-//     var i,
-//         NUM_ROCKS = 4;
+_generateBrick : function() {
 
-//     for (i = 0; i < NUM_ROCKS; ++i) {
-//         this.generateRock();
-//     }
-// },
+    this._bricks[0] = new Brick (50, 50, 'D'.charCodeAt(0), 'A'.charCodeAt(0));
+},
 
 // _findNearestShip : function(posX, posY) {
 //     var closestShip = null,
@@ -91,8 +85,7 @@ deferredSetup : function () {
 },
 
 init: function() {
-    // this._generateRocks();
-    //this._generateShip();
+    this._generateBrick();
 },
 
 // fireBullet: function(cx, cy, velX, velY, rotation) {
@@ -142,53 +135,19 @@ init: function() {
 
 update: function(du) {
 
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-        var i = 0;
-
-        while (i < aCategory.length) {
-
-            var status = aCategory[i].update(du);
-
-            if (status === this.KILL_ME_NOW) {
-                // remove the dead guy, and shuffle the others down to
-                // prevent a confusing gap from appearing in the array
-                aCategory.splice(i,1);
-                console.log('Removing entity');
-            }
-            else {
-                ++i;
-            }
-        }
+    for (var i = 0; i < this._bricks.length; i++) {
+        this._bricks[i].update(du);
     }
-    
-    // if (this._rocks.length === 0) this._generateRocks();
 
 },
 
 render: function(ctx) {
 
-    var debugX = 10, debugY = 100;
-
-    for (var c = 0; c < this._categories.length; ++c) {
-
-        var aCategory = this._categories[c];
-
-        // if (!this._bShowRocks && aCategory == this._rocks) continue;
-
-        for (var i = 0; i < aCategory.length; ++i) {
-
-            aCategory[i].render(ctx);
-            // debug.text(".", debugX + i * 10, debugY);
-
-        }
-        debugY += 10;
+    for (var i = 0; i < this._bricks.length; i++) {
+        this._bricks[i].render(ctx);
     }
-}
 
 }
 
-// Some deferred setup which needs the object to have been created first
-entityManager.deferredSetup();
+};
 
