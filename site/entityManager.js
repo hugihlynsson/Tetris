@@ -27,48 +27,9 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
-// _rocks   : [],
-// _bullets : [],
-// _ships   : [],
-
-// _bShowRocks : true,
-
-// "PRIVATE" METHODS
-
-// _generateRocks : function() {
-//     var i,
-//         NUM_ROCKS = 4;
-
-//     for (i = 0; i < NUM_ROCKS; ++i) {
-//         this.generateRock();
-//     }
-// },
-
-// _findNearestShip : function(posX, posY) {
-//     var closestShip = null,
-//         closestIndex = -1,
-//         closestSq = 1000 * 1000;
-
-//     for (var i = 0; i < this._ships.length; ++i) {
-
-//         var thisShip = this._ships[i];
-//         var shipPos = thisShip.getPos();
-//         var distSq = util.wrappedDistSq(
-//             shipPos.posX, shipPos.posY, 
-//             posX, posY,
-//             g_canvas.width, g_canvas.height);
-
-//         if (distSq < closestSq) {
-//             closestShip = thisShip;
-//             closestIndex = i;
-//             closestSq = distSq;
-//         }
-//     }
-//     return {
-//         theShip : closestShip,
-//         theIndex: closestIndex
-//     };
-// },
+_createPlayfield : function () {
+    this._categories[0] = new Field(8, 24);
+},
 
 _forEachOf: function(aCategory, fn) {
     for (var i = 0; i < aCategory.length; ++i) {
@@ -88,57 +49,16 @@ KILL_ME_NOW : -1,
 //
 deferredSetup : function () {
     this._categories = [];
+    this._createPlayfield();
 },
 
 init: function() {
-    // this._generateRocks();
-    //this._generateShip();
+    
 },
 
-// fireBullet: function(cx, cy, velX, velY, rotation) {
-//     this._bullets.push(new Bullet({
-//         cx   : cx,
-//         cy   : cy,
-//         velX : velX,
-//         velY : velY,
-
-//         rotation : rotation
-//     }));
-// },
-
-// generateRock : function(descr) {
-//     this._rocks.push(new Rock(descr));
-// },
-
-// generateShip : function(descr) {
-//     this._ships.push(new Ship(descr));
-// },
-
-// killNearestShip : function(xPos, yPos) {
-//     var theShip = this._findNearestShip(xPos, yPos).theShip;
-//     if (theShip) {
-//         theShip.kill();
-//     }
-// },
-
-// yoinkNearestShip : function(xPos, yPos) {
-//     var theShip = this._findNearestShip(xPos, yPos).theShip;
-//     if (theShip) {
-//         theShip.setPos(xPos, yPos);
-//     }
-// },
-
-// resetShips: function() {
-//     this._forEachOf(this._ships, Ship.prototype.reset);
-// },
-
-// haltShips: function() {
-//     this._forEachOf(this._ships, Ship.prototype.halt);
-// },	
-
-// toggleRocks: function() {
-//     this._bShowRocks = !this._bShowRocks;
-// },
+setActiveBlock : function (block) {
+    this._categories[0].setActiveBlock(block);
+},
 
 update: function(du) {
 
@@ -162,8 +82,6 @@ update: function(du) {
             }
         }
     }
-    
-    // if (this._rocks.length === 0) this._generateRocks();
 
 },
 
@@ -174,8 +92,6 @@ render: function(ctx) {
     for (var c = 0; c < this._categories.length; ++c) {
 
         var aCategory = this._categories[c];
-
-        // if (!this._bShowRocks && aCategory == this._rocks) continue;
 
         for (var i = 0; i < aCategory.length; ++i) {
 
@@ -192,3 +108,12 @@ render: function(ctx) {
 // Some deferred setup which needs the object to have been created first
 entityManager.deferredSetup();
 
+var block = {
+    form :  [[0,1,0],
+            [1,1,1]],
+    posX:   0,
+    posY:   4,
+    color:  'blue'
+};
+
+entityManager.setActiveBlock(block);

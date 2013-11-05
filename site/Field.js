@@ -1,4 +1,3 @@
-
 // New playing field with width and height
 function Field(width, height)
 {
@@ -12,10 +11,42 @@ function Field(width, height)
 			this.fieldArray[i][j] = 0;
 		}
 	}
+
+	return {
+		setActiveBlock : function (block) {
+			this.activeBlock = block;
+		},
+		update : function () {
+			this.fieldArray = this.nextField();
+		},
+		render : function (ctx) {
+			var field = this.fieldArray;
+			var fieldWidth = field[0].length;
+			var fieldHeight = field.length;
+			var size = this.size;
+		
+			var pix = this.size;
+		
+			for(var i = 0; i < fieldHeight; ++i)
+			{
+				for(var j = 0; j < fieldWidth; ++j)
+				{
+					var block = field[i][j];
+		
+					if(block === 1)
+					{
+						ctx.fillStyle = 'rgb(220, 51, 51)';
+						ctx.fillRect(size*j, size*i, size, size);
+					}
+				}
+			}
+		}
+	}
 }
 
+
 // Square size in pixels
-Field.prototype.size = 40;
+Field.prototype.size = 20;
 
 // Collision function that takes a tetris object
 // and adds it to the current playfield, and returns
@@ -38,7 +69,7 @@ Field.prototype.size = 40;
 //	color: 	'blue'
 // }
 
-Field.prototype.activeBlock = {};
+Field.prototype.activeBlock = null;
 
 Field.prototype.collidesWith = function (obj) {	
 	var field = this.fieldArray;
@@ -58,12 +89,13 @@ Field.prototype.collidesWith = function (obj) {
 			}
 		}
 	}
-
 	return false;
 };
 
 // Add tetris object values to playfield
 Field.prototype.nextField = function () {
+	if (this.activeBlock === null) return this.fieldArray;
+
 	var form = this.activeBlock['form'];
 	var width = form[0].length;
 	var height = form.length;
@@ -72,44 +104,17 @@ Field.prototype.nextField = function () {
 	var y = this.activeBlock.posY;
 
 	// Nasty hack to clone the array
-	var nextArray = fieldArray.slice(0);
+	var nextArray = this.fieldArray.slice(0);
 
 	// Loop through playfield at given position
 	// for tetris object
 	for (var i = 0; i < height; ++i)
 	{
-		for(var j = 0; j < width; ++i)
+		for(var j = 0; j < width; ++j)
 		{
-			console.log(i+y, j+x);
 			nextArray[i+y][j+x] += form[i][j];
 		}
 	}
 
 	return nextArray;
-};
-
-Field.prototype.update = function (obj) {
-	this.fieldArray = this.nextField(obj);
-};
-
-Field.prototype.render = function (ctx) {
-	var field = this.fieldArray;
-	var fieldWidth = field[0].length;
-	var fieldHeight = field.length;
-
-	var pix = this.size;
-
-	for(var i = 0; i < fieldHeight; ++i)
-	{
-		for(var j = 0; j < fieldWidth; ++j)
-		{
-			var block = field[i][j];
-
-			if(block === 1)
-			{
-				ctx.fillStyle = 'rgb(220, 51, 51)';
-				ctx.fillRect(0, 0, 10, 10);
-			}
-		}
-	}
 };
