@@ -27,16 +27,12 @@ var entityManager = {
 
 // "PRIVATE" DATA
 
- _bricks   : [],
+ _bricks : [],
+ _boards : [],
 
 // _bShowRocks : true,
 
 // "PRIVATE" METHODS
-
-_generateBrick : function() {
-
-    this._bricks[0] = new Brick (50, 50, 'D'.charCodeAt(0), 'A'.charCodeAt(0));
-},
 
 // _findNearestShip : function(posX, posY) {
 //     var closestShip = null,
@@ -85,7 +81,11 @@ deferredSetup : function () {
 },
 
 init: function() {
-    this._generateBrick();
+    this._boards[0] = new Board(
+        200, 200, 100, 200, 
+        16, 8,
+        'J'.charCodeAt(0), 'L'.charCodeAt(0), 'I'.charCodeAt(0), 'J'.charCodeAt(0)
+    );
 },
 
 // fireBullet: function(cx, cy, velX, velY, rotation) {
@@ -138,6 +138,9 @@ update: function(du) {
     for (var i = 0; i < this._bricks.length; i++) {
         this._bricks[i].update(du);
     }
+    for (var i = 0; i < this._boards.length; i++) {
+        this._boards[i].update(du);
+    }
 
 },
 
@@ -145,6 +148,10 @@ render: function(ctx) {
 
     for (var i = 0; i < this._bricks.length; i++) {
         this._bricks[i].render(ctx);
+    }
+
+    for (var i = 0; i < this._boards.length; i++) {
+        this._boards[i].render(ctx);
     }
 
 }
