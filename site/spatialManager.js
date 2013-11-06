@@ -90,7 +90,7 @@ findEntityInRange: function(posX, posY, radius) {
 render: function(ctx) {
     var oldStyle = ctx.strokeStyle;
     ctx.strokeStyle = "red";
-    this._drawPoints(ctx);
+    // this._drawPoints(ctx);
     
     for (var ID in this._entities) {
         var e = this._entities[ID];

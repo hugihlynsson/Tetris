@@ -15,10 +15,11 @@ var Brickunit = function (x, y, size) {
 		update : function (y) { _cy += y; },
 		render : function (ctx, color) {
 			var oldStyle = ctx.fillStyle;
-			util.fillBox(ctx, _cx, _cy, _size+1, _size+1, color);
+			util.fillBox(ctx, _cx, _cy, _size, _size, color);
 			ctx.fillStyle = oldStyle;
 		},
 		getPos  : function () { return { cx : _cx, cy : _cy }; },
+		setPos  : function (x, y) { _cx = x; _cy = y },
 		getSize : function () { return _size; },
 		nudge   : function (x) { _cx += x; },
 		align  	: function () { 

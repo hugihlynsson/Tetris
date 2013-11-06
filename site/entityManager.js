@@ -82,19 +82,19 @@ deferredSetup : function () {
 
 init: function() {
     var unit = spatialManager.unit;
-    var width = 8;
-    var height = 16;
+    var width = 10;
+    var height = 20;
     var brickControl1 = ['A'.charCodeAt(0), 'D'.charCodeAt(0), 'W'.charCodeAt(0), 'S'.charCodeAt(0),];
     var brickControl2 = ['J'.charCodeAt(0), 'L'.charCodeAt(0), 'I'.charCodeAt(0), 'K'.charCodeAt(0),];
     var boardControl1 = ['F'.charCodeAt(0), 'H'.charCodeAt(0), 'T'.charCodeAt(0), 'G'.charCodeAt(0),];
     this._boards[0] = new Board(
-        unit*10, unit*10, unit*width, unit*height, 
+        unit*9, unit*12, unit*width, unit*height, 
         height, width,
         brickControl1,
         boardControl1
     );
     this._boards[1] = new Board(
-        unit*20, unit*10, unit*width, unit*height, 
+        unit*21, unit*12, unit*width, unit*height, 
         height, width,
         brickControl2
     );

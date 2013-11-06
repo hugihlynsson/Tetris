@@ -26,8 +26,10 @@ var Board = function (cx, cy, w, h, rows, columns, brickControl, keyControl) {
 
 	var _newBrick = function () {
 		return new Brick(
-			_cx, _cy-_height/2, 
-			_brickUnit, 'X',
+			spatialManager.getClosestX(_cx), 
+			spatialManager.getClosestX(_cy)-_height/2, 
+			_brickUnit, 
+			'X',
 			_brickControl
 		);
 	};
