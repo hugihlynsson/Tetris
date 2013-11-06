@@ -28,7 +28,7 @@ var entityManager = {
 // "PRIVATE" DATA
 
 _createPlayfield : function () {
-    this._categories[0] = new Field(8, 24);
+    //this._categories[0] = new Field(8, 24);
 },
 
 _forEachOf: function(aCategory, fn) {
@@ -57,7 +57,7 @@ init: function() {
 },
 
 setActiveBlock : function (block) {
-    this._categories[0].setActiveBlock(block);
+    //this._categories[0].setActiveBlock(block);
 },
 
 update: function(du) {
@@ -115,5 +115,7 @@ var block = {
     posY:   4,
     color:  'blue'
 };
+/*
+var block = new Block();
 
-entityManager.setActiveBlock(block);
+entityManager.setActiveBlock(block);*/

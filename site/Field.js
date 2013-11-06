@@ -1,52 +1,161 @@
 // New playing field with width and height
 function Field(width, height)
 {
-	this.fieldArray = [];
+	var _fieldArray = [];
 	// Initialize playfield
 	for(var i = 0; i < height; ++i)
 	{
-		this.fieldArray.push([]);
+		_fieldArray.push([]);
 		for(var j = 0; j < width; ++j)
 		{
-			this.fieldArray[i][j] = 0;
+			_fieldArray[i][j] = 0;
+
+			// FOR TESTING PURPOSES
+			// TODO
+			// REMOVE
+			if(i === 14) _fieldArray[i][j] = 1;
 		}
 	}
 
+// Add tetris object values to playfield
+
+	var _size = 40;
+
+	var _activeBlock = null;
+
+	var _shouldUpdate = false;
+
+	var _setActiveBlock = function (block) {
+		_activeBlock = block;
+	};
+
+	var block = new Block({
+		form : [[0, 1, 0],
+				[1, 1, 1]],
+		posX: 3,
+		posY: 3,
+		rotation: 0,
+		color: 'red'
+	});
+
+	_setActiveBlock(block);
+
+	var nextField = function (block) {
+		if (block === null) return _fieldArray;
+	
+		var form = block.getForm();
+		var width = form[0].length;
+		var height = form.length;
+	
+		var pos = block.getPos();
+	
+		// Nasty hack to clone the array
+		var nextArray = _fieldArray.slice(0);
+	
+		// Loop through playfield at given position
+		// for tetris object
+		for (var i = 0; i < height; ++i)
+		{
+			for(var j = 0; j < width; ++j)
+			{
+				nextArray[i + pos.y][j + pos.x] += form[i][j];
+			}
+		}
+	
+		return nextArray;
+	};
+
+	var isColliding = function (block) {
+		var form = block.getForm();
+		var width = block.getWidth();
+		var height = block.getHeight();
+		var pos = block.getPos();
+
+		for(var i = 0; i < height; ++i)
+		{
+			for(var j = 0; j < width; ++j)
+			{
+				if(_fieldArray[pos.y+i][pos.x+j] !== 0
+					&& form[i][j] !== 0)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	};
+
 	return {
+		requestUpdate : function () {
+			_shouldUpdate = true;
+		},
 		setActiveBlock : function (block) {
-			this.activeBlock = block;
+			_activeBlock = block;
 		},
 		update : function () {
-			this.fieldArray = this.nextField();
+			if(_shouldUpdate)
+			{
+				// Move the block down
+				_activeBlock.moveDown();
+
+				if (isColliding(_activeBlock))
+				{
+					_activeBlock.moveUp();
+					// Make a new block
+					
+					nextField(_activeBlock);
+					_setActiveBlock(new Block({
+							form : [[0, 1, 0],
+									[1, 1, 1]],
+							posX: 3,
+							posY: 3,
+							rotation: 0,
+							color: 'red'
+						}));
+
+				}
+				
+				_shouldUpdate = false;
+			}
 		},
 		render : function (ctx) {
-			var field = this.fieldArray;
+			_activeBlock.render(ctx);
+
+			var field = _fieldArray;
 			var fieldWidth = field[0].length;
 			var fieldHeight = field.length;
-			var size = this.size;
 		
-			var pix = this.size;
-		
+			var pix = _size;
+
+			ctx.fillStyle = 'rgb(220, 51, 51)';
+
+			// Render all 'stuck' blocks
+
 			for(var i = 0; i < fieldHeight; ++i)
 			{
 				for(var j = 0; j < fieldWidth; ++j)
 				{
 					var block = field[i][j];
-		
+					
+					var x = _size * j;
+					var y = _size * i;
+
 					if(block === 1)
 					{
-						ctx.fillStyle = 'rgb(220, 51, 51)';
-						ctx.fillRect(size*j, size*i, size, size);
+						ctx.fillRect(x, y, _size, _size);
 					}
+
+					var old = ctx.fillStyle;
+					ctx.fillStyle = "#FFF";
+					ctx.fillText(block, x + _size/2, y + _size/2);
+					ctx.fillStyle = old;
 				}
 			}
 		}
 	}
 }
 
-
-// Square size in pixels
-Field.prototype.size = 20;
 
 // Collision function that takes a tetris object
 // and adds it to the current playfield, and returns
@@ -69,52 +178,3 @@ Field.prototype.size = 20;
 //	color: 	'blue'
 // }
 
-Field.prototype.activeBlock = null;
-
-Field.prototype.collidesWith = function (obj) {	
-	var field = this.fieldArray;
-	var fieldWidth = field[0].length;
-	var fieldHeight = field.length;
-
-	for(var i = 0; i < fieldHeight; ++i)
-	{
-		for(var j = 0; j < fieldWidth; ++j)
-		{
-			if(field[j][i] > 1)
-			{
-				// If an object is colliding with 
-				// a previously occupied space
-				// it's value should be greater than 1
-				return true;
-			}
-		}
-	}
-	return false;
-};
-
-// Add tetris object values to playfield
-Field.prototype.nextField = function () {
-	if (this.activeBlock === null) return this.fieldArray;
-
-	var form = this.activeBlock['form'];
-	var width = form[0].length;
-	var height = form.length;
-
-	var x = this.activeBlock.posX;
-	var y = this.activeBlock.posY;
-
-	// Nasty hack to clone the array
-	var nextArray = this.fieldArray.slice(0);
-
-	// Loop through playfield at given position
-	// for tetris object
-	for (var i = 0; i < height; ++i)
-	{
-		for(var j = 0; j < width; ++j)
-		{
-			nextArray[i+y][j+x] += form[i][j];
-		}
-	}
-
-	return nextArray;
-};

@@ -43,6 +43,8 @@ function gatherInputs() {
 // It then delegates the game-specific logic to `updateSimulation`
 
 
+var playField = new Field(8, 24);
+
 
 // GAME-SPECIFIC UPDATE LOGIC
 
@@ -50,7 +52,9 @@ function updateSimulation(du) {
     
     processDiagnostics();
 
-    entityManager.update(du);
+    playField.update();
+
+    //entityManager.update(du);
 
 }
 
@@ -76,6 +80,8 @@ var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
 
+var KEY_TICK = keyCode('Y');
+
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -86,6 +92,8 @@ function processDiagnostics() {
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+
+    if (eatKey(KEY_TICK)) playField.requestUpdate();
 
 }
 
@@ -106,7 +114,9 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
-    entityManager.render(ctx);
+    //entityManager.render(ctx);
+
+    playField.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
