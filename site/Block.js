@@ -2,7 +2,7 @@ function Block(descr)
 {
 	var _block = {};
 
-	var _size = 40;
+	var _size = 20;
 
 	for(var i in descr)
 	{

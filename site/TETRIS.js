@@ -43,7 +43,7 @@ function gatherInputs() {
 // It then delegates the game-specific logic to `updateSimulation`
 
 
-var playField = new Field(8, 24);
+var playField = new Field(10,20);
 
 
 // GAME-SPECIFIC UPDATE LOGIC

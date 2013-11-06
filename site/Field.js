@@ -19,7 +19,7 @@ function Field(width, height)
 
 // Add tetris object values to playfield
 
-	var _size = 40;
+	var _size = 20;
 
 	var _activeBlock = null;
 
@@ -33,7 +33,7 @@ function Field(width, height)
 		form : [[0, 1, 0],
 				[1, 1, 1]],
 		posX: 3,
-		posY: 3,
+		posY: -1,
 		rotation: 0,
 		color: 'red'
 	});
@@ -86,6 +86,9 @@ function Field(width, height)
 		return false;
 	};
 
+	var KEY_LEFT = keyCode('A');
+	var KEY_RIGHT = keyCode('D');
+
 	return {
 		requestUpdate : function () {
 			_shouldUpdate = true;
@@ -103,7 +106,7 @@ function Field(width, height)
 				{
 					_activeBlock.moveUp();
 					// Make a new block
-					
+
 					nextField(_activeBlock);
 					_setActiveBlock(new Block({
 							form : [[0, 1, 0],
@@ -117,6 +120,15 @@ function Field(width, height)
 				}
 				
 				_shouldUpdate = false;
+			}
+
+			if(eatKey(KEY_LEFT))
+			{
+				_activeBlock.nudgeLeft();
+			}
+			if(eatKey(KEY_RIGHT))
+			{
+				_activeBlock.nudgeRight();
 			}
 		},
 		render : function (ctx) {
