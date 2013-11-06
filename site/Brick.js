@@ -10,8 +10,8 @@ var Brick = function (x, y, size, type, keyControl) {
 	// this.setup(descr);
 
 	// "Private" variables and functions are kept here:
-	var _x = x;
-	var _y = y;
+	var _cx = x;
+	var _cy = y;
 
 	var _speed = 1;
 	var _size = size;
@@ -42,12 +42,12 @@ var Brick = function (x, y, size, type, keyControl) {
 	var _type = type;
 
 	// There is always one:
-	var _units = [new Brickunit(_x, _y, _size)];
+	var _units = [new Brickunit(_cx, _cy, _size)];
 
 	// If it's a number, it's a board bottom:
 	if (!isNaN(_type)) {
 		for (var i = 1; i < _type; i++) {
-			_units.push(new Brickunit(_x+_size*i, _y, _size));
+			_units.push(new Brickunit(_cx+_size*i, _cy, _size));
 		}
 	}
 	else {
@@ -57,38 +57,38 @@ var Brick = function (x, y, size, type, keyControl) {
 	}
 
 	if (_type === 'I') {
-		_units.push(new Brickunit(_x-_size, _y, _size));
-		_units.push(new Brickunit(_x+_size, _y, _size));
-		_units.push(new Brickunit(_x+_size*2, _y, _size));
+		_units.push(new Brickunit(_cx-_size, _cy, _size));
+		_units.push(new Brickunit(_cx+_size, _cy, _size));
+		_units.push(new Brickunit(_cx+_size*2, _cy, _size));
 		_color = "blue";
 		_unitArray = [1, 1, 1, 1];
 	}
 	else if (_type === 'L') {
-		_units.push(new Brickunit(_x, _y-_size, _size));
-		_units.push(new Brickunit(_x, _y+_size, _size));
-		_units.push(new Brickunit(_x+_size, _y+_size, _size));
+		_units.push(new Brickunit(_cx, _cy-_size, _size));
+		_units.push(new Brickunit(_cx, _cy+_size, _size));
+		_units.push(new Brickunit(_cx+_size, _cy+_size, _size));
 		_color = "green";
 		_unitArray = [[1, 0], [1, 0], [1, 1]];
 	}
 	else if (_type === 'S') {
-		_units.push(new Brickunit(_x-_size, _y, _size));
-		_units.push(new Brickunit(_x, _y+_size, _size));
-		_units.push(new Brickunit(_x+_size, _y+_size, _size));
+		_units.push(new Brickunit(_cx-_size, _cy, _size));
+		_units.push(new Brickunit(_cx, _cy+_size, _size));
+		_units.push(new Brickunit(_cx+_size, _cy+_size, _size));
 		_color = "yellow";
 	}
 	else if (_type === 'A') {
-		_units.push(new Brickunit(_x, _y-_size, _size));
-		_units.push(new Brickunit(_x-_size, _y, _size));
-		_units.push(new Brickunit(_x+_size, _y, _size));
+		_units.push(new Brickunit(_cx, _cy-_size, _size));
+		_units.push(new Brickunit(_cx-_size, _cy, _size));
+		_units.push(new Brickunit(_cx+_size, _cy, _size));
 	}
 	else if (_type === 'B') {
-		_units.push(new Brickunit(_x, _y-_size, _size));
-		_units.push(new Brickunit(_x+_size, _y-_size, _size));
-		_units.push(new Brickunit(_x+_size, _y, _size));
+		_units.push(new Brickunit(_cx, _cy-_size, _size));
+		_units.push(new Brickunit(_cx+_size, _cy-_size, _size));
+		_units.push(new Brickunit(_cx+_size, _cy, _size));
 		_color = "purple";
 	}
 
-	var _canMove = function (x) {
+	var _isLegalPos = function (x) {
 		for (var i in _units) {
 			var unitPos = _units[i].getPos();
 			unitPos.cx += x;
@@ -98,38 +98,41 @@ var Brick = function (x, y, size, type, keyControl) {
 	}
 
 	var _rotate = function () {
-		// Create rotated brick (units)
-		console.log('rotating');
-		var rotPos = _units[0].getPos();
+		// Cannot rotate the big cube:
+		if (_type === 'B') return;
+
 		var oldUnits = _units;
+
+		var rotPos = _units[0].getPos();
 		for (var i = 1; i < _units.length; i++) {
 			pos = _units[i].getPos();
 			var xDiff = rotPos.cx - pos.cx;
 			var yDiff = rotPos.cy - pos.cy;
-			_units[i].setPos(rotPos.cx + yDiff, rotPos.cy + xDiff);
-			// Check if new units are colliding, if so - revert to oldUnits.
+			_units[i].setPos(rotPos.cx - yDiff, rotPos.cy + xDiff);
 		}
 
-		// If they do not collide with other stuff, make it this one.
+		// If new position is not legal, undo the rotation:
+		if (!_isLegalPos(0)) _units = oldUnits;
 	}
 
 	var _checkMovement = function (du) {
 		if (keys[_keyUp] && _rotateTimer < 0) {
-			// TODO: Check if can rotate, then do:
 			_rotateTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 			_rotate();
 		}
 		if (keys[_keyDown]) {
-			// TODO: Check if can rotate, then do:
+			// Quadrupple up the speed:
+			_cy += _speed*du*3;
+			for (var i in _units) { _units[i].update(_speed*du); }
 		}
 		if (keys[_keyRight] && _moveTimer < 0) {
-			if (!_canMove(_size)) return;
+			if (!_isLegalPos(_size)) return;
 			for (var i in _units) { _units[i].nudge(+_size); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
 		if (keys[_keyLeft] && _moveTimer < 0) {
 			// First check if move is allowed:
-			if (!_canMove(-_size)) return;
+			if (!_isLegalPos(-_size)) return;
 			for (var i in _units) { _units[i].nudge(-_size); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
@@ -139,7 +142,7 @@ var Brick = function (x, y, size, type, keyControl) {
 	return {
 		update : function (du) {
 			if (!_isStuck) {
-				_x += _speed*du;
+				_cy += _speed*du;
 				for (var i in _units) { _units[i].update(_speed*du); }
 				_moveTimer -= 1;
 				_rotateTimer -= 1;
@@ -150,7 +153,7 @@ var Brick = function (x, y, size, type, keyControl) {
 			for (var i in _units) { _units[i].render(ctx, _color); }
 		},
 		getPos : function () {
-			return { cx : _x ,cy: _y };
+			return { cx : _cx ,cy: _cy };
 		},
 		getHeight : function () {
 			return _size;
@@ -166,7 +169,7 @@ var Brick = function (x, y, size, type, keyControl) {
 			}
 		},
 		nudge : function (x) { 
-			_x += x;
+			_cx += x;
 			for (var i in _units) { _units[i].nudge(x); } 
 		},
 		collidesWith : function (brick) {
