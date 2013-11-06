@@ -30,15 +30,9 @@ function Field(width, height)
 		_activeBlock = block;
 	};
 
-	var block = new Block({
-		form : [[0, 1, 0],
-				[1, 1, 1]],
-		posX: 3,
-		posY: -1,
-		rotation: 0,
-		color: 'red'
-	});
+	// Initial block
 
+	var block = new Block();
 	_setActiveBlock(block);
 
 	var nextField = function (block) {
@@ -66,6 +60,10 @@ function Field(width, height)
 		return nextArray;
 	};
 
+	var getWidth = function () {
+		return _fieldArray[0].length;
+	};
+
 	var isColliding = function (block) {
 		var form = block.getForm();
 		var width = block.getWidth();
@@ -89,6 +87,16 @@ function Field(width, height)
 
 	var KEY_LEFT = keyCode('A');
 	var KEY_RIGHT = keyCode('D');
+	var KEY_ROTATE = keyCode('W');
+
+	var outOfBounds = function () {
+		var pos = _activeBlock.getPos();
+		var width = _activeBlock.getWidth();
+		return getWidth() < (pos.x + width)
+		|| isColliding(_activeBlock)
+		|| pos.x < 0
+		|| isColliding(_activeBlock); 
+	};
 
 	return {
 		requestUpdate : function () {
@@ -97,10 +105,14 @@ function Field(width, height)
 		setActiveBlock : function (block) {
 			_activeBlock = block;
 		},
-		getWidth : function () {
-			return _fieldArray[0].length;
+		getWidth: getWidth,
+		tick: function () {
+			_shouldUpdate = true;
 		},
 		update : function () {
+			// Check if we're updating. Tetris moves
+			// are in a rather discrete time intervals
+			// so we will not be doing redundant updates.
 			if(_shouldUpdate)
 			{
 				// Move the block down
@@ -112,40 +124,39 @@ function Field(width, height)
 					// Make a new block
 
 					nextField(_activeBlock);
-					_setActiveBlock(new Block({
-							form : [[0, 1, 0],
-									[1, 1, 1]],
-							posX: 3,
-							posY: 0,
-							rotation: 0,
-							color: 'red'
-						}));
-
+					_setActiveBlock(new Block());
 				}
 				
 				_shouldUpdate = false;
 			}
 
-			var pos = _activeBlock.getPos();
-			var width = _activeBlock.getWidth();
-
-			// Prevent blocks from falling out of 
-			// playfield bounds when moving left
-			// or right
-
 			if(eatKey(KEY_LEFT))
 			{
+				// Begin by moving block left
 				_activeBlock.nudgeLeft();
-				if(0 >= pos.x
-					|| isColliding(_activeBlock))
+
+				// Then check it against our collision
+				// information, that is the walls of 
+				// the playfield and other stuck blocks.
+				// If we collide with either, then we redo
+				// our move to a 'safe' place.
+				if(outOfBounds())
 					_activeBlock.nudgeRight();
 			}
+
 			if(eatKey(KEY_RIGHT))
 			{
+				// Same here …
 				_activeBlock.nudgeRight();
-				if(this.getWidth() <= (pos.x + width)
-					|| isColliding(_activeBlock))
+				if(outOfBounds())
 					_activeBlock.nudgeLeft();
+			}
+
+			if(eatKey(KEY_ROTATE))
+			{
+				_activeBlock.rotate();
+				if(outOfBounds())
+					_activeBlock.rotateLeft();
 			}
 		},
 		render : function (ctx) {

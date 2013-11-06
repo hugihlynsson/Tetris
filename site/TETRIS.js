@@ -44,13 +44,23 @@ function gatherInputs() {
 
 
 var playField = new Field(10,20);
-
-
+var blockClock = 15;
+var clock = 0;
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
     
     processDiagnostics();
+
+
+    if(clock === 0)
+    {
+        playField.tick();
+    }
+    
+    clock++;
+    clock = clock % blockClock;
+
 
     playField.update();
 

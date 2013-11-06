@@ -37,6 +37,21 @@ isBetween: function(value, lowBound, highBound) {
     return true;
 },
 
+// OBJECT KEYS
+// ===========
+
+getKeys: function (object) {
+    var keys = [];
+    for(var i in object)
+    {
+        if(object.hasOwnProperty(i))
+        {
+            keys.push(i)
+        }
+    }
+    return keys;
+},
+
 
 // RANDOMNESS
 // ==========
