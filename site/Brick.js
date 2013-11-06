@@ -3,7 +3,7 @@
 // =====
 
 // Creating a "class" Brick
-var Brick = function (x, y, size, type, r, l) {
+var Brick = function (x, y, size, type, keyControl) {
 
 	// Calling the "constructor" of the "parent" element:
 	// Maybe just not use this?
@@ -13,10 +13,13 @@ var Brick = function (x, y, size, type, r, l) {
 	var _x = x;
 	var _y = y;
 
-	var _keyRight = r;
-	var _keyLeft = l;
 	var _speed = 1;
 	var _size = size;
+
+	var _keyLeft = (keyControl) ? keyControl[0] : 0;
+	var _keyRight = (keyControl) ? keyControl[1] : 0;
+	var _keyTop = (keyControl) ? keyControl[2] : 0;
+	var _keyDown = (keyControl) ? keyControl[3] : 0;
 
 	var _spatialId = spatialManager.getNewSpatialID();
 	var _isStuck = false;
@@ -44,7 +47,7 @@ var Brick = function (x, y, size, type, r, l) {
 	}
 	else {
 		var _brickTypes = ['I', 'L', 'S', 'A'];
-		var _type = _brickTypes[Math.floor(Math.random()*_brickTypes.length)];
+		_type = _brickTypes[Math.floor(Math.random()*_brickTypes.length)];
 	}
 
 	if (_type === 'I') {
@@ -73,11 +76,11 @@ var Brick = function (x, y, size, type, r, l) {
 
 	var _checkMovement = function (du) {
 		if (keys[_keyLeft] && _moveTimer < 0) { 
-			for (i in _units) { _units[i].nudge(-_size*du); }
+			for (var i in _units) { _units[i].nudge(-_size*du); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
 		if (keys[_keyRight] && _moveTimer < 0) {
-			for (i in _units) { _units[i].nudge(+_size*du); }
+			for (var i in _units) { _units[i].nudge(+_size*du); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
 	};
@@ -87,13 +90,13 @@ var Brick = function (x, y, size, type, r, l) {
 		update : function (du) {
 			if (!_isStuck) {
 				_x += _speed*du;
-				for (i in _units) { _units[i].update(_speed*du); }
+				for (var i in _units) { _units[i].update(_speed*du); }
 				_moveTimer -= 1;
 				_checkMovement(du);
 			}
 		},
 		render : function (ctx) {
-			for (i in _units) { _units[i].render(ctx, _color); }
+			for (var i in _units) { _units[i].render(ctx, _color); }
 		},
 		getPos : function () {
 			return { cx : _x ,cy: _y };
@@ -106,7 +109,7 @@ var Brick = function (x, y, size, type, r, l) {
 		},
 		stick : function () {
 			_isStuck = true;
-			for (i in _units) { _units[i].align(); }
+			for (var i in _units) { _units[i].align(); }
 		},
 		nudge : function (x) { 
 			_x += x;
@@ -115,21 +118,13 @@ var Brick = function (x, y, size, type, r, l) {
 		collidesWith : function (brick) {
 			// TODO: implement more efficient collition:
 			// (maybe it should be more generic and done in spatial manager?)
-			for (i in _units) {
-				var otherUnits = brick.getUnits()
-				for (j in otherUnits) {
+			for (var i in _units) {
+				var otherUnits = brick.getUnits();
+				for (var j in otherUnits) {
 					if (_units[i].collidesWith(otherUnits[j])) return true;
 				}
 			}
 			return false;
 		},
-		collidesWithBottom : function (brick) {
-			var otherpos = brick.getPos();
-			if (_x-size > otherpos.cx && _x+_size < otherpos.cx
-						&& Math.abs(_y-otherpos.cy) < _size) {
-				return true;
-			}
-			return false;
-		}
 	};
 };

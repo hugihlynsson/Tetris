@@ -26,7 +26,7 @@ _entities : [],
 
 unit : 20,
 
-// "PRIVATE" METHODS
+// "private methods and variables:
 _drawPoints : function (ctx) {
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = "white";
@@ -37,6 +37,8 @@ _drawPoints : function (ctx) {
     }
     ctx.fillStyle = oldStyle;
 },
+
+_fields : [],
 
 // PUBLIC METHODS
 getClosestY : function (y) {

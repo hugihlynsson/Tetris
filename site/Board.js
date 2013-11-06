@@ -3,7 +3,7 @@
 // =====
 
 // Creating a "class" Board
-var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, keyDown) {
+var Board = function (cx, cy, w, h, rows, columns, brickControl, keyControl) {
 
 	// "Private" variables and functions are kept here:
 	var _cx = cx;
@@ -13,19 +13,23 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 	var _rows = rows;
 	var _columns = columns;
 
-	var _keyLeft = keyLeft;
-	var _keyRight = keyRight;
-	var _keyUp = keyUp;
-	var _keyDown = keyDown;
-
 	var _brickUnit = _width / _columns;
 
+	var _brickControl = brickControl;
+	var _keyControl = keyControl || [];
+
+
+	var _keyLeft = (keyControl) ? keyControl[0] : 0;
+	var _keyRight = (keyControl) ? keyControl[1] : 0;
+	var _keyTop = (keyControl) ? keyControl[2] : 0;
+	var _keyDown = (keyControl) ? keyControl[3] : 0;
+
 	var _newBrick = function () {
-		return (new Brick(
+		return new Brick(
 			_cx, _cy-_height/2, 
 			_brickUnit, 'X',
-			'D'.charCodeAt(0), 'A'.charCodeAt(0)
-		));
+			_brickControl
+		);
 	};
 
 	var _currentBrick = _newBrick();
@@ -52,19 +56,18 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 	};
 
 	// Move the fields bricks x to the right or left:
-	_nudgeBricks = function (x) {
-		console.log('nudging bricks');
+	var _nudgeBricks = function (x) {
 		_currentBrick.nudge(x);
 		_bottomBrick.nudge(x);
-		for (i in _stuckBricks) { _stuckBricks[i].nudge(x); }
+		for (var i in _stuckBricks) { _stuckBricks[i].nudge(x); }
 	};
 
 	// Brick is down, so make a new one:
-	_stickBrick = function() {
+	var _stickBrick = function() {
 		_stuckBricks[_stuckBricks.length] = _currentBrick;
 		_currentBrick.stick();
 		_currentBrick = _newBrick();
-	}
+	};
 
 	// "Public" functions are part of the returned object (note change of syntax):
 	return {
@@ -83,17 +86,16 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 				_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 			}
 
+			_checkBrickCollition();
 			_currentBrick.update(du);
-
 			// If current brick is colliding, 
 			// make it stuck and check for fullline.
-			_checkBrickCollition();
 		},
 		render : function (ctx) {
 			util.strokeBox(ctx, _cx, _cy, _width, _height, 'red');
 			_currentBrick.render(ctx);
 
-			for (i in _stuckBricks) { _stuckBricks[i].render(ctx); }
+			for (var i in _stuckBricks) { _stuckBricks[i].render(ctx); }
 		},
 	};
 };
