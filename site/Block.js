@@ -3,7 +3,9 @@ function Block(descr)
 	var _block = {};
 
 	var _blockForms = {
-		0: [[1, 1, 1, 1]],
+
+		0: [[1, 1, 1, 1]
+			],
 
 		1: [[0, 1, 0],
 			[1, 1, 1]],
@@ -16,6 +18,14 @@ function Block(descr)
 
 		4: [[1, 1, 0],
 			[0, 1, 1]]
+	}
+
+	var _blockFormColors = {
+		0: '#FF0000',
+		1: '#00FF00',
+		2: '#0000FF',
+		3: '#FFFF00',
+		4: '#00FFFF'
 	}
 
 	var _size = 30;
@@ -33,7 +43,8 @@ function Block(descr)
 			posY: y,
 			formName: randomForm,
 			rotation: rotation,
-			color: 'red'};
+			color: _blockFormColors[randomForm]
+		};
 	};
 
 	// Check if block should be random
@@ -103,8 +114,6 @@ function Block(descr)
 		{
 			_block.form = _rotateRight();
 		}
-
-
 	};
 
 	var getForm = function () {
@@ -124,6 +133,10 @@ function Block(descr)
 		return _block.form[0].length;
 	};
 
+	var getColor = function () {
+		return _block.color;
+	};
+
 	var update = function () {
 
 	};
@@ -131,7 +144,6 @@ function Block(descr)
 	var render = function (ctx) {
 		var width = _block.form[0].length;
 		var height = _block.form.length;
-
 		for(var i = 0; i < height; ++i)
 		{
 			for(var j = 0; j < width; ++j)
@@ -140,7 +152,15 @@ function Block(descr)
 
 				if (block === 1)
 				{
-					ctx.fillRect((_block.posX + j) * _size, (_block.posY + i) * _size, _size, _size);
+					var oldStyle = ctx.fillStyle;
+
+					var ease = (((clock)/(blockClock+1)) * _size);
+
+					console.log(ease);
+
+					ctx.fillStyle = _block.color;
+					ctx.fillRect((_block.posX + j) * _size, (_block.posY + i) * _size + ease, _size, _size);
+					ctx.fillStyle = oldStyle;
 				}
 			}
 		}
@@ -155,6 +175,7 @@ function Block(descr)
 		getForm: getForm,
 		getHeight: getHeight,
 		getWidth: getWidth,
+		getColor: getColor,
 		rotate: rotate,
 		rotateLeft: rotateLeft,
 		update: update,

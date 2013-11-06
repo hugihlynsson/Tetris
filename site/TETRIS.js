@@ -53,13 +53,14 @@ function updateSimulation(du) {
     processDiagnostics();
 
 
-    if(clock === 0)
+    clock++;
+
+    if(clock === blockClock)
     {
         playField.tick();
     }
     
-    clock++;
-    clock = clock % blockClock;
+    clock = clock % blockClock;dw
 
 
     playField.update();

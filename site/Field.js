@@ -8,12 +8,12 @@ function Field(width, height)
 		_fieldArray.push([]);
 		for(var j = 0; j < width; ++j)
 		{
-			_fieldArray[i][j] = 0;
-
+			_fieldArray[i].push([]);
+			_fieldArray[i][j][0] = 0;
 			// FOR TESTING PURPOSES
 			// TODO
 			// REMOVE
-			if(i === height-1) _fieldArray[i][j] = 1;
+			//if(i === height-1) _fieldArray[i][j] = 1;
 			//if(j === 0 || j === width-1) _fieldArray[i][j] = 1;
 		}
 	}
@@ -53,7 +53,14 @@ function Field(width, height)
 		{
 			for(var j = 0; j < width; ++j)
 			{
-				nextArray[i + pos.y][j + pos.x] += form[i][j];
+				nextArray[i + pos.y][j + pos.x][0] += form[i][j];
+				
+				// We shall colourize ye olde matrix with
+				// the thine *yarr* colour
+				if(form[i][j] === 1)
+				{
+					nextArray[i + pos.y][j + pos.x][1] = block.getColor();
+				}
 			}
 		}
 	
@@ -64,24 +71,30 @@ function Field(width, height)
 		return _fieldArray[0].length;
 	};
 
+	var getHeight = function () {
+		return _fieldArray.length;
+	};
+
 	var isColliding = function (block) {
 		var form = block.getForm();
 		var width = block.getWidth();
 		var height = block.getHeight();
 		var pos = block.getPos();
 
+		// Check for collision with bottom
+		if((getHeight() < (pos.y + height))) return true;
+
 		for(var i = 0; i < height; ++i)
 		{
 			for(var j = 0; j < width; ++j)
 			{
-				if(_fieldArray[pos.y+i][pos.x+j] !== 0
+				if(_fieldArray[pos.y+i][pos.x+j][0] !== 0
 					&& form[i][j] !== 0)
 				{
 					return true;
 				}
 			}
 		}
-
 		return false;
 	};
 
@@ -92,10 +105,41 @@ function Field(width, height)
 	var outOfBounds = function () {
 		var pos = _activeBlock.getPos();
 		var width = _activeBlock.getWidth();
-		return getWidth() < (pos.x + width)
-		|| isColliding(_activeBlock)
-		|| pos.x < 0
-		|| isColliding(_activeBlock); 
+		var height = _activeBlock.getHeight();
+		return (getWidth() < (pos.x + width))
+		|| (pos.x < 0)
+		|| (isColliding(_activeBlock))
+		|| (isColliding(_activeBlock));
+	};
+
+	var checkForLine = function () {
+		for(var i = 0; i < getHeight(); ++i)
+		{
+			var lineSum = 0;
+			
+			for(var j = 0; j < getWidth(); ++j)
+			{
+				lineSum += _fieldArray[i][j][0];
+			}
+
+			if(lineSum === getWidth()) removeLine(i);
+			console.log(lineSum, getWidth());
+		}
+	};
+
+	var removeLine = function (lineNumber) {
+		for(var k = 0; k < getWidth(); ++k)
+		{
+			_fieldArray[0][k].push([]);
+			_fieldArray[0][k][0] = 0;
+		}
+		for(var i = lineNumber; i > 0; --i)
+		{
+			for(var j = 0; j < getWidth(); ++j)
+			{
+				_fieldArray[i][j] = _fieldArray[i-1][j]
+			}
+		}
 	};
 
 	return {
@@ -106,6 +150,7 @@ function Field(width, height)
 			_activeBlock = block;
 		},
 		getWidth: getWidth,
+		getHeight: getHeight,
 		tick: function () {
 			_shouldUpdate = true;
 		},
@@ -122,11 +167,11 @@ function Field(width, height)
 				{
 					_activeBlock.moveUp();
 					// Make a new block
-
 					nextField(_activeBlock);
 					_setActiveBlock(new Block());
+					checkForLine();
 				}
-				
+
 				_shouldUpdate = false;
 			}
 
@@ -156,7 +201,14 @@ function Field(width, height)
 			{
 				_activeBlock.rotate();
 				if(outOfBounds())
+				{
 					_activeBlock.rotateLeft();
+					_activeBlock.rotateLeft();
+				}
+				if(outOfBounds())
+				{
+					_activeBlock.rotate();
+				}
 			}
 		},
 		render : function (ctx) {
@@ -165,10 +217,8 @@ function Field(width, height)
 			var field = _fieldArray;
 			var fieldWidth = field[0].length;
 			var fieldHeight = field.length;
-		
-			var pix = _size;
 
-			ctx.fillStyle = 'rgb(220, 51, 51)';
+			var pix = _size;
 
 			// Render all 'stuck' blocks
 
@@ -176,20 +226,22 @@ function Field(width, height)
 			{
 				for(var j = 0; j < fieldWidth; ++j)
 				{
-					var block = field[i][j];
+					var block = field[i][j][0];
+					var color = field[i][j][1];
 					
 					var x = _size * j;
 					var y = _size * i;
 
 					if(block === 1)
 					{
+						ctx.fillStyle = color;
 						ctx.fillRect(x, y, _size, _size);
 					}
 
-					var old = ctx.fillStyle;
-					ctx.fillStyle = "#FFF";
-					ctx.fillText(block, x + _size/2, y + _size/2);
-					ctx.fillStyle = old;
+					//var old = ctx.fillStyle;
+					//ctx.fillStyle = "#FFF";
+					//ctx.fillText(block, x + _size/2, y + _size/2);
+					//ctx.fillStyle = old;
 				}
 			}
 		}
