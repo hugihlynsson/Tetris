@@ -13,13 +13,14 @@ function Field(width, height)
 			// FOR TESTING PURPOSES
 			// TODO
 			// REMOVE
-			if(i === 14) _fieldArray[i][j] = 1;
+			if(i === height-1) _fieldArray[i][j] = 1;
+			//if(j === 0 || j === width-1) _fieldArray[i][j] = 1;
 		}
 	}
 
 // Add tetris object values to playfield
 
-	var _size = 20;
+	var _size = 30;
 
 	var _activeBlock = null;
 
@@ -96,6 +97,9 @@ function Field(width, height)
 		setActiveBlock : function (block) {
 			_activeBlock = block;
 		},
+		getWidth : function () {
+			return _fieldArray[0].length;
+		},
 		update : function () {
 			if(_shouldUpdate)
 			{
@@ -112,7 +116,7 @@ function Field(width, height)
 							form : [[0, 1, 0],
 									[1, 1, 1]],
 							posX: 3,
-							posY: 3,
+							posY: 0,
 							rotation: 0,
 							color: 'red'
 						}));
@@ -122,13 +126,26 @@ function Field(width, height)
 				_shouldUpdate = false;
 			}
 
+			var pos = _activeBlock.getPos();
+			var width = _activeBlock.getWidth();
+
+			// Prevent blocks from falling out of 
+			// playfield bounds when moving left
+			// or right
+
 			if(eatKey(KEY_LEFT))
 			{
 				_activeBlock.nudgeLeft();
+				if(0 >= pos.x
+					|| isColliding(_activeBlock))
+					_activeBlock.nudgeRight();
 			}
 			if(eatKey(KEY_RIGHT))
 			{
 				_activeBlock.nudgeRight();
+				if(this.getWidth() <= (pos.x + width)
+					|| isColliding(_activeBlock))
+					_activeBlock.nudgeLeft();
 			}
 		},
 		render : function (ctx) {
