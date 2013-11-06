@@ -24,18 +24,33 @@ _nextSpatialID : 1, // make all valid IDs non-falsey (i.e. don't start at 0)
 
 _entities : [],
 
-// "PRIVATE" METHODS
-//
-// <none yet>
+unit : 20,
 
+// "PRIVATE" METHODS
+_drawPoints : function (ctx) {
+    var oldStyle = ctx.fillStyle;
+    ctx.fillStyle = "white";
+    for (var i = 0; i < g_canvas.width; i += this.unit) {
+        for (var j = 0; j < g_canvas.height; j += this.unit) {
+            ctx.fillRect(i, j, 1, 1);
+        }
+    }
+    ctx.fillStyle = oldStyle;
+},
 
 // PUBLIC METHODS
+getClosestY : function (y) {
+    return Math.round(y/20)*20;
+},
+
+getClosestX : function (x) {
+    return Math.round(x/20)*20;
+},
 
 getNewSpatialID : function() {
 
     // TODO: YOUR STUFF HERE!
     return this._nextSpatialID++;
-
 },
 
 register: function(entity) {
@@ -65,6 +80,7 @@ findEntityInRange: function(posX, posY, radius) {
 render: function(ctx) {
     var oldStyle = ctx.strokeStyle;
     ctx.strokeStyle = "red";
+    this._drawPoints(ctx);
     
     for (var ID in this._entities) {
         var e = this._entities[ID];

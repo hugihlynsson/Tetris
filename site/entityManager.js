@@ -81,9 +81,12 @@ deferredSetup : function () {
 },
 
 init: function() {
+    var unit = spatialManager.unit;
+    var width = 8;
+    var height = 16;
     this._boards[0] = new Board(
-        200, 200, 100, 200, 
-        16, 8,
+        unit*10, unit*10, unit*width, unit*height, 
+        height, width,
         'J'.charCodeAt(0), 'L'.charCodeAt(0), 'I'.charCodeAt(0), 'J'.charCodeAt(0)
     );
 },
@@ -153,6 +156,8 @@ render: function(ctx) {
     for (var i = 0; i < this._boards.length; i++) {
         this._boards[i].render(ctx);
     }
+
+    spatialManager.render(ctx);
 
 }
 

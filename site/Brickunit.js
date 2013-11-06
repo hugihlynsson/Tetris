@@ -6,28 +6,34 @@
 var Brickunit = function (x, y, size) {
 
 	// "Private" variables and functions are kept here:
-	var _x = x;
-	var _y = y;
+	var _cx = x;
+	var _cy = y;
 	var _size = size;
 
 	// "Public" functions are part of the returned object (note change of syntax):
 	return {
-		update : function (y) { _y += y; },
-		render : function (ctx) {
-			util.fillBox(ctx, _x, _y, _size, _size, "red");
+		update : function (y) { _cy += y; },
+		render : function (ctx, color) {
+			var oldStyle = ctx.fillStyle;
+			util.fillBox(ctx, _cx, _cy, _size+1, _size+1, color);
+			ctx.fillStyle = oldStyle;
 		},
-		getPos : function () { return { cx : _x, cy : _y }; },
+		getPos  : function () { return { cx : _cx, cy : _cy }; },
 		getSize : function () { return _size; },
-		nudge : function (x) { _x += x; },
+		nudge   : function (x) { _cx += x; },
+		align  : function () { 
+			_cy = spatialManager.getClosestY(_cy);
+			_cx = spatialManager.getClosestY(_cx); 
+		},
 		collidesWith : function (brickunit) {
 			// A simple collition system that uses the units radius
 			// but works because we only need to compere the centers
 			// of the squares sides:
 			var otherPos = brickunit.getPos();
-			if (util.distSq(_x, _y, otherPos.cx, otherPos.cy) < _size*brickunit.getSize()) {
+			if (util.distSq(_cx, _cy, otherPos.cx, otherPos.cy) < _size*brickunit.getSize()*0.9) {
 				return true;
 			}
 			return false;
-		}
+		},
 	};
 };

@@ -23,7 +23,7 @@ var Brick = function (x, y, size, type, r, l) {
 	// In ms. If > 0, brick should not move.
 	var _moveTimer = 0;
 	var _secBetweenMoves = 0.2;
-
+	var _color = "red";
 
 	// TODO: Define all types to emulate old tetris:
 	// Types: 
@@ -51,16 +51,19 @@ var Brick = function (x, y, size, type, r, l) {
 		_units.push(new Brickunit(_x-_size, _y, _size));
 		_units.push(new Brickunit(_x+_size, _y, _size));
 		_units.push(new Brickunit(_x+_size*2, _y, _size));
+		_color = "blue";
 	}
 	else if (_type === 'L') {
 		_units.push(new Brickunit(_x, _y-_size, _size));
 		_units.push(new Brickunit(_x, _y+_size, _size));
 		_units.push(new Brickunit(_x+_size, _y+_size, _size));
+		_color = "green";
 	}
 	else if (_type === 'S') {
 		_units.push(new Brickunit(_x-_size, _y, _size));
 		_units.push(new Brickunit(_x, _y+_size, _size));
 		_units.push(new Brickunit(_x+_size, _y+_size, _size));
+		_color = "yellow";
 	}
 	else if (_type === 'A') {
 		_units.push(new Brickunit(_x, _y-_size, _size));
@@ -83,13 +86,14 @@ var Brick = function (x, y, size, type, r, l) {
 	return {
 		update : function (du) {
 			if (!_isStuck) {
+				_x += _speed*du;
 				for (i in _units) { _units[i].update(_speed*du); }
 				_moveTimer -= 1;
 				_checkMovement(du);
 			}
 		},
 		render : function (ctx) {
-			for (i in _units) { _units[i].render(ctx); }
+			for (i in _units) { _units[i].render(ctx, _color); }
 		},
 		getPos : function () {
 			return { cx : _x ,cy: _y };
@@ -102,8 +106,12 @@ var Brick = function (x, y, size, type, r, l) {
 		},
 		stick : function () {
 			_isStuck = true;
+			for (i in _units) { _units[i].align(); }
 		},
-		nudge : function (x) { for (var i in _units) { _x += x; } },
+		nudge : function (x) { 
+			_x += x;
+			for (var i in _units) { _units[i].nudge(x); } 
+		},
 		collidesWith : function (brick) {
 			// TODO: implement more efficient collition:
 			// (maybe it should be more generic and done in spatial manager?)
@@ -112,6 +120,14 @@ var Brick = function (x, y, size, type, r, l) {
 				for (j in otherUnits) {
 					if (_units[i].collidesWith(otherUnits[j])) return true;
 				}
+			}
+			return false;
+		},
+		collidesWithBottom : function (brick) {
+			var otherpos = brick.getPos();
+			if (_x-size > otherpos.cx && _x+_size < otherpos.cx
+						&& Math.abs(_y-otherpos.cy) < _size) {
+				return true;
 			}
 			return false;
 		}

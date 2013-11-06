@@ -53,6 +53,7 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 
 	// Move the fields bricks x to the right or left:
 	_nudgeBricks = function (x) {
+		console.log('nudging bricks');
 		_currentBrick.nudge(x);
 		_bottomBrick.nudge(x);
 		for (i in _stuckBricks) { _stuckBricks[i].nudge(x); }
@@ -61,7 +62,7 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 	// Brick is down, so make a new one:
 	_stickBrick = function() {
 		_stuckBricks[_stuckBricks.length] = _currentBrick;
-		_currentBrick
+		_currentBrick.stick();
 		_currentBrick = _newBrick();
 	}
 
@@ -91,12 +92,8 @@ var Board = function (cx, cy, w, h, rows, columns, keyLeft, keyRight, keyUp, key
 		render : function (ctx) {
 			util.strokeBox(ctx, _cx, _cy, _width, _height, 'red');
 			_currentBrick.render(ctx);
-			_bottomBrick.render(ctx);
 
 			for (i in _stuckBricks) { _stuckBricks[i].render(ctx); }
 		},
-		getBottom : function() {
-			return new Brick();
-		}
 	};
 };
