@@ -144,6 +144,12 @@ function Block(descr)
 	var render = function (ctx) {
 		var width = _block.form[0].length;
 		var height = _block.form.length;
+
+		// Some easing, soon to be encapsulated
+		// in it's own functional premises
+		var ease = clock/blockClock;
+		ease = -(Math.cos((ease/2) * Math.PI)) * _size;
+		
 		for(var i = 0; i < height; ++i)
 		{
 			for(var j = 0; j < width; ++j)
@@ -153,11 +159,6 @@ function Block(descr)
 				if (block === 1)
 				{
 					var oldStyle = ctx.fillStyle;
-
-					var ease = (((clock)/(blockClock+1)) * _size);
-
-					console.log(ease);
-
 					ctx.fillStyle = _block.color;
 					ctx.fillRect((_block.posX + j) * _size, (_block.posY + i) * _size + ease, _size, _size);
 					ctx.fillStyle = oldStyle;

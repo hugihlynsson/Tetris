@@ -44,7 +44,7 @@ function gatherInputs() {
 
 
 var playField = new Field(10,20);
-var blockClock = 15;
+var blockClock = 30;
 var clock = 0;
 // GAME-SPECIFIC UPDATE LOGIC
 

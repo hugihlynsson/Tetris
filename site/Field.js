@@ -237,11 +237,12 @@ function Field(width, height)
 						ctx.fillStyle = color;
 						ctx.fillRect(x, y, _size, _size);
 					}
-
-					//var old = ctx.fillStyle;
-					//ctx.fillStyle = "#FFF";
-					//ctx.fillText(block, x + _size/2, y + _size/2);
-					//ctx.fillStyle = old;
+					/*
+					var old = ctx.fillStyle;
+					ctx.fillStyle = "#FFF";
+					ctx.fillText(block, x + _size/2, y + _size/2);
+					ctx.fillStyle = old;
+					*/
 				}
 			}
 		}
