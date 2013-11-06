@@ -74,13 +74,25 @@ var Brick = function (x, y, size, type, keyControl) {
 		_units.push(new Brickunit(_x+_size, _y, _size));
 	}
 
+	var _canMove = function (x) {
+		for (var i in _units) {
+			var unitPos = _units[i].getPos();
+			unitPos.cx += x;
+			if (spatialManager.getField(unitPos)) return false; 
+		}
+		return true;
+	}
+
 	var _checkMovement = function (du) {
-		if (keys[_keyLeft] && _moveTimer < 0) { 
-			for (var i in _units) { _units[i].nudge(-_size*du); }
+		if (keys[_keyRight] && _moveTimer < 0) {
+			if (!_canMove(_size)) return;
+			for (var i in _units) { _units[i].nudge(+_size*du); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
-		if (keys[_keyRight] && _moveTimer < 0) {
-			for (var i in _units) { _units[i].nudge(+_size*du); }
+		if (keys[_keyLeft] && _moveTimer < 0) {
+			// First check if move is allowed:
+			if (!_canMove(-_size)) return;
+			for (var i in _units) { _units[i].nudge(-_size*du); }
 			_moveTimer = _secBetweenMoves*SECS_TO_NOMINALS*du;
 		}
 	};
@@ -109,7 +121,10 @@ var Brick = function (x, y, size, type, keyControl) {
 		},
 		stick : function () {
 			_isStuck = true;
-			for (var i in _units) { _units[i].align(); }
+			for (var i in _units) { 
+				_units[i].align();
+				spatialManager.markField(_units[i].getPos());
+			}
 		},
 		nudge : function (x) { 
 			_x += x;

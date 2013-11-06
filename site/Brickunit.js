@@ -21,7 +21,7 @@ var Brickunit = function (x, y, size) {
 		getPos  : function () { return { cx : _cx, cy : _cy }; },
 		getSize : function () { return _size; },
 		nudge   : function (x) { _cx += x; },
-		align  : function () { 
+		align  	: function () { 
 			_cy = spatialManager.getClosestY(_cy);
 			_cx = spatialManager.getClosestY(_cx); 
 		},

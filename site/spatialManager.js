@@ -39,14 +39,22 @@ _drawPoints : function (ctx) {
 },
 
 _fields : [],
+markField : function (pos) {
+    var x = Math.round(this.getClosestX(pos.cx)/this.unit);
+    var y = this.getClosestX(pos.cy);
+    this._fields[x][y] = true;
+},
+getField : function (pos) {
+    return this._fields[Math.round(this.getClosestX(pos.cx)/this.unit)][this.getClosestY(pos.cy)];
+},
 
 // PUBLIC METHODS
 getClosestY : function (y) {
-    return Math.round(y/20)*20;
+    return Math.round(y/this.unit)*this.unit;
 },
 
 getClosestX : function (x) {
-    return Math.round(x/20)*20;
+    return Math.round(x/this.unit)*this.unit;
 },
 
 getNewSpatialID : function() {
@@ -92,4 +100,9 @@ render: function(ctx) {
     ctx.strokeStyle = oldStyle;
 }
 
+}
+
+// Some initialization:
+for (var i = 0; i < g_canvas.width/spatialManager.unit; i++) {
+    spatialManager._fields[i] = [];
 }
