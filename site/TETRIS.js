@@ -60,7 +60,7 @@ function updateSimulation(du) {
         playField.tick();
     }
     
-    clock = clock % blockClock;dw
+    clock = clock % blockClock;
 
 
     playField.update();
