@@ -72,7 +72,7 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 
 clearCanvas: function (ctx) {
     var prevfillStyle = ctx.fillStyle;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "white";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = prevfillStyle;
 },
@@ -98,7 +98,7 @@ fillBox: function (ctx, x, y, w, h, style) {
 strokeBox: function (ctx, cx, cy, w, h, style) {
     var oldStyle = ctx.strokeStyle;
     ctx.strokeStyle = style;
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(cx-w/2, cy-h/2);
     ctx.lineTo(cx+w/2, cy-h/2);

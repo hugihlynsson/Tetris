@@ -94,7 +94,7 @@ var Board = function (cx, cy, w, h, rows, columns, brickControl, keyControl) {
 			// make it stuck and check for fullline.
 		},
 		render : function (ctx) {
-			util.strokeBox(ctx, _cx, _cy, _width, _height, 'red');
+			util.strokeBox(ctx, _cx, _cy, _width, _height, 'blue');
 			_currentBrick.render(ctx);
 
 			for (var i in _stuckBricks) { _stuckBricks[i].render(ctx); }
