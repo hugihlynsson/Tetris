@@ -147,8 +147,6 @@ function Field(width, height)
 			{
 				removeLine(i);
 			}
-
-			console.log(lineSum, getWidth());
 		}
 	};
 
@@ -161,7 +159,14 @@ function Field(width, height)
 
 			if(i <= lineNumber)
 			{
-				_fieldArray[i] = _fieldArray[i-1];
+				for(var j = 0; j < getWidth(); ++j)
+				{
+					for(var k = 0; k < _fieldArray[i][j].length; ++k)
+					{
+						// Three dimensional array copy WOAH!!
+						_fieldArray[i][j][k] = _fieldArray[i-1][j][k];
+					}
+				}
 			}
 		}
 

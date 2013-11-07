@@ -104,14 +104,13 @@ function Block(descr)
 			rotated.push([]);
 		}
 
-		//  			   old.dálkar = new.raðir
-		//	rotated = [[], …, []]
+		// old.dálkar = new.raðir
+		// rotated = [[], …, []]
 
 		for(var i = 0; i < old.length; ++i)
 		{
 			for(var j = 0; j < old[0].length; ++j)
 			{
-				console.log();
 				rotated[old[0].length-j-1][i] = old[i][j];
 			}
 		}
