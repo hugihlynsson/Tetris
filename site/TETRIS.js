@@ -44,24 +44,35 @@ function gatherInputs() {
 
 
 var playField = new Field(10,20);
-var blockClock = 30;
+
+var blockClock = 15;
 var clock = 0;
+
+// Dirty, dirty programming
+var KEY_FAST = keyCode('S');
+
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    
+
     processDiagnostics();
 
+    var speed = 1;
 
-    clock++;
-
-    if(clock === blockClock)
+    if(eatKey(KEY_FAST))
     {
+       speed = 10;
+    }
+
+    clock += 1 * speed * du;
+
+    if(clock >= blockClock)
+    {
+
         playField.tick();
     }
     
     clock = clock % blockClock;
-
 
     playField.update();
 
@@ -91,8 +102,6 @@ var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
 
-var KEY_TICK = keyCode('Y');
-
 function processDiagnostics() {
 
     if (eatKey(KEY_MIXED))
@@ -103,8 +112,6 @@ function processDiagnostics() {
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
-
-    if (eatKey(KEY_TICK)) playField.requestUpdate();
 
 }
 

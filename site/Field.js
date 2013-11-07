@@ -26,6 +26,8 @@ function Field(width, height)
 
 	var _shouldUpdate = false;
 
+	var _renderDebugNums = false;
+
 	var _setActiveBlock = function (block) {
 		_activeBlock = block;
 	};
@@ -56,13 +58,15 @@ function Field(width, height)
 				nextArray[i + pos.y][j + pos.x][0] += form[i][j];
 				
 				// We shall colourize ye olde matrix with
-				// the thine *yarr* colour
+				// thine *yarr* colour
 				if(form[i][j] === 1)
 				{
 					nextArray[i + pos.y][j + pos.x][1] = block.getColor();
 				}
 			}
 		}
+
+		console.log(nextArray);
 	
 		return nextArray;
 	};
@@ -98,9 +102,22 @@ function Field(width, height)
 		return false;
 	};
 
+	var noEase = function () {
+		_activeBlock.noEase();
+	};
+
+	var doEase = function () {
+		_activeBlock.doEase();
+	};
+
+	var ease = function () {
+		_activeBlock.ease();
+	};
+
 	var KEY_LEFT = keyCode('A');
 	var KEY_RIGHT = keyCode('D');
 	var KEY_ROTATE = keyCode('W');
+	var KEY_DEBUG_NUMS = keyCode('T');
 
 	var outOfBounds = function () {
 		var pos = _activeBlock.getPos();
@@ -119,26 +136,33 @@ function Field(width, height)
 			
 			for(var j = 0; j < getWidth(); ++j)
 			{
-				lineSum += _fieldArray[i][j][0];
+				if(_fieldArray[i][j][0] > 0)
+				{
+					lineSum++;
+				}
 			}
 
-			if(lineSum === getWidth()) removeLine(i);
+			if(lineSum === getWidth())
+			{
+				removeLine(i);
+				i--;
+			}
+
 			console.log(lineSum, getWidth());
 		}
 	};
 
 	var removeLine = function (lineNumber) {
-		for(var k = 0; k < getWidth(); ++k)
+
+		for(var i = getHeight()-1; i > 1; --i)
 		{
-			_fieldArray[0][k].push([]);
-			_fieldArray[0][k][0] = 0;
+			console.log(i, i-1);
+			_fieldArray[i] = _fieldArray[i-1];
 		}
-		for(var i = lineNumber; i > 0; --i)
+
+		for(var j = 0; j < getWidth(); ++j)
 		{
-			for(var j = 0; j < getWidth(); ++j)
-			{
-				_fieldArray[i][j] = _fieldArray[i-1][j]
-			}
+			_fieldArray[0][j][0] = 0;
 		}
 	};
 
@@ -151,6 +175,9 @@ function Field(width, height)
 		},
 		getWidth: getWidth,
 		getHeight: getHeight,
+		noEase: noEase,
+		doEase: doEase,
+		ease: ease,
 		tick: function () {
 			_shouldUpdate = true;
 		},
@@ -210,6 +237,11 @@ function Field(width, height)
 					_activeBlock.rotate();
 				}
 			}
+
+			if(eatKey(KEY_DEBUG_NUMS))
+			{
+				_renderDebugNums = !_renderDebugNums;
+			}
 		},
 		render : function (ctx) {
 			_activeBlock.render(ctx);
@@ -237,12 +269,14 @@ function Field(width, height)
 						ctx.fillStyle = color;
 						ctx.fillRect(x, y, _size, _size);
 					}
-					/*
-					var old = ctx.fillStyle;
-					ctx.fillStyle = "#FFF";
-					ctx.fillText(block, x + _size/2, y + _size/2);
-					ctx.fillStyle = old;
-					*/
+					
+					if(_renderDebugNums)
+					{
+						var old = ctx.fillStyle;
+						ctx.fillStyle = "#FFF";
+						ctx.fillText(block, x + _size/2, y + _size/2);
+						ctx.fillStyle = old;
+					}
 				}
 			}
 		}

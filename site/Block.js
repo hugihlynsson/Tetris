@@ -17,22 +17,34 @@ function Block(descr)
 			[1, 1, 0]],
 
 		4: [[1, 1, 0],
-			[0, 1, 1]]
+			[0, 1, 1]],
+
+		5: [[0, 1],
+			[0, 1],
+			[1, 1]],
+
+		6: [[1, 0],
+			[1, 0],
+			[1, 1]]
 	}
 
 	var _blockFormColors = {
-		0: '#FF0000',
-		1: '#00FF00',
-		2: '#0000FF',
-		3: '#FFFF00',
-		4: '#00FFFF'
+		0: '#ff69b4',
+		1: '#e9967a',
+		2: '#eedd82',
+		3: '#66cdaa',
+		4: '#00bfff',
+		5: '#ffdead',
+		6: '#cdc9c9'
 	}
 
 	var _size = 30;
 
+	var _shouldEase = true;
+
 	var _randomBlock = function () {
 		var forms = util.getKeys(_blockForms);
-		var randomForm = Math.floor(util.randRange(0, 5));
+		var randomForm = Math.floor(util.randRange(0, 7));
 		var rotation = Math.floor(util.randRange(0, 4));
 
 		var x = 4;
@@ -137,6 +149,18 @@ function Block(descr)
 		return _block.color;
 	};
 
+	var noEase = function () {
+		_shouldEase = false;
+	};
+
+	var doEase = function () {
+		_shouldEase = true;
+	};
+
+	var ease = function () {
+		return _shouldEase;
+	};
+
 	var update = function () {
 
 	};
@@ -147,8 +171,6 @@ function Block(descr)
 
 		// Some easing, soon to be encapsulated
 		// in it's own functional premises
-		var ease = clock/blockClock;
-		ease = -(Math.cos((ease/2) * Math.PI)) * _size;
 		
 		for(var i = 0; i < height; ++i)
 		{
@@ -159,6 +181,19 @@ function Block(descr)
 				if (block === 1)
 				{
 					var oldStyle = ctx.fillStyle;
+					
+					var ease = 1;
+
+					if(_shouldEase)
+					{
+						ease = clock/blockClock;
+						ease = -(Math.cos((ease/2) * Math.PI)) * _size;
+					}
+					else
+					{
+						_shouldEase = true;
+					}
+
 					ctx.fillStyle = _block.color;
 					ctx.fillRect((_block.posX + j) * _size, (_block.posY + i) * _size + ease, _size, _size);
 					ctx.fillStyle = oldStyle;
@@ -179,6 +214,9 @@ function Block(descr)
 		getColor: getColor,
 		rotate: rotate,
 		rotateLeft: rotateLeft,
+		noEase: noEase,
+		doEase: doEase,
+		ease: ease,
 		update: update,
 		render: render,
 		_block: _block
