@@ -186,8 +186,8 @@ function Block(descr)
 
 					if(_shouldEase)
 					{
-						ease = clock/blockClock;
-						ease = -(Math.cos((ease/2) * Math.PI)) * _size;
+						//ease = clock/blockClock;
+						//ease = -(Math.cos((ease/2) * Math.PI)) * _size;
 					}
 					else
 					{

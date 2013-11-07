@@ -55,7 +55,7 @@ function Field(width, height)
 		{
 			for(var j = 0; j < width; ++j)
 			{
-				nextArray[i + pos.y][j + pos.x][0] += form[i][j];
+				 if(form[i][j] === 1) nextArray[i + pos.y][j + pos.x][0] = 1;
 				
 				// We shall colourize ye olde matrix with
 				// thine *yarr* colour
@@ -86,7 +86,8 @@ function Field(width, height)
 		var pos = block.getPos();
 
 		// Check for collision with bottom
-		if((getHeight() < (pos.y + height))) return true;
+		console.log(getHeight());
+		if((pos.y + height) > getHeight()) return true;
 
 		for(var i = 0; i < height; ++i)
 		{
@@ -145,7 +146,6 @@ function Field(width, height)
 			if(lineSum === getWidth())
 			{
 				removeLine(i);
-				i--;
 			}
 
 			console.log(lineSum, getWidth());
@@ -157,8 +157,15 @@ function Field(width, height)
 		for(var i = getHeight()-1; i > 1; --i)
 		{
 			console.log(i, i-1);
-			_fieldArray[i] = _fieldArray[i-1];
+			_fieldArray[i] = _fieldArray[i];
+
+			if(i <= lineNumber)
+			{
+				_fieldArray[i] = _fieldArray[i-1];
+			}
 		}
+
+		// Stroka út efstu línu
 
 		for(var j = 0; j < getWidth(); ++j)
 		{
