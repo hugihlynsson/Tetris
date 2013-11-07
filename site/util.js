@@ -37,6 +37,21 @@ isBetween: function(value, lowBound, highBound) {
     return true;
 },
 
+// OBJECT KEYS
+// ===========
+
+getKeys: function (object) {
+    var keys = [];
+    for(var i in object)
+    {
+        if(object.hasOwnProperty(i))
+        {
+            keys.push(i)
+        }
+    }
+    return keys;
+},
+
 
 // RANDOMNESS
 // ==========
@@ -79,7 +94,7 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 
 clearCanvas: function (ctx) {
     var prevfillStyle = ctx.fillStyle;
-    ctx.fillStyle = "black";
+    ctx.fillStyle = "#2f4f4f";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = prevfillStyle;
 },

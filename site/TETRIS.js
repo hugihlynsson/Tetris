@@ -17,6 +17,10 @@ A sort-of-playable version of the classic arcade game.
 */
 
 
+// // ====================
+// // CREATE INITIAL SHIPS
+// // ====================
+
 // =============
 // GATHER INPUTS
 // =============
@@ -39,16 +43,41 @@ function gatherInputs() {
 // It then delegates the game-specific logic to `updateSimulation`
 
 
+var playField = new Field(10,20);
+
+var blockClock = 15;
+var clock = 0;
+
+// Dirty, dirty programming
+var KEY_FAST = keyCode('S');
+
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    
-    processDiagnostics();
-    
-    entityManager.update(du);
 
-    // // Prevent perpetual firing!
-    // eatKey(Ship.prototype.KEY_FIRE);
+    processDiagnostics();
+
+    var speed = 1;
+
+    if(eatKey(KEY_FAST))
+    {
+       speed = 10;
+    }
+
+    clock += 1 * speed * du;
+
+    if(clock >= blockClock)
+    {
+
+        playField.tick();
+    }
+    
+    clock = clock % blockClock;
+
+    playField.update();
+
+    //entityManager.update(du);
+
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -80,31 +109,10 @@ function processDiagnostics() {
 
     if (eatKey(KEY_GRAVITY)) g_useGravity = !g_useGravity;
 
-    // if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
+    if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
-    // if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
-    // if (eatKey(KEY_HALT)) entityManager.haltShips();
-
-    // if (eatKey(KEY_RESET)) entityManager.resetShips();
-
-    // if (eatKey(KEY_0)) entityManager.toggleRocks();
-
-    // if (eatKey(KEY_1)) entityManager.generateShip({
-    //     cx : g_mouseX,
-    //     cy : g_mouseY,
-        
-    //     sprite : g_sprites.ship});
-
-    // if (eatKey(KEY_2)) entityManager.generateShip({
-    //     cx : g_mouseX,
-    //     cy : g_mouseY,
-        
-    //     sprite : g_sprites.ship2
-    //     });
-
-    // if (eatKey(KEY_K)) entityManager.killNearestShip(
-    //     g_mouseX, g_mouseY);
 }
 
 
@@ -124,7 +132,9 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
-    entityManager.render(ctx);
+    //entityManager.render(ctx);
+
+    playField.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -139,29 +149,23 @@ var g_images = {};
 function requestPreloads() {
 
     var requiredImages = {
-        // ship   : "https://notendur.hi.is/~pk/308G/images/ship.png",
-        // ship2  : "https://notendur.hi.is/~pk/308G/images/ship_2.png",
-        // rock   : "https://notendur.hi.is/~pk/308G/images/rock.png"
+
     };
 
-    imagesPreload(requiredImages, g_images, preloadDone);
 }
 
 var g_sprites = {};
 
 function preloadDone() {
 
-    // g_sprites.ship  = new Sprite(g_images.ship);
-    // g_sprites.ship2 = new Sprite(g_images.ship2);
-    // g_sprites.rock  = new Sprite(g_images.rock);
-
-    // g_sprites.bullet = new Sprite(g_images.ship);
-    // g_sprites.bullet.scale = 0.25;
-
     entityManager.init();
 
     main.init();
 }
 
+entityManager.init();
+
+main.init();
+
 // Kick it off
-requestPreloads();
+// requestPreloads();
