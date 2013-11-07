@@ -182,7 +182,7 @@ function Block(descr)
 				{
 					var oldStyle = ctx.fillStyle;
 					
-					var ease = 1;
+					var ease = 0;
 
 					if(_shouldEase)
 					{
