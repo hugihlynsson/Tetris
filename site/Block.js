@@ -2,7 +2,7 @@
 // BLOCK
 // =====
 
-var Block = function (descr)
+var Block = function (size)
 {
 	// Private variables and methods:
 	var _blockForms = {
@@ -40,7 +40,7 @@ var Block = function (descr)
 		6: '#cdc9c9'
 	};
 
-	var _size = 30;
+	var _size = size || 20;
 
 	var _shouldEase = true;
 
@@ -64,10 +64,7 @@ var Block = function (descr)
 	};
 
 	// Check if block should be random:
-	if (descr === undefined)
-	{
-		descr = _randomBlock();
-	}
+	var descr = _randomBlock();
 
 	// Build the actual block
 	for (var i in descr)
@@ -95,7 +92,7 @@ var Block = function (descr)
 
 	var rotate = function () {
 		_block.rotation = (_block.rotation + 1) % 4;
-		_block.form = _rotateLeft();
+		_block.form = _rotateRight();
 	};
 
 	var _rotateRight = function () {
@@ -122,13 +119,9 @@ var Block = function (descr)
 		return rotated;
 	};
 
+	// TODO: Finish this function:
 	var _rotateLeft = function () {
-		
-		// The simple and stupid version that works:
-		_rotateRight();
-		_rotateRight();
-		return _rotateRight();
-
+		// Broken code:
 		// _block.rotation = (_block.rotation - 1) % 4;
 		// for(var i = 0; i < 3; ++i)
 		// {

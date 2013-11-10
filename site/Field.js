@@ -3,15 +3,28 @@
 // ============
 
 // New playing field with width and height
-var Field = function (width, height)
+var Field = function (x, y, width, height, columns)
 {
 	// Private variables and methods:
+
+	// Initialize instance variables:
+	var _x = x;
+	var _y = y;
+	var _width = width;
+	var _height = height;
+	var _columns = columns;
+
+	// Create the fields matrix:
+	var _unitSize = Math.round(_width / _columns);
+	var _rows = Math.round(_height / _unitSize);
+
 	var _fieldArray = [];
-	// Initialize playfield
-	for (var i = 0; i < height; ++i)
+
+	// Initialize playfield:
+	for (var i = 0; i < _rows; ++i)
 	{
 		_fieldArray.push([]);
-		for (var j = 0; j < width; ++j)
+		for (var j = 0; j < _columns; ++j)
 		{
 			_fieldArray[i].push([]);
 			_fieldArray[i][j][0] = 0;
@@ -25,9 +38,7 @@ var Field = function (width, height)
 
 	// Add tetris object values to playfield
 
-	var _size = 30;
-
-	var _activeBlock = null;
+	var _activeBlock = new Block();
 
 	var _shouldUpdate = false;
 
@@ -36,11 +47,6 @@ var Field = function (width, height)
 	var _setActiveBlock = function (block) {
 		_activeBlock = block;
 	};
-
-	// Initial block
-
-	var block = new Block();
-	_setActiveBlock(block);
 
 	var nextField = function (block) {
 		if (block === null) return _fieldArray;
@@ -119,7 +125,6 @@ var Field = function (width, height)
 	var KEY_LEFT = keyCode('A');
 	var KEY_RIGHT = keyCode('D');
 	var KEY_ROTATE = keyCode('W');
-	var KEY_DEBUG_NUMS = keyCode('T');
 
 	var outOfBounds = function () {
 		var pos = _activeBlock.getPos();
@@ -180,6 +185,23 @@ var Field = function (width, height)
 		}
 	};
 
+
+	var _renderDebugNums = function (ctx) {
+		for (var i = 0; i < _rows; ++i)
+		{
+			for (var j = 0; j < _columns; ++j)
+			{
+				var old = ctx.fillStyle;
+				ctx.fillText(
+					_fieldArray[i][j][0], 
+					_unitSize * j + _unitSize/2, 
+					_unitSize * i + _unitSize/2
+				);
+				ctx.fillStyle = old;
+			}
+		}
+	}
+
 	// Public methods:
 	return {
 		requestUpdate : function () {
@@ -197,9 +219,8 @@ var Field = function (width, height)
 			_shouldUpdate = true;
 		},
 		update : function () {
-			// Check if we're updating. Tetris moves
-			// are in a rather discrete time intervals
-			// so we will not be doing redundant updates.
+			// Check if we're updating. Tetris moves are in a rather discrete
+			// time intervals so we will not be doing redundant updates.
 			if (_shouldUpdate)
 			{
 				// Move the block down
@@ -219,76 +240,53 @@ var Field = function (width, height)
 
 			if (eatKey(KEY_LEFT))
 			{
-				// Begin by moving block left
+				// Move block. If illegal, move back:
 				_activeBlock.nudgeLeft();
-
-				// Then check it against our collision
-				// information, that is the walls of 
-				// the playfield and other stuck blocks.
-				// If we collide with either, then we redo
-				// our move to a 'safe' place.
-				if(outOfBounds())
-					_activeBlock.nudgeRight();
+				if (outOfBounds()) _activeBlock.nudgeRight();
 			}
 
 			if (eatKey(KEY_RIGHT))
 			{
-				// Same here …
+				// Move block. If illegal, move back:
 				_activeBlock.nudgeRight();
-				if(outOfBounds())
-					_activeBlock.nudgeLeft();
+				if (outOfBounds()) _activeBlock.nudgeLeft();
 			}
 
 			if (eatKey(KEY_ROTATE))
 			{
+				// Rotate block. 
+				// If illegal, try again until it gets back to
+				// the original position (max 3 times):
 				_activeBlock.rotate();
-				// If it's not legal, try again until in original
-				// position (will happen max 3 times):
 				while (outOfBounds()) _activeBlock.rotate();
-			}
-
-			if(eatKey(KEY_DEBUG_NUMS))
-			{
-				_renderDebugNums = !_renderDebugNums;
 			}
 		},
 		render : function (ctx) {
+
+			// Draw field background:
+			util.fillBox(ctx, _x, _y, _width, _height, '#3f5f5f');
+
+			// Render the active block:
 			_activeBlock.render(ctx);
 
-			var field = _fieldArray;
-			var fieldWidth = field[0].length;
-			var fieldHeight = field.length;
-
-			var pix = _size;
-
-			// Render all 'stuck' blocks
-
-			for (var i = 0; i < fieldHeight; ++i)
+			// Render all 'stuck' blocks:
+			for (var i = 0; i < _rows; ++i)
 			{
-				for (var j = 0; j < fieldWidth; ++j)
+				for (var j = 0; j < _columns; ++j)
 				{
-					var block = field[i][j][0];
-					var color = field[i][j][1];
-					
-					var x = _size * j;
-					var y = _size * i;
-
-					if (block === 1)
+					if ( _fieldArray[i][j][0])
 					{
-						ctx.fillStyle = color;
-						ctx.fillRect(x, y, _size, _size);
-					}
-					
-					if (_renderDebugNums)
-					{
-						var old = ctx.fillStyle;
-						ctx.fillStyle = "#FFF";
-						ctx.fillText(block, x + _size/2, y + _size/2);
-						ctx.fillStyle = old;
+						ctx.fillStyle = _fieldArray[i][j][1];
+						ctx.fillRect(
+							_unitSize * j, _unitSize * i,
+							_unitSize, _unitSize
+						);
 					}
 				}
 			}
-		}
+
+			if (g_renderDebugNums) _renderDebugNums(ctx);
+		},
 	};
 }
 

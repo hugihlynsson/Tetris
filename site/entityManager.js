@@ -7,7 +7,9 @@
 var EntityManager = function () 
 {
     // Private variables and methods:
-    var _fields = [new Field(10, 20)];
+    var _fields = [
+        new Field(0, 0, 200, 400, 10)
+    ];
 
     // TODO: Move these variables to Field:
     var _blockClock = 15;

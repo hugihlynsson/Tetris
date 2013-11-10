@@ -1,20 +1,8 @@
 // ======
 // TETRIS
 // ======
-/*
-
-A sort-of-playable version of the classic arcade game.
-
-*/
 
 "use strict";
-
-/* jshint browser: true, devel: true, globalstrict: true */
-
-/*
-0        1         2         3         4         5         6         7         8
-12345678901234567890123456789012345678901234567890123456789012345678901234567890
-*/
 
 
 // // ====================
@@ -58,6 +46,7 @@ var g_allowMixedActions = true;
 var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
+var g_renderDebugNums = false;
 
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
@@ -73,6 +62,7 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
+var KEY_DEBUG_NUMS = keyCode('T');
 
 function processDiagnostics() {
 
@@ -84,6 +74,8 @@ function processDiagnostics() {
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
+    
+    if(eatKey(KEY_DEBUG_NUMS)) { g_renderDebugNums = !g_renderDebugNums; }
 
 }
 
