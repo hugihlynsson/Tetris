@@ -55,12 +55,11 @@ function Field(width, height)
 		{
 			for(var j = 0; j < width; ++j)
 			{
-				 if(form[i][j] === 1) nextArray[i + pos.y][j + pos.x][0] = 1;
-				
 				// We shall colourize ye olde matrix with
 				// thine *yarr* colour
 				if(form[i][j] === 1)
 				{
+					nextArray[i + pos.y][j + pos.x][0] = 1
 					nextArray[i + pos.y][j + pos.x][1] = block.getColor();
 				}
 			}

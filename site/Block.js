@@ -185,7 +185,10 @@ function Block(descr)
 
 					if(_shouldEase)
 					{
-						//ease = clock/blockClock;
+						// Normal Easing
+						ease = (clock/blockClock-1) * _size;
+
+						// Cosinal 'smooth' nudgy easing
 						//ease = -(Math.cos((ease/2) * Math.PI)) * _size;
 					}
 					else
