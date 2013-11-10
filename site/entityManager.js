@@ -7,8 +7,14 @@
 var EntityManager = function () 
 {
     // Private variables and methods:
+    var control1 = {
+        left: keyCode('A'), 
+        right: keyCode('D'), 
+        rotate: keyCode('W'), 
+        fast: keyCode('S')
+    };
     var _fields = [
-        new Field(0, 0, 200, 400, 10)
+        new Field(0, 0, 200, 400, 10, control1)
     ];
 
     // TODO: Move these variables to Field:

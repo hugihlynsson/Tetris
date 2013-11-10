@@ -174,14 +174,12 @@ var Block = function (size)
 
 		// Some easing, soon to be encapsulated
 		// in it's own functional premises
-		
+
 		for (var i = 0; i < height; ++i)
 		{
 			for (var j = 0; j < width; ++j)
 			{
-				var block = _block.form[i][j];
-
-				if (block === 1)
+				if (_block.form[i][j])
 				{
 					var oldStyle = ctx.fillStyle;
 					

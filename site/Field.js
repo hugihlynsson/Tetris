@@ -3,7 +3,7 @@
 // ============
 
 // New playing field with width and height
-var Field = function (x, y, width, height, columns)
+var Field = function (x, y, width, height, columns, control)
 {
 	// Private variables and methods:
 
@@ -13,8 +13,8 @@ var Field = function (x, y, width, height, columns)
 	var _width = width;
 	var _height = height;
 	var _columns = columns;
+	var _control = control;
 
-	// Create the fields matrix:
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
 
@@ -36,19 +36,14 @@ var Field = function (x, y, width, height, columns)
 		}
 	}
 
-	// Add tetris object values to playfield
-
 	var _activeBlock = new Block();
-
 	var _shouldUpdate = false;
-
-	var _renderDebugNums = false;
 
 	var _setActiveBlock = function (block) {
 		_activeBlock = block;
 	};
 
-	var nextField = function (block) {
+	var _nextField = function (block) {
 		if (block === null) return _fieldArray;
 	
 		var form = block.getForm();
@@ -66,26 +61,18 @@ var Field = function (x, y, width, height, columns)
 		{
 			for (var j = 0; j < width; ++j)
 			{
-				if (form[i][j] === 1) nextArray[i + pos.y][j + pos.x][0] = 1;
+				if (form[i][j]) nextArray[i+pos.y][j+pos.x][0] = 1;
 				
 				// We shall colourize ye olde matrix with
 				// thine *yarr* colour:
-				if (form[i][j] === 1)
+				if (form[i][j])
 				{
-					nextArray[i + pos.y][j + pos.x][1] = block.getColor();
+					nextArray[i+pos.y][j+pos.x][1] = block.getColor();
 				}
 			}
 		}
 	
 		return nextArray;
-	};
-
-	var getWidth = function () {
-		return _fieldArray[0].length;
-	};
-
-	var getHeight = function () {
-		return _fieldArray.length;
 	};
 
 	var isColliding = function (block) {
@@ -95,7 +82,7 @@ var Field = function (x, y, width, height, columns)
 		var pos = block.getPos();
 
 		// Check for collision with bottom:
-		if((pos.y + height) > getHeight()) return true;
+		if((pos.y + height) > _rows) return true;
 
 		for (var i = 0; i < height; ++i)
 		{
@@ -110,64 +97,41 @@ var Field = function (x, y, width, height, columns)
 		return false;
 	};
 
-	var noEase = function () {
-		_activeBlock.noEase();
-	};
-
-	var doEase = function () {
-		_activeBlock.doEase();
-	};
-
-	var ease = function () {
-		_activeBlock.ease();
-	};
-
-	var KEY_LEFT = keyCode('A');
-	var KEY_RIGHT = keyCode('D');
-	var KEY_ROTATE = keyCode('W');
-
-	var outOfBounds = function () {
+	var _outOfBounds = function () {
 		var pos = _activeBlock.getPos();
 		var width = _activeBlock.getWidth();
 		var height = _activeBlock.getHeight();
 		return (
-			(getWidth() < (pos.x + width)) || 
+			(_columns < (pos.x + width)) || 
 			(pos.x < 0) || 
 			(isColliding(_activeBlock)) || 
 			(isColliding(_activeBlock))
 		);
 	};
 
-	var checkForLine = function () {
-		for (var i = 0; i < getHeight(); ++i)
+	var _checkForLine = function () {
+		for (var i = 0; i < _rows; ++i)
 		{
 			var lineSum = 0;
 			
-			for (var j = 0; j < getWidth(); ++j)
+			for (var j = 0; j < _columns; ++j)
 			{
-				if (_fieldArray[i][j][0] > 0)
-				{
-					lineSum++;
-				}
+				if (_fieldArray[i][j][0] > 0) lineSum++;
 			}
 
-			if (lineSum === getWidth())
-			{
-				removeLine(i);
-			}
+			if (lineSum === _columns) _removeLine(i); 
 		}
 	};
 
-	var removeLine = function (lineNumber) {
+	var _removeLine = function (lineNumber) {
 
-		for (var i = getHeight()-1; i > 1; --i)
+		for (var i = _rows-1; i > 1; --i)
 		{
-			console.log(i, i-1);
 			_fieldArray[i] = _fieldArray[i];
 
 			if (i <= lineNumber)
 			{
-				for (var j = 0; j < getWidth(); ++j)
+				for (var j = 0; j < _columns; ++j)
 				{
 					for (var k = 0; k < _fieldArray[i][j].length; ++k)
 					{
@@ -179,7 +143,7 @@ var Field = function (x, y, width, height, columns)
 		}
 
 		// Erase the top line:
-		for (var j = 0; j < getWidth(); ++j)
+		for (var j = 0; j < _columns; ++j)
 		{
 			_fieldArray[0][j][0] = 0;
 		}
@@ -192,15 +156,17 @@ var Field = function (x, y, width, height, columns)
 			for (var j = 0; j < _columns; ++j)
 			{
 				var old = ctx.fillStyle;
+				ctx.fillStyle = 'white';
+				ctx.font = '5pt Helvetica';
 				ctx.fillText(
 					_fieldArray[i][j][0], 
-					_unitSize * j + _unitSize/2, 
-					_unitSize * i + _unitSize/2
+					_unitSize*j + _unitSize/2 - 2, 
+					_unitSize*i + _unitSize/2 + 2
 				);
 				ctx.fillStyle = old;
 			}
 		}
-	}
+	};
 
 	// Public methods:
 	return {
@@ -210,11 +176,6 @@ var Field = function (x, y, width, height, columns)
 		setActiveBlock : function (block) {
 			_activeBlock = block;
 		},
-		getWidth: getWidth,
-		getHeight: getHeight,
-		noEase: noEase,
-		doEase: doEase,
-		ease: ease,
 		tick: function () {
 			_shouldUpdate = true;
 		},
@@ -230,35 +191,34 @@ var Field = function (x, y, width, height, columns)
 				{
 					_activeBlock.moveUp();
 					// Make a new block
-					nextField(_activeBlock);
+					_nextField(_activeBlock);
 					_setActiveBlock(new Block());
-					checkForLine();
+					_checkForLine();
 				}
 
 				_shouldUpdate = false;
 			}
 
-			if (eatKey(KEY_LEFT))
+			if (eatKey(_control.left))
 			{
 				// Move block. If illegal, move back:
 				_activeBlock.nudgeLeft();
-				if (outOfBounds()) _activeBlock.nudgeRight();
+				if (_outOfBounds()) _activeBlock.nudgeRight();
 			}
 
-			if (eatKey(KEY_RIGHT))
+			if (eatKey(_control.right))
 			{
 				// Move block. If illegal, move back:
 				_activeBlock.nudgeRight();
-				if (outOfBounds()) _activeBlock.nudgeLeft();
+				if (_outOfBounds()) _activeBlock.nudgeLeft();
 			}
 
-			if (eatKey(KEY_ROTATE))
+			if (eatKey(_control.rotate))
 			{
-				// Rotate block. 
-				// If illegal, try again until it gets back to
-				// the original position (max 3 times):
+				// Rotate block. If illegal, try again until it gets
+				// back to the original position (max 3 times):
 				_activeBlock.rotate();
-				while (outOfBounds()) _activeBlock.rotate();
+				while (_outOfBounds()) _activeBlock.rotate();
 			}
 		},
 		render : function (ctx) {
@@ -288,7 +248,7 @@ var Field = function (x, y, width, height, columns)
 			if (g_renderDebugNums) _renderDebugNums(ctx);
 		},
 	};
-}
+};
 
 
 // Collision function that takes a tetris object

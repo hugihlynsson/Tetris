@@ -47,6 +47,7 @@ var g_useGravity = false;
 var g_useAveVel = true;
 var g_renderSpatialDebug = false;
 var g_renderDebugNums = false;
+var g_easeBrick = false;
 
 var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
@@ -62,12 +63,13 @@ var KEY_1 = keyCode('1');
 var KEY_2 = keyCode('2');
 
 var KEY_K = keyCode('K');
+
 var KEY_DEBUG_NUMS = keyCode('T');
+var KEY_EASE = keyCode('E');
 
 function processDiagnostics() {
 
-    if (eatKey(KEY_MIXED))
-        g_allowMixedActions = !g_allowMixedActions;
+    if (eatKey(KEY_MIXED)) g_allowMixedActions = !g_allowMixedActions;
 
     if (eatKey(KEY_GRAVITY)) g_useGravity = !g_useGravity;
 
@@ -75,7 +77,9 @@ function processDiagnostics() {
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
     
-    if(eatKey(KEY_DEBUG_NUMS)) { g_renderDebugNums = !g_renderDebugNums; }
+    if (eatKey(KEY_DEBUG_NUMS)) g_renderDebugNums = !g_renderDebugNums;
+    
+    if (eatKey(KEY_EASE)) g_easeBrick = !g_easeBrick;
 
 }
 
