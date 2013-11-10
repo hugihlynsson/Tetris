@@ -5,7 +5,7 @@
 // New playing field with width and height
 var Field = function (width, height)
 {
-	// Private variables and functions:
+	// Private variables and methods:
 	var _fieldArray = [];
 	// Initialize playfield
 	for (var i = 0; i < height; ++i)
@@ -70,8 +70,6 @@ var Field = function (width, height)
 				}
 			}
 		}
-
-		console.log(nextArray);
 	
 		return nextArray;
 	};
@@ -90,8 +88,7 @@ var Field = function (width, height)
 		var height = block.getHeight();
 		var pos = block.getPos();
 
-		// Check for collision with bottom
-		console.log(getHeight());
+		// Check for collision with bottom:
 		if((pos.y + height) > getHeight()) return true;
 
 		for (var i = 0; i < height; ++i)
@@ -183,6 +180,7 @@ var Field = function (width, height)
 		}
 	};
 
+	// Public methods:
 	return {
 		requestUpdate : function () {
 			_shouldUpdate = true;

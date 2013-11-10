@@ -42,7 +42,7 @@ function gatherInputs() {
 //
 // It then delegates the game-specific logic to `updateSimulation`
 
-
+var entityManager = new EntityManager();
 var playField = new Field(10,20);
 
 var blockClock = 15;
@@ -163,7 +163,6 @@ function preloadDone() {
     main.init();
 }
 
-entityManager.init();
 
 main.init();
 

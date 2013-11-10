@@ -1,16 +1,13 @@
-// ============
-// BLOCK OBJECT
-// ============
+// =====
+// BLOCK
+// =====
 
 var Block = function (descr)
 {
-	// Private variables and functions:
-	var _block = {};
-
+	// Private variables and methods:
 	var _blockForms = {
 
-		0: [[1, 1, 1, 1]
-			],
+		0: [[1, 1, 1, 1]],
 
 		1: [[0, 1, 0],
 			[1, 1, 1]],
@@ -46,6 +43,8 @@ var Block = function (descr)
 	var _size = 30;
 
 	var _shouldEase = true;
+
+	var _block = {};
 
 	var _randomBlock = function () {
 		var forms = util.getKeys(_blockForms);
@@ -213,7 +212,7 @@ var Block = function (descr)
 		}
 	};
 
-	// Public functions:
+	// Public methods:
 	// TODO: Maybe make some direct mapping to functions indirect
 	//       to get a better understanding of what is happening?
 	//       Setters and getters should propably not be private functions.
