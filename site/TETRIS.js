@@ -43,40 +43,12 @@ function gatherInputs() {
 // It then delegates the game-specific logic to `updateSimulation`
 
 var entityManager = new EntityManager();
-var playField = new Field(10,20);
-
-var blockClock = 15;
-var clock = 0;
-
-// Dirty, dirty programming
-var KEY_FAST = keyCode('S');
 
 // GAME-SPECIFIC UPDATE LOGIC
-
 function updateSimulation(du) {
 
     processDiagnostics();
-
-    var speed = 1;
-
-    if(eatKey(KEY_FAST))
-    {
-       speed = 10;
-    }
-
-    clock += 1 * speed * du;
-
-    if(clock >= blockClock)
-    {
-
-        playField.tick();
-    }
-    
-    clock = clock % blockClock;
-
-    playField.update();
-
-    //entityManager.update(du);
+    entityManager.update(du);
 
 }
 
@@ -132,9 +104,7 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
-    //entityManager.render(ctx);
-
-    playField.render(ctx);
+    entityManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -148,6 +118,7 @@ var g_images = {};
 
 function requestPreloads() {
 
+    // TODO before production: Remove if there is nothing in here:
     var requiredImages = {
 
     };
@@ -158,7 +129,7 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    entityManager.init();
+    entityManager.createPlayfields();
 
     main.init();
 }

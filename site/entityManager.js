@@ -6,19 +6,13 @@
 
 var EntityManager = function () 
 {
-    var _fields = [];
-
     // Private variables and methods:
-    var _createPlayfield = function () {
-        _fields[_fields.length] = new Field(10, 20);
-    };
+    var _fields = [new Field(10, 20)];
 
-    var _forEachField = function(fn) {
-        for (var i in _fields) 
-        {
-            fn.call(_fields[i]);
-        }
-    };
+    // TODO: Move these variables to Field:
+    var _blockClock = 15;
+    var _clock = 0;
+    var _KEY_FAST = keyCode('S');
 
     // Public methods:
     return {
@@ -28,18 +22,26 @@ var EntityManager = function ()
         },
 
         update: function(du) {
-            for (var i in _fields) 
+
+            // TODO: Move most of this stuff to Field:
+            var speed = 1;            
+            if(eatKey(_KEY_FAST)) speed = 10;
+
+            _clock += 1 * speed * du;
+
+            if(_clock >= _blockClock)
             {
-                _fields[i].update(du);
+                for (var i in _fields) _fields[i].tick();
             }
+            
+            _clock = _clock % _blockClock;
+
+            for (var i in _fields) _fields[i].update(du);
 
         },
 
         render: function(ctx) {
-            for (var i in _fields) 
-            {
-                _fields[i].render();
-            }
+            for (var i in _fields) _fields[i].render(ctx);
         }
     }
 };
