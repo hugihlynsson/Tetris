@@ -3,7 +3,7 @@
 // ============
 
 // New playing field with width and height
-function Field(width, height)
+var Field = function (width, height)
 {
 	// Private variables and functions:
 	var _fieldArray = [];
@@ -244,15 +244,9 @@ function Field(width, height)
 			if (eatKey(KEY_ROTATE))
 			{
 				_activeBlock.rotate();
-				if(outOfBounds())
-				{
-					_activeBlock.rotateLeft();
-					_activeBlock.rotateLeft();
-				}
-				if (outOfBounds())
-				{
-					_activeBlock.rotate();
-				}
+				// If it's not legal, try again until in original
+				// position (will happen max 3 times):
+				while (outOfBounds()) _activeBlock.rotate();
 			}
 
 			if(eatKey(KEY_DEBUG_NUMS))

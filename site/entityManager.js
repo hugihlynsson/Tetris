@@ -108,13 +108,6 @@ render: function(ctx) {
 // Some deferred setup which needs the object to have been created first
 entityManager.deferredSetup();
 
-var block = {
-    form :  [[0,1,0],
-            [1,1,1]],
-    posX:   0,
-    posY:   4,
-    color:  'blue'
-};
 /*
 var block = new Block();
 

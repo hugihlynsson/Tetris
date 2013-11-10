@@ -2,7 +2,7 @@
 // BLOCK OBJECT
 // ============
 
-function Block(descr)
+var Block = function (descr)
 {
 	// Private variables and functions:
 	var _block = {};
@@ -96,12 +96,12 @@ function Block(descr)
 
 	var rotate = function () {
 		_block.rotation = (_block.rotation + 1) % 4;
-		_block.form = _rotateRight();
+		_block.form = _rotateLeft();
 	};
 
 	var _rotateRight = function () {
+
 		var old = _block.form;
-		console.log(_block.form);
 		var rotated = [];
 
 		for (var i = 0; i < old[0].length; i++)
@@ -123,13 +123,18 @@ function Block(descr)
 		return rotated;
 	};
 
-	var rotateLeft = function () {
-		_block.rotation = (_block.rotation - 1) % 4;
+	var _rotateLeft = function () {
 		
-		for(var i = 0; i < 3; ++i)
-		{
-			_block.form = _rotateRight();
-		}
+		// The simple and stupid version that works:
+		_rotateRight();
+		_rotateRight();
+		return _rotateRight();
+
+		// _block.rotation = (_block.rotation - 1) % 4;
+		// for(var i = 0; i < 3; ++i)
+		// {
+		//  _block.form = _rotateRight();
+		// }
 	};
 
 	var getForm = function () {
@@ -223,7 +228,7 @@ function Block(descr)
 		getWidth: getWidth,
 		getColor: getColor,
 		rotate: rotate,
-		rotateLeft: rotateLeft,
+		rotateLeft: _rotateLeft,
 		noEase: noEase,
 		doEase: doEase,
 		ease: ease,
@@ -232,4 +237,4 @@ function Block(descr)
 		_block: _block
 	};
 
-}
+};
