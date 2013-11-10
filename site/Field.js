@@ -1,12 +1,17 @@
+// ============
+// FIELD OBJECT
+// ============
+
 // New playing field with width and height
 function Field(width, height)
 {
+	// Private variables and functions:
 	var _fieldArray = [];
 	// Initialize playfield
-	for(var i = 0; i < height; ++i)
+	for (var i = 0; i < height; ++i)
 	{
 		_fieldArray.push([]);
-		for(var j = 0; j < width; ++j)
+		for (var j = 0; j < width; ++j)
 		{
 			_fieldArray[i].push([]);
 			_fieldArray[i][j][0] = 0;
@@ -18,7 +23,7 @@ function Field(width, height)
 		}
 	}
 
-// Add tetris object values to playfield
+	// Add tetris object values to playfield
 
 	var _size = 30;
 
@@ -46,20 +51,20 @@ function Field(width, height)
 	
 		var pos = block.getPos();
 	
-		// Nasty hack to clone the array
+		// Nasty hack to clone the array:
 		var nextArray = _fieldArray.slice(0);
 	
 		// Loop through playfield at given position
-		// for tetris object
+		// for tetris object:
 		for (var i = 0; i < height; ++i)
 		{
-			for(var j = 0; j < width; ++j)
+			for (var j = 0; j < width; ++j)
 			{
-				 if(form[i][j] === 1) nextArray[i + pos.y][j + pos.x][0] = 1;
+				if (form[i][j] === 1) nextArray[i + pos.y][j + pos.x][0] = 1;
 				
 				// We shall colourize ye olde matrix with
-				// thine *yarr* colour
-				if(form[i][j] === 1)
+				// thine *yarr* colour:
+				if (form[i][j] === 1)
 				{
 					nextArray[i + pos.y][j + pos.x][1] = block.getColor();
 				}
@@ -89,12 +94,11 @@ function Field(width, height)
 		console.log(getHeight());
 		if((pos.y + height) > getHeight()) return true;
 
-		for(var i = 0; i < height; ++i)
+		for (var i = 0; i < height; ++i)
 		{
-			for(var j = 0; j < width; ++j)
+			for (var j = 0; j < width; ++j)
 			{
-				if(_fieldArray[pos.y+i][pos.x+j][0] !== 0
-					&& form[i][j] !== 0)
+				if (_fieldArray[pos.y+i][pos.x+j][0] !== 0 && form[i][j] !== 0)
 				{
 					return true;
 				}
@@ -124,26 +128,28 @@ function Field(width, height)
 		var pos = _activeBlock.getPos();
 		var width = _activeBlock.getWidth();
 		var height = _activeBlock.getHeight();
-		return (getWidth() < (pos.x + width))
-		|| (pos.x < 0)
-		|| (isColliding(_activeBlock))
-		|| (isColliding(_activeBlock));
+		return (
+			(getWidth() < (pos.x + width)) || 
+			(pos.x < 0) || 
+			(isColliding(_activeBlock)) || 
+			(isColliding(_activeBlock))
+		);
 	};
 
 	var checkForLine = function () {
-		for(var i = 0; i < getHeight(); ++i)
+		for (var i = 0; i < getHeight(); ++i)
 		{
 			var lineSum = 0;
 			
-			for(var j = 0; j < getWidth(); ++j)
+			for (var j = 0; j < getWidth(); ++j)
 			{
-				if(_fieldArray[i][j][0] > 0)
+				if (_fieldArray[i][j][0] > 0)
 				{
 					lineSum++;
 				}
 			}
 
-			if(lineSum === getWidth())
+			if (lineSum === getWidth())
 			{
 				removeLine(i);
 			}
@@ -152,16 +158,16 @@ function Field(width, height)
 
 	var removeLine = function (lineNumber) {
 
-		for(var i = getHeight()-1; i > 1; --i)
+		for (var i = getHeight()-1; i > 1; --i)
 		{
 			console.log(i, i-1);
 			_fieldArray[i] = _fieldArray[i];
 
-			if(i <= lineNumber)
+			if (i <= lineNumber)
 			{
-				for(var j = 0; j < getWidth(); ++j)
+				for (var j = 0; j < getWidth(); ++j)
 				{
-					for(var k = 0; k < _fieldArray[i][j].length; ++k)
+					for (var k = 0; k < _fieldArray[i][j].length; ++k)
 					{
 						// Three dimensional array copy WOAH!!
 						_fieldArray[i][j][k] = _fieldArray[i-1][j][k];
@@ -170,9 +176,8 @@ function Field(width, height)
 			}
 		}
 
-		// Stroka út efstu línu
-
-		for(var j = 0; j < getWidth(); ++j)
+		// Erase the top line:
+		for (var j = 0; j < getWidth(); ++j)
 		{
 			_fieldArray[0][j][0] = 0;
 		}
@@ -197,7 +202,7 @@ function Field(width, height)
 			// Check if we're updating. Tetris moves
 			// are in a rather discrete time intervals
 			// so we will not be doing redundant updates.
-			if(_shouldUpdate)
+			if (_shouldUpdate)
 			{
 				// Move the block down
 				_activeBlock.moveDown();
@@ -214,7 +219,7 @@ function Field(width, height)
 				_shouldUpdate = false;
 			}
 
-			if(eatKey(KEY_LEFT))
+			if (eatKey(KEY_LEFT))
 			{
 				// Begin by moving block left
 				_activeBlock.nudgeLeft();
@@ -228,7 +233,7 @@ function Field(width, height)
 					_activeBlock.nudgeRight();
 			}
 
-			if(eatKey(KEY_RIGHT))
+			if (eatKey(KEY_RIGHT))
 			{
 				// Same here …
 				_activeBlock.nudgeRight();
@@ -236,7 +241,7 @@ function Field(width, height)
 					_activeBlock.nudgeLeft();
 			}
 
-			if(eatKey(KEY_ROTATE))
+			if (eatKey(KEY_ROTATE))
 			{
 				_activeBlock.rotate();
 				if(outOfBounds())
@@ -244,7 +249,7 @@ function Field(width, height)
 					_activeBlock.rotateLeft();
 					_activeBlock.rotateLeft();
 				}
-				if(outOfBounds())
+				if (outOfBounds())
 				{
 					_activeBlock.rotate();
 				}
@@ -266,9 +271,9 @@ function Field(width, height)
 
 			// Render all 'stuck' blocks
 
-			for(var i = 0; i < fieldHeight; ++i)
+			for (var i = 0; i < fieldHeight; ++i)
 			{
-				for(var j = 0; j < fieldWidth; ++j)
+				for (var j = 0; j < fieldWidth; ++j)
 				{
 					var block = field[i][j][0];
 					var color = field[i][j][1];
@@ -276,13 +281,13 @@ function Field(width, height)
 					var x = _size * j;
 					var y = _size * i;
 
-					if(block === 1)
+					if (block === 1)
 					{
 						ctx.fillStyle = color;
 						ctx.fillRect(x, y, _size, _size);
 					}
 					
-					if(_renderDebugNums)
+					if (_renderDebugNums)
 					{
 						var old = ctx.fillStyle;
 						ctx.fillStyle = "#FFF";
@@ -292,7 +297,7 @@ function Field(width, height)
 				}
 			}
 		}
-	}
+	};
 }
 
 
@@ -310,10 +315,10 @@ function Field(width, height)
 
 // e.g.
 // {
-//	form : 	[[0,1,0],
-//  		[1,1,1]],
+//	form :  [[0,1,0],
+//			[1,1,1]],
 //	posX:   0,
-//	posY: 	4,
-//	color: 	'blue'
+//	posY:   4,
+//	color:  'blue'
 // }
 

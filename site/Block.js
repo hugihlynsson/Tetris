@@ -1,5 +1,10 @@
+// ============
+// BLOCK OBJECT
+// ============
+
 function Block(descr)
 {
+	// Private variables and functions:
 	var _block = {};
 
 	var _blockForms = {
@@ -26,7 +31,7 @@ function Block(descr)
 		6: [[1, 0],
 			[1, 0],
 			[1, 1]]
-	}
+	};
 
 	var _blockFormColors = {
 		0: '#ff69b4',
@@ -36,7 +41,7 @@ function Block(descr)
 		4: '#00bfff',
 		5: '#ffdead',
 		6: '#cdc9c9'
-	}
+	};
 
 	var _size = 30;
 
@@ -59,14 +64,14 @@ function Block(descr)
 		};
 	};
 
-	// Check if block should be random
+	// Check if block should be random:
 	if (descr === undefined)
 	{
-		var descr = _randomBlock();
+		descr = _randomBlock();
 	}
 
 	// Build the actual block
-	for(var i in descr)
+	for (var i in descr)
 	{
 		_block[i] = descr[i];
 	}
@@ -99,7 +104,7 @@ function Block(descr)
 		console.log(_block.form);
 		var rotated = [];
 
-		for(var i = 0; i < old[0].length; i++)
+		for (var i = 0; i < old[0].length; i++)
 		{
 			rotated.push([]);
 		}
@@ -107,9 +112,9 @@ function Block(descr)
 		// old.dálkar = new.raðir
 		// rotated = [[], …, []]
 
-		for(var i = 0; i < old.length; ++i)
+		for (var i = 0; i < old.length; ++i)
 		{
-			for(var j = 0; j < old[0].length; ++j)
+			for (var j = 0; j < old[0].length; ++j)
 			{
 				rotated[old[0].length-j-1][i] = old[i][j];
 			}
@@ -132,8 +137,10 @@ function Block(descr)
 	};
 
 	var getPos = function () {
-		return {x: _block.posX,
-			y: _block.posY}
+		return { 
+			x: _block.posX, 
+			y: _block.posY
+		};
 	};
 
 	var getHeight = function () {
@@ -171,9 +178,9 @@ function Block(descr)
 		// Some easing, soon to be encapsulated
 		// in it's own functional premises
 		
-		for(var i = 0; i < height; ++i)
+		for (var i = 0; i < height; ++i)
 		{
-			for(var j = 0; j < width; ++j)
+			for (var j = 0; j < width; ++j)
 			{
 				var block = _block.form[i][j];
 
@@ -183,7 +190,7 @@ function Block(descr)
 					
 					var ease = 0;
 
-					if(_shouldEase)
+					if (_shouldEase)
 					{
 						//ease = clock/blockClock;
 						//ease = -(Math.cos((ease/2) * Math.PI)) * _size;
@@ -201,6 +208,10 @@ function Block(descr)
 		}
 	};
 
+	// Public functions:
+	// TODO: Maybe make some direct mapping to functions indirect
+	//       to get a better understanding of what is happening?
+	//       Setters and getters should propably not be private functions.
 	return {
 		nudgeLeft: nudgeLeft,
 		nudgeRight: nudgeRight,
