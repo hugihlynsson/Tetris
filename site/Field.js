@@ -14,13 +14,16 @@ var Field = function (x, y, width, height, columns, control)
 	var _height = height;
 	var _columns = columns;
 	var _control = control;
-	var _score = new Highscore(_x, _y, '#eedd82', '16px Helvetica');
-
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
 
-	var _nextBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
-	var _activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
+	var _score = new Highscore(_x, _y-_unitSize, '#eedd82', 16, 'Helvetica');
+
+	var _nextBlock = entityManager.getNewBlock(
+		_unitSize, _x, _y, Math.floor(_columns/2)
+	);
+	var _activeBlock = entityManager.getNewBlock(
+		_unitSize, _x, _y, Math.floor(_columns/2));
 
 	var _fieldArray = [];
 
@@ -196,7 +199,11 @@ var Field = function (x, y, width, height, columns, control)
 					// Make a new block
 					_nextField(_activeBlock);
 					_activeBlock = _nextBlock;
-					_nextBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
+					_nextBlock = entityManager.getNewBlock(
+						_unitSize, 
+						_x, _y, 
+						Math.floor(_columns/2)
+					);
 					_checkForLine();
 				}
 
