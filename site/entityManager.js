@@ -58,7 +58,6 @@ var entityManager = {
     _fields : null,
 
     init : function () {
-        console.log("herna");
         if (g_gamestyle === 1){
             this._fields = [
                 new Field(0, 80, 200, 400, 10, this._control1)
