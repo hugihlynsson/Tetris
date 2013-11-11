@@ -161,13 +161,32 @@ function menu(ctx){
     ctx.font="bold 20px Arial";
     ctx.fillText("PLAY press 1", 80, 70);
 
-    if(eatKey(KEY_1)){
+
+    var mousex = g_mouseX;
+    var mousey = g_mouseY;
+
+    var clickbutton = buttonclick(mousex, mousey, g_canvas.width/2-75, 50, 30, 150);
+
+
+
+
+    if(eatKey(KEY_1) || (clickbutton && g_button)){
         util.clearCanvas(ctx);
         ctx.fillStyle = oldStyle;
         g_gamestyle = 1;
     }
 }
 
+
+
+function buttonclick(mousex, mousey, boxstartx, boxstarty, boxheight, boxwidth){
+    if(((mousex >= boxstartx) && (mousex <= boxstartx+boxwidth)) && 
+        ((mousey >= boxstarty) && (mousey <= boxstarty+boxheight))){
+            return true;
+    }
+    else return false;
+
+}
 
 // =============
 // PRELOAD STUFF
