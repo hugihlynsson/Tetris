@@ -66,10 +66,9 @@ var entityManager = {
 
     init : function () {
         this._fields = [
-            new Field(0, 0, 200, 400, 10, this._control1),
-            new Field(210, 0, 200, 400, 10, this._control2)
+            new Field(0, 80, 200, 400, 10, this._control1),
+            new Field(210, 80, 200, 400, 10, this._control2)
         ];
-        for (var i in this._fields) this._fields[i].setActiveBlock();
     },
 
     update: function (du) {

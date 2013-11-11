@@ -77,10 +77,11 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		update: function () { 
 			//TODO: do something or remove
 		},
-		render: function (ctx) {
+		// Override x and y are optional and can be used to render
+		// block at a specific position.
+		render: function (ctx, overrideX, overrideY) {
 			var width = _form[0].length;
 			var height = _form.length;
-
 			// Some easing, soon to be encapsulated
 			// in it's own functional premises
 
@@ -105,7 +106,22 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 						}
 
 						ctx.fillStyle = _color;
-						ctx.fillRect(_fieldX + (_column + j) * _size, _fieldY + (_row + i) * _size + ease, _size, _size);
+						if (overrideX) 
+						{
+							ctx.fillRect(
+								overrideX + j*_size, 
+								overrideY + i*_size + ease, 
+								_size, _size
+							);
+						}
+						else 
+						{
+							ctx.fillRect(
+								_fieldX + (_column + j) * _size, 
+								_fieldY + (_row + i) * _size + ease, 
+								_size, _size
+							);
+						}
 						ctx.fillStyle = oldStyle;
 					}
 				}

@@ -19,6 +19,9 @@ var Field = function (x, y, width, height, columns, control)
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
 
+	var _nextBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
+	var _activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
+
 	var _fieldArray = [];
 
 	// Initialize playfield:
@@ -37,7 +40,6 @@ var Field = function (x, y, width, height, columns, control)
 		}
 	}
 
-	var _activeBlock;
 
 	var _shouldUpdate = false;
 
@@ -174,9 +176,6 @@ var Field = function (x, y, width, height, columns, control)
 		requestUpdate : function () {
 			_shouldUpdate = true;
 		},
-		setActiveBlock : function () {
-			_activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
-		},
 		tick: function () {
 			_shouldUpdate = true;
 		},
@@ -196,7 +195,8 @@ var Field = function (x, y, width, height, columns, control)
 					_activeBlock.moveUp();
 					// Make a new block
 					_nextField(_activeBlock);
-					_activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
+					_activeBlock = _nextBlock;
+					_nextBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
 					_checkForLine();
 				}
 
@@ -232,7 +232,9 @@ var Field = function (x, y, width, height, columns, control)
 
 			// Render the active block:
 			_activeBlock.render(ctx);
-
+			ctx.fillStyle = _nextBlock.getColor();
+			ctx.fillText('Next Block:', _x, _y - _unitSize*3);
+			_nextBlock.render(ctx, _x + _width - _unitSize*4, _y - _unitSize*4);
 			// Render all 'stuck' blocks:
 			for (var i = 0; i < _rows; ++i)
 			{
