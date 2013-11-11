@@ -1,6 +1,6 @@
-// ============
-// FIELD OBJECT
-// ============
+// ===========
+// FIELD CLASS
+// ===========
 
 // A field 'class'
 var Field = function (x, y, width, height, columns, control)
@@ -14,6 +14,7 @@ var Field = function (x, y, width, height, columns, control)
 	var _height = height;
 	var _columns = columns;
 	var _control = control;
+	var _score = new Highscore(_x, _y, '#eedd82', '16px Helvetica');
 
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
@@ -144,6 +145,9 @@ var Field = function (x, y, width, height, columns, control)
 		{
 			_fieldArray[0][j][0] = 0;
 		}
+
+		// Update score:
+		_score.addScore(100);
 	};
 
 
@@ -181,6 +185,9 @@ var Field = function (x, y, width, height, columns, control)
 			// time intervals so we will not be doing redundant updates.
 			if (_shouldUpdate)
 			{
+				// Increment score:
+				_score.addScore(1);
+
 				// Move the block down
 				_activeBlock.moveDown();
 
@@ -241,6 +248,8 @@ var Field = function (x, y, width, height, columns, control)
 					}
 				}
 			}
+
+			_score.render(ctx);
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
 		}

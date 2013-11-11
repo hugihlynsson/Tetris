@@ -1,6 +1,6 @@
-// =====
-// BLOCK
-// =====
+// ===========
+// BLOCK CLASS
+// ===========
 
 var Block = function (size, fieldX, fieldY, column, form, color)
 {
