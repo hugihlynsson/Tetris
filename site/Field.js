@@ -25,8 +25,35 @@ var Field = function (x, y, width, height, columns, control)
 	var _activeBlock = entityManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2));
 
-    var _blockClock = 15;
-    var _clock = 0;
+	// A class to 
+	var Clock = function (limit) {
+		_limit = limit;
+		_count = 0;
+		_hasFinished = false;
+
+		return {
+			tick : function (x) { 
+				_count += (x) ? x : 1; 
+				if (_count > _limit) {
+					_count = 0;
+					_hasFinished = true;
+				}
+			},
+			hasFinished : function () { 
+				if (_hasFinished) {
+					_hasFinished = false;
+					return true;
+				}; 
+				return false;
+			},
+			setLimit : function (limit) {
+				_limit = limit;
+			}
+		};
+	};
+
+	var _baseClockLimit = 20;
+    var _clock = new Clock(_baseClockLimit);
 
 	var _fieldArray = [];
 
@@ -191,10 +218,17 @@ var Field = function (x, y, width, height, columns, control)
 
 	        var speed = (eatKey(_control.fast)) ? 10 : 1;            
 
-	        _clock += 1 * speed * du;
+	        _clock.tick(speed * du);
 
-			if (_clock >= _blockClock)
+			if (_clock.hasFinished())
 			{
+				// TODO: implement better _blockClock updating/abstraction with
+				// less hardcoded values.
+				// Update blockClock according to score:
+				_clock.setLimit(
+					_baseClockLimit - Math.floor(_score.getScore()/100)
+				);
+
 				// Increment score:
 				_score.addScore(1);
 
@@ -217,7 +251,6 @@ var Field = function (x, y, width, height, columns, control)
 
 				_shouldUpdate = false;
 			}
-	        _clock = _clock % _blockClock;
 
 			if (eatKey(_control.left))
 			{

@@ -22,6 +22,7 @@ var Highscore = function (x, y, color, fontSize, font)
 			ctx.fillText('Score: ' + _score, _x, _y+_fontSize);
 			ctx.fillStyle = oldStyle;
 		},
-		addScore : function (amount) { _score += amount; }
+		addScore : function (amount) { _score += amount; },
+		getScore : function () { return _score; }
 	};
 };
