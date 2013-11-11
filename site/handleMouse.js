@@ -14,6 +14,8 @@
 var g_mouseX = 0,
     g_mouseY = 0;
 
+var g_button = false;
+
 function handleMouse(evt) {
     
     g_mouseX = evt.clientX - g_canvas.offsetLeft;
@@ -21,7 +23,13 @@ function handleMouse(evt) {
     
     // If no button is being pressed, then bail
     var button = evt.buttons === undefined ? evt.which : evt.buttons;
-    if (!button) return;
+
+    if (button){
+    	g_button = true;
+    } 
+    if(!button){
+    	g_button = false;
+    }
     
     // entityManager.yoinkNearestShip(g_mouseX, g_mouseY);
 }
