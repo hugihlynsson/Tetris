@@ -157,8 +157,8 @@ var Field = function (x, y, width, height, columns, control)
 				ctx.font = '5pt Helvetica';
 				ctx.fillText(
 					_fieldArray[i][j][0], 
-					_unitSize*j + _unitSize/2 - 2, 
-					_unitSize*i + _unitSize/2 + 2
+					_x + _unitSize*j + _unitSize/2 - 2, 
+					_y + _unitSize*i + _unitSize/2 + 2
 				);
 				ctx.fillStyle = old;
 			}
