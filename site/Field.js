@@ -23,13 +23,13 @@ var Field = function (x, y, width, height, columns, control)
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
 	var _activeBlock = entityManager.getNewBlock(
-		_unitSize, _x, _y, Math.floor(_columns/2));
+		_unitSize, _x, _y, Math.floor(_columns/2)
+	);
 
-	// A class to 
 	var Clock = function (limit) {
-		_limit = limit;
-		_count = 0;
-		_hasFinished = false;
+		var _limit = limit;
+		var _count = 0;
+		var _hasFinished = false;
 
 		return {
 			tick : function (x) { 
@@ -206,12 +206,6 @@ var Field = function (x, y, width, height, columns, control)
 
 	// Public methods:
 	return {
-		requestUpdate : function () {
-			_shouldUpdate = true;
-		},
-		tick: function () {
-			_shouldUpdate = true;
-		},
 		update : function (du) {
 			// Check if we're updating. Tetris moves are in a rather discrete
 			// time intervals so we will not be doing redundant updates.
