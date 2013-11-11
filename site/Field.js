@@ -25,6 +25,9 @@ var Field = function (x, y, width, height, columns, control)
 	var _activeBlock = entityManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2));
 
+    var _blockClock = 15;
+    var _clock = 0;
+
 	var _fieldArray = [];
 
 	// Initialize playfield:
@@ -182,10 +185,15 @@ var Field = function (x, y, width, height, columns, control)
 		tick: function () {
 			_shouldUpdate = true;
 		},
-		update : function () {
+		update : function (du) {
 			// Check if we're updating. Tetris moves are in a rather discrete
 			// time intervals so we will not be doing redundant updates.
-			if (_shouldUpdate)
+
+	        var speed = (eatKey(_control.fast)) ? 10 : 1;            
+
+	        _clock += 1 * speed * du;
+
+			if (_clock >= _blockClock)
 			{
 				// Increment score:
 				_score.addScore(1);
@@ -209,6 +217,7 @@ var Field = function (x, y, width, height, columns, control)
 
 				_shouldUpdate = false;
 			}
+	        _clock = _clock % _blockClock;
 
 			if (eatKey(_control.left))
 			{

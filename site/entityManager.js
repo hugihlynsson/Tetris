@@ -42,7 +42,6 @@ var entityManager = {
         6: '#cdc9c9'
     },
 
-    // Private variables and methods:
     _control1 : {
         left: keyCode('A'), 
         right: keyCode('D'), 
@@ -56,13 +55,7 @@ var entityManager = {
         fast: keyCode('K')
     },
 
-    // TODO: Move these variables to Field:
-    _blockClock : 15,
-    _clock : 0,
-    _KEY_FAST : keyCode('S'),
-
     _fields : null,
-    // Public methods:
 
     init : function () {
         this._fields = [
@@ -72,19 +65,6 @@ var entityManager = {
     },
 
     update: function (du) {
-
-        // TODO: Move most of this stuff to Field:
-        var speed = 1;            
-        if(eatKey(this._KEY_FAST)) speed = 10;
-
-        this._clock += 1 * speed * du;
-
-        if(this._clock >= this._blockClock)
-        {
-            for (var i in this._fields) this._fields[i].tick();
-        }
-        
-        this._clock = this._clock % this._blockClock;
 
         for (var i in this._fields) this._fields[i].update(du);
 
