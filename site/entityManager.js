@@ -58,18 +58,33 @@ var entityManager = {
     _fields : null,
 
     init : function () {
-        this._fields = [
-            new Field(0, 80, 200, 400, 10, this._control1),
-            new Field(210, 80, 200, 400, 10, this._control2)
-        ];
+        console.log("herna");
+        if (g_gamestyle === 1){
+            this._fields = [
+                new Field(0, 80, 200, 400, 10, this._control1)
+            ];
+        }
+        if (g_gamestyle === 2){
+            this._fields = [
+                new Field(0, 80, 200, 400, 10, this._control1),
+                new Field(210, 80, 200, 400, 10, this._control2)
+            ];
+        }
     },
 
     update: function (du) {
-        for (var i in this._fields) this._fields[i].update(du);
+        if(g_gamestyle != 0){
+            for (var i in this._fields) this._fields[i].update(du);
+        }
     },
 
     render: function (ctx) {
-        for (var i in this._fields) this._fields[i].render(ctx);
+        if (g_gamestyle === 0){
+            menu(ctx);
+        }
+        if(g_gamestyle != 0){
+            for (var i in this._fields) this._fields[i].render(ctx);
+        }
     },
 
     getNewBlock: function (size, fieldX, fieldY, column) {
@@ -78,4 +93,5 @@ var entityManager = {
         var color = this._blockFormColors[formType];
         return new Block(size, fieldX, fieldY, column, form, color);
     }
+
 };
