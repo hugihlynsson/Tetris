@@ -30,8 +30,6 @@ function gatherInputs() {
 //
 // It then delegates the game-specific logic to `updateSimulation`
 
-var entityManager = new EntityManager();
-
 // GAME-SPECIFIC UPDATE LOGIC
 function updateSimulation(du) {
 
@@ -113,7 +111,6 @@ function renderSimulation(ctx) {
 var g_images = {};
 
 function requestPreloads() {
-
     // TODO before production: Remove if there is nothing in here:
     var requiredImages = {
 
@@ -125,13 +122,7 @@ var g_sprites = {};
 
 function preloadDone() {
 
-    entityManager.createPlayfields();
-
     main.init();
 }
-
-
 main.init();
-
-// Kick it off
-// requestPreloads();
+entityManager.init();

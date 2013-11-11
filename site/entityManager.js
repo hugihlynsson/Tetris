@@ -4,52 +4,101 @@
 //
 // A module which handles arbitrary entity-management for Tetris
 
-var EntityManager = function () 
-{
+var entityManager = {
+    _blockForms : {
+
+        0: [[1, 1, 1, 1]],
+
+        1: [[0, 1, 0],
+            [1, 1, 1]],
+
+        2: [[1, 1],
+            [1, 1]],
+
+        3: [[0, 1, 1],
+            [1, 1, 0]],
+
+        4: [[1, 1, 0],
+            [0, 1, 1]],
+
+        5: [[0, 1],
+            [0, 1],
+            [1, 1]],
+
+        6: [[1, 0],
+            [1, 0],
+            [1, 1]]
+    },
+
+    _blockNum : 6,
+
+    _blockFormColors : {
+        0: '#ff69b4',
+        1: '#e9967a',
+        2: '#eedd82',
+        3: '#66cdaa',
+        4: '#00bfff',
+        5: '#ffdead',
+        6: '#cdc9c9'
+    },
+
     // Private variables and methods:
-    var control1 = {
+    _control1 : {
         left: keyCode('A'), 
         right: keyCode('D'), 
         rotate: keyCode('W'), 
         fast: keyCode('S')
-    };
-    var _fields = [
-        new Field(0, 0, 200, 400, 10, control1)
-    ];
+    },
+    _control2 : {
+        left: keyCode('J'), 
+        right: keyCode('L'), 
+        rotate: keyCode('I'), 
+        fast: keyCode('K')
+    },
 
     // TODO: Move these variables to Field:
-    var _blockClock = 15;
-    var _clock = 0;
-    var _KEY_FAST = keyCode('S');
+    _blockClock : 15,
+    _clock : 0,
+    _KEY_FAST : keyCode('S'),
 
+    _fields : null,
     // Public methods:
-    return {
 
-        setActiveBlock : function (block) {
-            //this._categories[0].setActiveBlock(block);
-        },
+    init : function () {
+        this._fields = [
+            new Field(0, 0, 200, 400, 10, this._control1),
+            new Field(210, 0, 200, 400, 10, this._control2)
+        ];
+        for (var i in this._fields) this._fields[i].setActiveBlock();
+    },
 
-        update: function(du) {
+    update: function (du) {
 
-            // TODO: Move most of this stuff to Field:
-            var speed = 1;            
-            if(eatKey(_KEY_FAST)) speed = 10;
+        // TODO: Move most of this stuff to Field:
+        var speed = 1;            
+        if(eatKey(this._KEY_FAST)) speed = 10;
 
-            _clock += 1 * speed * du;
+        this._clock += 1 * speed * du;
 
-            if(_clock >= _blockClock)
-            {
-                for (var i in _fields) _fields[i].tick();
-            }
-            
-            _clock = _clock % _blockClock;
-
-            for (var i in _fields) _fields[i].update(du);
-
-        },
-
-        render: function(ctx) {
-            for (var i in _fields) _fields[i].render(ctx);
+        if(this._clock >= this._blockClock)
+        {
+            for (var i in this._fields) this._fields[i].tick();
         }
+        
+        this._clock = this._clock % this._blockClock;
+
+        for (var i in this._fields) this._fields[i].update(du);
+
+    },
+
+    render: function (ctx) {
+        for (var i in this._fields) this._fields[i].render(ctx);
+    },
+
+    getNewBlock: function (size, fieldX, fieldY, column) {
+        var formType = Math.floor(Math.random()*this._blockNum);
+        var form = this._blockForms[formType];
+        var color = this._blockFormColors[formType];
+        return new Block(size, fieldX, fieldY, column, form, color);
     }
 };

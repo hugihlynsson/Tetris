@@ -2,7 +2,7 @@
 // FIELD OBJECT
 // ============
 
-// New playing field with width and height
+// A field 'class'
 var Field = function (x, y, width, height, columns, control)
 {
 	// Private variables and methods:
@@ -36,12 +36,9 @@ var Field = function (x, y, width, height, columns, control)
 		}
 	}
 
-	var _activeBlock = new Block();
-	var _shouldUpdate = false;
+	var _activeBlock;
 
-	var _setActiveBlock = function (block) {
-		_activeBlock = block;
-	};
+	var _shouldUpdate = false;
 
 	var _nextField = function (block) {
 		if (block === null) return _fieldArray;
@@ -173,8 +170,8 @@ var Field = function (x, y, width, height, columns, control)
 		requestUpdate : function () {
 			_shouldUpdate = true;
 		},
-		setActiveBlock : function (block) {
-			_activeBlock = block;
+		setActiveBlock : function () {
+			_activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
 		},
 		tick: function () {
 			_shouldUpdate = true;
@@ -192,7 +189,7 @@ var Field = function (x, y, width, height, columns, control)
 					_activeBlock.moveUp();
 					// Make a new block
 					_nextField(_activeBlock);
-					_setActiveBlock(new Block());
+					_activeBlock = entityManager.getNewBlock(_unitSize, _x, _y, Math.floor(_columns/2));
 					_checkForLine();
 				}
 
@@ -238,7 +235,7 @@ var Field = function (x, y, width, height, columns, control)
 					{
 						ctx.fillStyle = _fieldArray[i][j][1];
 						ctx.fillRect(
-							_unitSize * j, _unitSize * i,
+							_x + _unitSize*j, _y + _unitSize*i,
 							_unitSize, _unitSize
 						);
 					}
@@ -246,7 +243,7 @@ var Field = function (x, y, width, height, columns, control)
 			}
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
-		},
+		}
 	};
 };
 
