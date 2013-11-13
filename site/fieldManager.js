@@ -1,10 +1,10 @@
-// ==============
-// ENTITY MANAGER
-// ==============
+// ============
+// FIELDMANAGER
+// ============
 //
-// A module which handles arbitrary entity-management for Tetris
+// A module which handles arbitrary field management for Tetris
 
-var entityManager = {
+var fieldManager = {
     _blockForms : {
 
         0: [[1, 1, 1, 1]],

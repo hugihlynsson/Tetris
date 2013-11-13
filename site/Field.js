@@ -19,10 +19,10 @@ var Field = function (x, y, width, height, columns, control)
 
 	var _score = new Highscore(_x, _y-_unitSize, '#eedd82', 16, 'Helvetica');
 
-	var _nextBlock = entityManager.getNewBlock(
+	var _nextBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
-	var _activeBlock = entityManager.getNewBlock(
+	var _activeBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
 
@@ -242,7 +242,7 @@ var Field = function (x, y, width, height, columns, control)
 					// Make a new block
 					_nextField(_activeBlock);
 					_activeBlock = _nextBlock;
-					_nextBlock = entityManager.getNewBlock(
+					_nextBlock = fieldManager.getNewBlock(
 						_unitSize, 
 						_x, _y, 
 						Math.floor(_columns/2)

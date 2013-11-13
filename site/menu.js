@@ -36,14 +36,14 @@ function menu(ctx){
         util.clearCanvas(ctx);
         ctx.fillStyle = oldStyle;
         g_gamestyle = 1;
-        entityManager.init();
+        fieldManager.init();
     }
 
         if(eatKey(KEY_2) || (clickbutton2 && g_button)){
         util.clearCanvas(ctx);
         ctx.fillStyle = oldStyle;
         g_gamestyle = 2;
-        entityManager.init();
+        fieldManager.init();
     }
 }
 

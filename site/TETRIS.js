@@ -34,7 +34,7 @@ function gatherInputs() {
 function updateSimulation(du) {
 
     processDiagnostics();
-    entityManager.update(du);
+    fieldManager.update(du);
 
 }
 
@@ -98,7 +98,7 @@ function processDiagnostics() {
 
 function renderSimulation(ctx) {
 
-    entityManager.render(ctx);
+    fieldManager.render(ctx);
 
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
@@ -125,4 +125,4 @@ function preloadDone() {
     main.init();
 }
 main.init();
-entityManager.init();
+fieldManager.init();
