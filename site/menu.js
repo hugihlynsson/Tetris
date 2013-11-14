@@ -1,6 +1,3 @@
-
-
-
 var boxstartx = g_canvas.width/2-75;
 var boxstarty = g_canvas.height/2 - 150;
 var boxheight = 30;
@@ -14,7 +11,7 @@ function menu(ctx){
 
 
     util.clearCanvas(ctx);
-    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_bgColor);
+    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
     buttons(ctx, buttonnr, buttonname);
 
@@ -47,11 +44,14 @@ function buttons(ctx, nr, name){
 
     for(var i = 0; i < nr; i++){
 
-        
-        util.fillBox(ctx,  boxstartx, buttony, 150, 30, "orange");
+        var boxWidth = 160;
+        // Render a small shadow on the 'button':
+        util.fillRoundedBox(ctx,  boxstartx, buttony+2, boxWidth, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  boxstartx, buttony, boxWidth, 30, 5, g_color.red);
         ctx.fillStyle = "white";
-        ctx.font = "bold 20px Arial";
-        ctx.fillText(name[i], boxstartx + 20, buttony+20);
+        ctx.font = "100 20px Helvetica";
+        ctx.textAlign = "center";
+        ctx.fillText(name[i], boxstartx + boxWidth/2, buttony+20);
 
         buttony += 50;
 

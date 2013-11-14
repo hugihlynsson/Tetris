@@ -94,7 +94,7 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 
 clearCanvas: function (ctx) {
     var prevfillStyle = ctx.fillStyle;
-    ctx.fillStyle = g_bgColor;
+    ctx.fillStyle = g_color.bg;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.fillStyle = prevfillStyle;
 },
@@ -115,6 +115,23 @@ fillBox: function (ctx, x, y, w, h, style) {
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = oldStyle;
+},
+
+fillRoundedBox: function (ctx, x, y, w, h, r, style) {
+    var oldStyle = ctx.fillStyle;
+    ctx.fillStyle = style;
+    // Draw two boxes that fill all but the corners:
+    ctx.fillRect(x, y+r, w, h-r*2);
+    ctx.fillRect(x+r, y, w-r*2, h);
+    // Draw rounded cornser, first top left:
+    this.fillCircle(ctx, x+r, y+r, r);
+    // Top right:
+    this.fillCircle(ctx, x+w-r, y+r, r);
+    // Bottom left:
+    this.fillCircle(ctx, x+r, y+h-r, r);
+    // Bottom right:
+    this.fillCircle(ctx, x+w-r, y+h-r, r);
     ctx.fillStyle = oldStyle;
 }
 

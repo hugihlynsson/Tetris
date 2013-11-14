@@ -17,7 +17,7 @@ var Field = function (x, y, width, height, columns, control)
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
 
-	var _score = new Highscore(_x, _y-_unitSize, '#eedd82', 16, 'Helvetica');
+	var _score = new Highscore(_x, _y-_unitSize, g_color.green, 16, 'Helvetica');
 
 	var _nextBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
@@ -278,13 +278,16 @@ var Field = function (x, y, width, height, columns, control)
 		render : function (ctx) {
 
 			// Draw field background:
-			util.fillBox(ctx, _x, _y, _width, _height, '#3f5f5f');
+			util.fillBox(ctx, _x, _y, _width, _height, g_color.fieldBg);
 
 			// Render the active block:
 			_activeBlock.render(ctx);
+
+			// Render the next block:
 			ctx.fillStyle = _nextBlock.getColor();
-			ctx.fillText('NEXT:', _x, _y - _unitSize*3);
+			ctx.fillText('NEXT:', _x, _y - _unitSize*3 - 7);
 			_nextBlock.render(ctx, _x + _width - _unitSize*4, _y - _unitSize*4);
+
 			// Render all 'stuck' blocks:
 			for (var i = 0; i < _rows; ++i)
 			{
