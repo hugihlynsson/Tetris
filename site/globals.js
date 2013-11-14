@@ -22,3 +22,5 @@ var NOMINAL_UPDATE_INTERVAL = 16.666;
 
 // Multiply by this to convert seconds into "nominals"
 var SECS_TO_NOMINALS = 1000 / NOMINAL_UPDATE_INTERVAL;
+
+var g_bgColor = '#2f4f4f';

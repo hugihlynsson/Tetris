@@ -14,7 +14,7 @@ function menu(ctx){
 
 
     util.clearCanvas(ctx);
-    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, "black");
+    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_bgColor);
 
     buttons(ctx, buttonnr, buttonname);
 

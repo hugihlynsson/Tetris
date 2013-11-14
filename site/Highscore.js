@@ -18,7 +18,7 @@ var Highscore = function (x, y, color, fontSize, font)
 		render : function (ctx) {
 			var oldStyle = ctx.fillStyle;
 			ctx.fillStyle = _color;
-			ctx.font = _fontSize + ' ' + _font;
+			ctx.font = _fontSize + 'px ' + _font;
 			ctx.fillText('SCORE: ' + _score, _x, _y+_fontSize);
 			ctx.fillStyle = oldStyle;
 		},
