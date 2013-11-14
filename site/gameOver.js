@@ -10,8 +10,6 @@ if( false/*vantar að setja hér */){
 	util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, "black");
 
-
-
     util.fillBox(ctx,  g_canvas.width/2-75, 50, 150, 30, "DeepPink");
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = "white";
@@ -38,10 +36,5 @@ if( false/*vantar að setja hér */){
     }
 
     
-}
-
-
-
-
-
+    }
 };
