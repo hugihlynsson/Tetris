@@ -66,7 +66,7 @@ var fieldManager = {
         if (g_gamestyle === 2){
             this._fields = [
                 new Field(0, 80, 200, 400, 10, this._control1),
-                new Field(210, 80, 200, 400, 10, this._control2)
+                new Field(400, 80, 200, 400, 10, this._control2)
             ];
         }
     },
