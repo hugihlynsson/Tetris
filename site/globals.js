@@ -36,6 +36,8 @@ var g_color = {
 	pink: '#ff69b4',
 	yellow: '#eedd82',
 	blue: '#00bfff',
+	sand: '#ffdead',
+	gray: '#cdc9c9'
 };
 
 // _blockForms : {

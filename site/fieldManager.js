@@ -30,15 +30,15 @@ var fieldManager = {
             [1, 1]]
     },
 
-    _blockNum : 6,
+    _blockNum : 7,
 
     _blockFormColors : {
-        0: '#ff69b4',
-        1: '#e9967a',
-        2: '#eedd82',
-        3: '#66cdaa',
-        4: '#00bfff',
-        5: '#ffdead',
+        0: g_color.pink,
+        1: g_color.red,
+        2: g_color.yellow,
+        3: g_color.green,
+        4: g_color.blue,
+        5: g_color.sand,
         6: '#cdc9c9'
     },
 
@@ -58,12 +58,14 @@ var fieldManager = {
     _fields : null,
 
     init : function () {
-        if (g_gamestyle === 1){
+        if (g_gamestyle === 1) 
+        {
             this._fields = [
                 new Field(200, 80, 200, 400, 10, this._control1)
             ];
         }
-        if (g_gamestyle === 2){
+        if (g_gamestyle === 2) 
+        {
             this._fields = [
                 new Field(0, 80, 200, 400, 10, this._control1),
                 new Field(400, 80, 200, 400, 10, this._control2)
@@ -72,16 +74,19 @@ var fieldManager = {
     },
 
     update: function (du) {
-        if(g_gamestyle != 0){
+        if(g_gamestyle != 0)
+        {
             for (var i in this._fields) this._fields[i].update(du);
         }
     },
 
     render: function (ctx) {
-        if (g_gamestyle === 0){
+        if (g_gamestyle === 0)
+        {
             menu(ctx);
         }
-        if(g_gamestyle != 0){
+        if(g_gamestyle != 0)
+        {
             for (var i in this._fields) this._fields[i].render(ctx);
         }
     },

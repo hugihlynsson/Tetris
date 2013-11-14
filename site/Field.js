@@ -145,6 +145,7 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _checkForLine = function () {
+		var linesRemoved = 0;
 		for (var i = 0; i < _rows; ++i)
 		{
 			var lineSum = 0;
@@ -154,7 +155,17 @@ var Field = function (x, y, width, height, columns, control)
 				if (_fieldArray[i][j][0] > 0) lineSum++;
 			}
 
-			if (lineSum === _columns) _removeLine(i); 
+			if (lineSum === _columns) 
+			{
+				_removeLine(i);
+				linesRemoved += 1;	
+			}  
+		}
+		var bonus = 100;
+		for (var i = 0; i < linesRemoved; i++) 
+		{
+			_score.addScore(bonus);
+			bonus *= 2;
 		}
 	};
 
@@ -184,7 +195,6 @@ var Field = function (x, y, width, height, columns, control)
 		}
 
 		// Update score and clock:
-		_score.addScore(100);
 		_linesCleared += 1;
 		var topSpeed = 4;
 		if (_linesCleared > _baseClockLimit - topSpeed) {
@@ -236,9 +246,6 @@ var Field = function (x, y, width, height, columns, control)
 				// TODO: implement better _blockClock updating/abstraction with
 				// less hardcoded values.
 				// Update blockClock according to score:
-
-				// Increment score:
-				_score.addScore(1);
 
 				// Move the block down
 				_activeBlock.moveDown();
@@ -308,7 +315,7 @@ var Field = function (x, y, width, height, columns, control)
 					}
 				}
 			}
-			
+
 			_score.render(ctx);
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
