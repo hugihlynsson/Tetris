@@ -19,12 +19,14 @@ var Field = function (x, y, width, height, columns, control)
 
 	var _score = new Highscore(_x, _y-_unitSize, '#eedd82', 16, 'Helvetica');
 
-	var _nextBlock = entityManager.getNewBlock(
+	var _nextBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
-	var _activeBlock = entityManager.getNewBlock(
+	var _activeBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
+
+	var _linesCleared = 0;
 
 	var Clock = function (limit) {
 		var _limit = limit;
@@ -181,8 +183,17 @@ var Field = function (x, y, width, height, columns, control)
 			_fieldArray[0][j][0] = 0;
 		}
 
-		// Update score:
+		// Update score and clock:
 		_score.addScore(100);
+		_linesCleared += 1;
+		var topSpeed = 4;
+		if (_linesCleared > _baseClockLimit - topSpeed) {
+			_clock.setLimit = topSpeed;
+		}
+		else {
+			_clock.setLimit(_baseClockLimit - _linesCleared);
+		}
+		
 	};
 
 
@@ -210,8 +221,7 @@ var Field = function (x, y, width, height, columns, control)
 			// Check if we're updating. Tetris moves are in a rather discrete
 			// time intervals so we will not be doing redundant updates.
 
-	        var speed = (eatKey(_control.fast)) ? 10 : 1;            
-
+	        var speed = (eatKey(_control.fast)) ? 10 : 1;
 	        _clock.tick(speed * du);
 
 			if (_clock.hasFinished())
@@ -219,9 +229,6 @@ var Field = function (x, y, width, height, columns, control)
 				// TODO: implement better _blockClock updating/abstraction with
 				// less hardcoded values.
 				// Update blockClock according to score:
-				_clock.setLimit(
-					_baseClockLimit - Math.floor(_score.getScore()/100)
-				);
 
 				// Increment score:
 				_score.addScore(1);
@@ -235,7 +242,7 @@ var Field = function (x, y, width, height, columns, control)
 					// Make a new block
 					_nextField(_activeBlock);
 					_activeBlock = _nextBlock;
-					_nextBlock = entityManager.getNewBlock(
+					_nextBlock = fieldManager.getNewBlock(
 						_unitSize, 
 						_x, _y, 
 						Math.floor(_columns/2)
@@ -276,7 +283,7 @@ var Field = function (x, y, width, height, columns, control)
 			// Render the active block:
 			_activeBlock.render(ctx);
 			ctx.fillStyle = _nextBlock.getColor();
-			ctx.fillText('Next Block:', _x, _y - _unitSize*3);
+			ctx.fillText('NEXT:', _x, _y - _unitSize*3);
 			_nextBlock.render(ctx, _x + _width - _unitSize*4, _y - _unitSize*4);
 			// Render all 'stuck' blocks:
 			for (var i = 0; i < _rows; ++i)

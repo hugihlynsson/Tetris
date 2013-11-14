@@ -31,12 +31,12 @@ function menu(ctx){
 
    if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
         g_gamestyle = 1;
-        entityManager.init();
+        fieldManager.init();
     }
 
     if(eatKey(KEY_2) || (clickbutton[1] && g_button)){
         g_gamestyle = 2;
-        entityManager.init();
+        fieldManager.init();
     }
 
 }

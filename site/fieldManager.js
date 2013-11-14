@@ -1,10 +1,10 @@
-// ==============
-// ENTITY MANAGER
-// ==============
+// ============
+// FIELDMANAGER
+// ============
 //
-// A module which handles arbitrary entity-management for Tetris
+// A module which handles arbitrary field management for Tetris
 
-var entityManager = {
+var fieldManager = {
     _blockForms : {
 
         0: [[1, 1, 1, 1]],
@@ -60,7 +60,7 @@ var entityManager = {
     init : function () {
         if (g_gamestyle === 1){
             this._fields = [
-                new Field(0, 80, 200, 400, 10, this._control1)
+                new Field(200, 80, 200, 400, 10, this._control1)
             ];
         }
         if (g_gamestyle === 2){

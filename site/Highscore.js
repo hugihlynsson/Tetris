@@ -19,7 +19,7 @@ var Highscore = function (x, y, color, fontSize, font)
 			var oldStyle = ctx.fillStyle;
 			ctx.fillStyle = _color;
 			ctx.font = _fontSize + ' ' + _font;
-			ctx.fillText('Score: ' + _score, _x, _y+_fontSize);
+			ctx.fillText('SCORE: ' + _score, _x, _y+_fontSize);
 			ctx.fillStyle = oldStyle;
 		},
 		addScore : function (amount) { _score += amount; },
