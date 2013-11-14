@@ -5,7 +5,7 @@
 // A field 'class'
 function gameOver (ctx) {
 
-if( vantar að setja hér ){
+if( false/*vantar að setja hér */){
 
 	util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, "black");
