@@ -20,10 +20,11 @@ var Highscore = function (x, y, color, fontSize, font)
 			ctx.fillStyle = _color;
 			ctx.textAlign = 'left';
 			ctx.font = '100 ' + _fontSize + 'px ' + _font;
-			ctx.fillText('SCORE: ' + _score, _x, _y+_fontSize);
+			ctx.fillText('score: ' + _score, _x, _y+_fontSize);
 			ctx.fillStyle = oldStyle;
 		},
 		addScore : function (amount) { _score += amount; },
-		getScore : function () { return _score; }
+		getScore : function () { return _score; },
+		setColor : function (color) { _color = color; },
 	};
 };
