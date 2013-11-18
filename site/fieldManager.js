@@ -91,7 +91,11 @@ var fieldManager = {
         {
             menu(ctx);
         }
-        if(g_gamestyle != 0)
+        if (g_gamestyle === 5)
+        {
+            gameover(ctx);
+        }
+        if(g_gamestyle > 0 && g_gamestyle < 5)
         {
             for (var i in this._fields) this._fields[i].render(ctx);
         }

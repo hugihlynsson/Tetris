@@ -38,6 +38,21 @@ function menu(ctx){
 
 }
 
+function gameover(ctx){
+    util.clearCanvas(ctx);
+    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
+    ctx.fillStyle = "red";
+    ctx.font = "100 80px Helvetica";
+    ctx.textAlign = "center";
+    ctx.fillText("Game Over", g_canvas.height/2, g_canvas.width/2);
+    if(g_button){
+        g_gamestyle = 0;
+    }
+
+}
+
+
+
 function buttons(ctx, nr, name){
 
     buttony = boxstarty;

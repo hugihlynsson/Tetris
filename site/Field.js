@@ -147,7 +147,7 @@ var Field = function (x, y, width, height, columns, control)
 
 		for (var j = 0; j < _columns; ++j)
 		{
-			if (_fieldArray[0][j][0] > 0) g_gamestyle = 0;
+			if (_fieldArray[0][j][0] > 0) g_gamestyle = 5;
 		}
 	};
 
