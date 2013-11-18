@@ -143,6 +143,14 @@ var Field = function (x, y, width, height, columns, control)
 		return (_columns < (pos.x + width));
 	};
 
+	var _checkForGameOver = function () {
+
+		for (var j = 0; j < _columns; ++j)
+		{
+			if (_fieldArray[0][j][0] > 0) g_gamestyle = 0;
+		}
+	};
+
 	var _checkForLine = function () {
 		var linesRemoved = 0;
 		for (var i = 0; i < _rows; ++i)
@@ -261,6 +269,7 @@ var Field = function (x, y, width, height, columns, control)
 						Math.floor(_columns/2)
 					);
 					_checkForLine();
+					_checkForGameOver();
 				}
 
 				_shouldUpdate = false;
