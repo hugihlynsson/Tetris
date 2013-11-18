@@ -44,9 +44,12 @@ function gameover(ctx){
     ctx.fillStyle = "red";
     ctx.font = "100 80px Helvetica";
     ctx.textAlign = "center";
-    ctx.fillText("Game Over", g_canvas.height/2, g_canvas.width/2);
+    ctx.fillText("Game Over", g_canvas.width/2, g_canvas.height/2);
+    ctx.font = "100 40px Helvetica";
+    ctx.fillText(g_winningscore, g_canvas.width/2, g_canvas.height/2 + 50);
     if(g_button){
         g_gamestyle = 0;
+        g_button = false;
     }
 
 }
