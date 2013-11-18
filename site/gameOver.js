@@ -5,8 +5,7 @@
 // A field 'class'
 function gameOver (ctx) {
 
-if( false/*vantar að setja hér */){
-
+    var render = function (ctx) {
 	util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, "black");
 
@@ -23,7 +22,6 @@ if( false/*vantar að setja hér */){
     ctx.font="bold 20px Arial";
     ctx.fillText("Go to menu", g_canvas.width/2-75, 100+20);
 
-
     var mousex = g_mouseX;
     var mousey = g_mouseY;
 
@@ -35,6 +33,7 @@ if( false/*vantar að setja hér */){
        	menu(ctx);
     }
 
-    
-    }
+    return {render: render};
+
+}
 };

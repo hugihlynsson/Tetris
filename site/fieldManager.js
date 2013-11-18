@@ -27,7 +27,13 @@ var fieldManager = {
 
         6: [[1, 0],
             [1, 0],
-            [1, 1]]
+            [1, 1]], 
+/*
+    This is a terror Tetris-piece
+        7: [[0, 1, 0, 1],
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [1, 0, 1, 0]]*/
     },
 
     _blockNum : 7,

@@ -67,11 +67,6 @@ var Field = function (x, y, width, height, columns, control)
 		{
 			_fieldArray[i].push([]);
 			_fieldArray[i][j][0] = 0;
-			// FOR TESTING PURPOSES
-			// TODO
-			// REMOVE
-			//if(i === height-1) _fieldArray[i][j] = 1;
-			//if(j === 0 || j === width-1) _fieldArray[i][j] = 1;
 		}
 	}
 
@@ -137,11 +132,15 @@ var Field = function (x, y, width, height, columns, control)
 		var width = _activeBlock.getWidth();
 		var height = _activeBlock.getHeight();
 		return (
-			(_columns < (pos.x + width)) || 
+			(_isAtRightEdge() || 
 			(pos.x < 0) || 
-			(isColliding(_activeBlock)) || 
-			(isColliding(_activeBlock))
-		);
+			(isColliding(_activeBlock))));
+		};
+
+	var _isAtRightEdge = function () {
+		var pos = _activeBlock.getPos();
+		var width = _activeBlock.getWidth();
+		return (_columns < (pos.x + width));
 	};
 
 	var _checkForLine = function () {
@@ -283,10 +282,13 @@ var Field = function (x, y, width, height, columns, control)
 
 			if (eatKey(_control.rotate))
 			{
-				// Rotate block. If illegal, try again until it gets
-				// back to the original position (max 3 times):
+				// Rotate block. If illegal, then block must be on right
+				// side of playing field, so block is nudged to the left
 				_activeBlock.rotate();
-				while (_outOfBounds()) _activeBlock.rotate();
+				for (var i = 0; _isAtRightEdge() && i < 3; ++i)
+				{
+					_activeBlock.nudgeLeft();
+				}
 			}
 		},
 		render : function (ctx) {
