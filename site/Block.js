@@ -40,9 +40,11 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		{
 			for (var j = 0; j < old[0].length; ++j)
 			{
-				rotated[old[0].length-j-1][i] = old[i][j];
+				rotated[j][old.length - 1 -i] = old[i][j];
 			}
 		}
+
+		console.log(rotated);
 		
 		return rotated;
 	};

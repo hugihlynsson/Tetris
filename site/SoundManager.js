@@ -6,7 +6,7 @@
 var SoundManager = function (){
     // Private variables and methods:
     //var _sounds = {};
-    var mainSound = new Audio('sounds/Tetris.mp3')
+    var mainSound = new Audio('sounds/tetris_song_halldor.m4a')
     // Public methods:
     return {
         addSound : function (name, file){
