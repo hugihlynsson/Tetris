@@ -46,7 +46,8 @@ function gameover(ctx){
     ctx.textAlign = "center";
     ctx.fillText("Game Over", g_canvas.width/2, g_canvas.height/2);
     ctx.font = "100 40px Helvetica";
-    ctx.fillText(g_winningscore, g_canvas.width/2, g_canvas.height/2 + 50);
+    ctx.fillText(g_winningscore[0], g_canvas.width/2, g_canvas.height/2 + 50);
+    ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 + 100);
     if(g_button){
         g_gamestyle = 0;
         g_button = false;

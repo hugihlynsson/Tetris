@@ -80,26 +80,67 @@ var fieldManager = {
     },
 
     update: function (du) {
-        if(g_gamestyle != 0)
-        {
-            for (var i in this._fields) this._fields[i].update(du);
+        if(g_gamestyle === 1){
+            this._fields[0].update(du); 
+            if(this._fields[0].isgameover()){
+                g_winningscore[0] = "Your Score";
+                g_winningscore[1] = this._fields[0].getscore();
+                g_gamestyle = 5;
+            }  
+        }
+        else if(g_gamestyle === 2){
+            for (var i in this._fields) this._fields[i].update(du); 
+            if(this._fields[0].isgameover()){
+                g_winningscore[0] = "DRAW";
+                g_winningscore[1] = this._fields[0].getscore();
+                g_gamestyle = 4;
+            }
+            else if(this._fields[1].isgameover()){
+                g_winningscore[0] = "DRAW";
+                g_winningscore[1] = this._fields[1].getscore();
+                g_gamestyle = 3;
+            }   
+        }
+        else if(g_gamestyle === 3){
+            this._fields[0].update(du);
+            if(this._fields[0].isgameover()){
+                if(this._fields[0].getscore() > g_winningscore[1]){
+                    g_winningscore[0] = "Player One WON";
+                    g_winningscore[1] = this._fields[0].getscore();
+                }
+                g_gamestyle = 5;
+            }    
+        }
+        else if(g_gamestyle === 4){
+            this._fields[1].update(du);
+            if(this._fields[1].isgameover()){
+                if(this._fields[1].getscore() > g_winningscore[1]){
+                    g_winningscore[0] = "Player Two WON";
+                    g_winningscore[1] = this._fields[1].getscore();
+                }
+                g_gamestyle = 5;
+            } 
         }
     },
 
     render: function (ctx) {
-        if (g_gamestyle === 0)
-        {
+        if (g_gamestyle === 0){
             menu(ctx);
         }
-
-        
-        if (g_gamestyle === 5)
-        {
-            gameover(ctx);
+        else if(g_gamestyle === 1){
+            this._fields[0].render(ctx);   
         }
-        else if(g_gamestyle > 0)
-        {
-            for (var i in this._fields) this._fields[i].render(ctx);
+        else if(g_gamestyle === 2){
+             for (var i in this._fields) this._fields[i].render(ctx);  
+        }
+        else if(g_gamestyle === 3){
+            this._fields[0].render(ctx);   
+        }
+        else if(g_gamestyle === 4){
+            this._fields[1].render(ctx);
+        }
+        else if (g_gamestyle === 5){
+            gameover(ctx);
         }
     },
 

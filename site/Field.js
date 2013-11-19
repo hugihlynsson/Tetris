@@ -17,6 +17,8 @@ var Field = function (x, y, width, height, columns, control)
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
 
+	var _gameover = false;
+
 	var _score = new Highscore(_x, _y-_unitSize, 'white', 16, 'Helvetica');
 
 	var _nextBlock = fieldManager.getNewBlock(
@@ -148,8 +150,7 @@ var Field = function (x, y, width, height, columns, control)
 		for (var j = 0; j < _columns; ++j)
 		{
 			if (_fieldArray[0][j][0] > 0) {
-				g_winningscore = _score.getScore();
-				g_gamestyle = 5;
+				_gameover = true;
 			}
 		}
 	};
@@ -333,6 +334,13 @@ var Field = function (x, y, width, height, columns, control)
 			_score.render(ctx);
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
+		},
+		isgameover : function () {
+
+			return _gameover;
+		},
+		getscore : function () {
+			return _score.getScore();
 		}
 	};
 };
