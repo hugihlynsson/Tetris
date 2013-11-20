@@ -112,6 +112,11 @@ function smallbuttons(ctx){
     boxWidth = 35;
     var betweenboxes_x = 45;
     var betweenboxes_y = 50;
+    var button_instruction = ["W", "A","S" ,"D" ,"I" ,"J" ,"K" ,"L"];
+    var j = 0;
+    ctx.fillStyle = "white";
+    ctx.font = "100 20px Helvetica";
+    ctx.textAlign = "center";
 
 
     for(var i = 0; i < 2; i++){
@@ -127,27 +132,14 @@ function smallbuttons(ctx){
         util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
         util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
 
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 ); 
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2  - betweenboxes_x, box_y + 20 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2 + betweenboxes_x, box_y + 20 + betweenboxes_y);
+
         box_x += 400;
     }
-    var box_x =  80;
-    var box_y = boxstarty;
-    boxWidth = 35;
-    
-    ctx.fillStyle = "white";
-    ctx.font = "100 20px Helvetica";
-    ctx.textAlign = "center";
 
-    ctx.fillText("W", box_x + boxWidth/2, box_y + 20 ); 
-    ctx.fillText("A", box_x + boxWidth/2  - betweenboxes_x, box_y + 20 + betweenboxes_y);
-    ctx.fillText("S", box_x + boxWidth/2, box_y + 20 + betweenboxes_y);
-    ctx.fillText("D", box_x + boxWidth/2 + betweenboxes_x, box_y + 20 + betweenboxes_y);
-
-    box_x += 400;  
-
-    ctx.fillText("I", box_x + boxWidth/2, box_y + 20);
-    ctx.fillText("J", box_x + boxWidth/2  - betweenboxes_x, box_y + 20 + betweenboxes_y);
-    ctx.fillText("K", box_x + boxWidth/2, box_y + 20 + betweenboxes_y);
-    ctx.fillText("L", box_x + boxWidth/2 + betweenboxes_x, box_y + 20 + betweenboxes_y);
 }
 
 
