@@ -1,11 +1,10 @@
 var boxstartx = g_canvas.width/2-75;
-var boxstarty = g_canvas.height/2 - 150;
+var boxstarty = g_canvas.height/2 - 50;
 var boxheight = 30;
 var boxwidth = 150;
 var buttonnr = 2;
 var buttonname = ["single player", "two player"];
 var clickbutton = [0, 0];
-
 
 function menu(ctx){
 
@@ -14,6 +13,7 @@ function menu(ctx){
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
 
+    drawTetrisLogo(ctx);
 
     buttons(ctx, buttonnr, buttonname);
 
@@ -42,7 +42,6 @@ function menu(ctx){
 
 function gameover(ctx){
     util.clearCanvas(ctx);
-    drawTetris(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
     ctx.fillStyle = "red";
     ctx.font = "100 80px Helvetica";
@@ -57,7 +56,48 @@ function gameover(ctx){
     }
 }
 
-function drawTetris(ctx) {
+function drawTetrisLogo(ctx) {
+    var x = 20;
+    var y = 20;
+    var unit = 20;
+
+    // T
+    var tColor = g_color.red;
+    util.fillBox(ctx, x, y, unit*5, unit, tColor);
+    util.fillBox(ctx, x+unit*2, y+unit, unit, unit*4, tColor);
+
+    // E
+    var eColor = g_color.yellow;
+    util.fillBox(ctx, x + unit*6,     y+unit, unit, unit*4, eColor);
+    util.fillBox(ctx, x + unit*6, y,          unit*4, unit, eColor);
+    util.fillBox(ctx, x + unit*6, y + unit*2, unit*3, unit, eColor);
+    util.fillBox(ctx, x + unit*6, y + unit*4, unit*4, unit, eColor);
+
+    // T2
+    var t2Color = g_color.blue;
+    util.fillBox(ctx, x + unit*11, y, unit*5, unit, t2Color);
+    util.fillBox(ctx, x + unit*13, y+unit, unit, unit*4, t2Color);
+
+    // R
+    var rColor = g_color.green;
+    util.fillBox(ctx, x + unit*17, y, unit, unit*5, rColor);
+    util.fillBox(ctx, x + unit*20, y, unit, unit*3, rColor);
+    util.fillBox(ctx, x + unit*18, y, unit*2, unit, rColor);
+    util.fillBox(ctx, x + unit*18, y + unit*2, unit*2, unit, rColor);
+    util.fillBox(ctx, x + unit*19, y + unit*3, unit, unit, rColor);
+    util.fillBox(ctx, x + unit*19, y + unit*4, unit*2, unit, rColor);
+
+    // I
+    var iColor = g_color.pink;
+    util.fillBox(ctx, x + unit*22, y, unit, unit*5, iColor);
+
+    // S
+    var sColor = g_color.grey;
+    util.fillBox(ctx, x + unit*24, y, unit*4, unit, sColor);
+    util.fillBox(ctx, x + unit*24, y + unit*2, unit*4, unit, sColor);
+    util.fillBox(ctx, x + unit*24, y + unit*4, unit*4, unit, sColor);
+    util.fillBox(ctx, x + unit*24, y + unit, unit, unit, sColor);
+    util.fillBox(ctx, x + unit*27, y + unit*3, unit, unit, sColor);
 
 }
 
