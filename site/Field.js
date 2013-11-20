@@ -146,11 +146,11 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _checkForGameOver = function () {
-
 		for (var j = 0; j < _columns; ++j)
 		{
 			if (_fieldArray[0][j][0] > 0) {
 				_gameover = true;
+				highscores.add(_score.getScore());
 			}
 		}
 	};

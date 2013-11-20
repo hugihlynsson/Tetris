@@ -27,7 +27,7 @@ var fieldManager = {
 
         6: [[1, 0],
             [1, 0],
-            [1, 1]], 
+            [1, 1]],
 /*
     This is a terror Tetris-piece
         7: [[0, 1, 0, 1],
@@ -49,28 +49,28 @@ var fieldManager = {
     },
 
     _control1 : {
-        left: keyCode('A'), 
-        right: keyCode('D'), 
-        rotate: keyCode('W'), 
+        left: keyCode('A'),
+        right: keyCode('D'),
+        rotate: keyCode('W'),
         fast: keyCode('S')
     },
     _control2 : {
-        left: keyCode('J'), 
-        right: keyCode('L'), 
-        rotate: keyCode('I'), 
+        left: keyCode('J'),
+        right: keyCode('L'),
+        rotate: keyCode('I'),
         fast: keyCode('K')
     },
 
     _fields : null,
 
     init : function () {
-        if (g_gamestate === 1) 
+        if (g_gamestate === 1)
         {
             this._fields = [
                 new Field(200, 80, 200, 400, 10, this._control1)
             ];
         }
-        if (g_gamestate === 2) 
+        if (g_gamestate === 2)
         {
             this._fields = [
                 new Field(0, 80, 200, 400, 10, this._control1),
@@ -80,16 +80,17 @@ var fieldManager = {
     },
 
     update: function (du) {
+
         if(g_gamestate === 1){
-            this._fields[0].update(du); 
+            this._fields[0].update(du);
             if(this._fields[0].isgameover()){
                 g_winningscore[0] = "Your Score";
                 g_winningscore[1] = this._fields[0].getscore();
                 g_gamestate = 5;
-            }  
+            }
         }
         else if(g_gamestate === 2){
-            for (var i in this._fields) this._fields[i].update(du); 
+            for (var i in this._fields) this._fields[i].update(du);
             if(this._fields[0].isgameover()){
                 g_winningscore[0] = "DRAW";
                 g_winningscore[1] = this._fields[0].getscore();
@@ -99,7 +100,7 @@ var fieldManager = {
                 g_winningscore[0] = "DRAW";
                 g_winningscore[1] = this._fields[1].getscore();
                 g_gamestate = 3;
-            }   
+            }
         }
         else if(g_gamestate === 3){
             this._fields[0].update(du);
@@ -109,7 +110,7 @@ var fieldManager = {
                     g_winningscore[1] = this._fields[0].getscore();
                 }
                 g_gamestate = 5;
-            }    
+            }
         }
         else if(g_gamestate === 4){
             this._fields[1].update(du);
@@ -119,7 +120,7 @@ var fieldManager = {
                     g_winningscore[1] = this._fields[1].getscore();
                 }
                 g_gamestate = 5;
-            } 
+            }
         }
     },
 
@@ -128,21 +129,21 @@ var fieldManager = {
             menu(ctx);
         }
         else if(g_gamestate === 1){
-            this._fields[0].render(ctx);   
+            this._fields[0].render(ctx);
         }
         else if(g_gamestate === 2){
-             for (var i in this._fields) this._fields[i].render(ctx);  
+             for (var i in this._fields) this._fields[i].render(ctx);
         }
         else if(g_gamestate === 3){
-            this._fields[0].render(ctx);  
+            this._fields[0].render(ctx);
             ctx.globalAlpha = 0.2;
-            this._fields[1].render(ctx);  
-            ctx.globalAlpha = 1; 
+            this._fields[1].render(ctx);
+            ctx.globalAlpha = 1;
         }
         else if(g_gamestate === 4){
             this._fields[1].render(ctx);
             ctx.globalAlpha = 0.2;
-            this._fields[0].render(ctx);  
+            this._fields[0].render(ctx);
             ctx.globalAlpha = 1;
         }
         else if (g_gamestate === 5){
