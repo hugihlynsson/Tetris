@@ -133,10 +133,10 @@ function smallbuttons(ctx){
         util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
         util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
 
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 );
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2  - betweenboxes_x, box_y + 20 + betweenboxes_y);
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 + betweenboxes_y);
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2 + betweenboxes_x, box_y + 20 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 22 );
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2  - betweenboxes_x, box_y + 22 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 22 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2 + betweenboxes_x, box_y + 22 + betweenboxes_y);
 
         box_x += 400;
     }
