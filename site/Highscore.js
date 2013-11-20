@@ -2,29 +2,26 @@
 // HIGHSCORE CLASS
 // ===============
 
-// A field 'class'
-var Highscore = function (x, y, color, fontSize, font) 
-{
-	// Private variables and methods:
-	var _x = x;
-	var _y = y;
-	var _color = color;
-	var _fontSize = fontSize;
-	var _font = font;
-	var _score = 0;
+"use strict";
 
-	// Public methods:
-	return {
-		render : function (ctx) {
-			var oldStyle = ctx.fillStyle;
-			ctx.fillStyle = _color;
-			ctx.textAlign = 'left';
-			ctx.font = '100 ' + _fontSize + 'px ' + _font;
-			ctx.fillText('score: ' + _score, _x, _y+_fontSize);
-			ctx.fillStyle = oldStyle;
-		},
-		addScore : function (amount) { _score += amount; },
-		getScore : function () { return _score; },
-		setColor : function (color) { _color = color; },
-	};
+var Highscore = function (){
+    // Private variables and methods:
+    var _sounds;
+    // Public methods:
+    return {
+        add: function (name, file){
+            _sounds[name] = new Audio(file);
+            console.log('Added: ' + _sounds[name]);
+        },
+
+        play: function (name, doLoop){
+            var sound = _sounds[name];
+            sound.loop = doLoop;
+            sound.play();
+        },
+        stop: function (name) {
+            _sounds[name].play(false);
+        },
+
+    };
 };

@@ -1,12 +1,13 @@
-// ===============
-// SoundManager CLASS
-// ===============
+// ===========
+// SCORE CLASS
+// ===========
+
 "use strict";
-// A field 'class'
+
 var SoundManager = function (){
     // Private variables and methods:
-    //var _sounds = {};
-    var _sounds = new Audio('sounds/tetris_song_halldor.m4a')
+    var _sounds = {};
+
     // Public methods:
     return {
         add: function (name, file){

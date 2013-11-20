@@ -19,7 +19,7 @@ var Field = function (x, y, width, height, columns, control)
 
 	var _gameover = false;
 
-	var _score = new Highscore(_x, _y-_unitSize, 'white', 16, 'Helvetica');
+	var _score = new Score(_x, _y-_unitSize, 'white', 16, 'Helvetica');
 
 	var _nextBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
@@ -36,18 +36,18 @@ var Field = function (x, y, width, height, columns, control)
 		var _hasFinished = false;
 
 		return {
-			tick : function (x) { 
-				_count += (x) ? x : 1; 
+			tick : function (x) {
+				_count += (x) ? x : 1;
 				if (_count > _limit) {
 					_count = 0;
 					_hasFinished = true;
 				}
 			},
-			hasFinished : function () { 
+			hasFinished : function () {
 				if (_hasFinished) {
 					_hasFinished = false;
 					return true;
-				}; 
+				};
 				return false;
 			},
 			setLimit : function (limit) {
@@ -77,16 +77,16 @@ var Field = function (x, y, width, height, columns, control)
 
 	var _nextField = function (block) {
 		if (block === null) return _fieldArray;
-	
+
 		var form = block.getForm();
 		var width = form[0].length;
 		var height = form.length;
-	
+
 		var pos = block.getPos();
-	
+
 		// Nasty hack to clone the array:
 		var nextArray = _fieldArray.slice(0);
-	
+
 		// Loop through playfield at given position
 		// for tetris object:
 		for (var i = 0; i < height; ++i)
@@ -94,7 +94,7 @@ var Field = function (x, y, width, height, columns, control)
 			for (var j = 0; j < width; ++j)
 			{
 				if (form[i][j]) nextArray[i+pos.y][j+pos.x][0] = 1;
-				
+
 				// We shall colourize ye olde matrix with
 				// thine *yarr* colour:
 				if (form[i][j])
@@ -103,7 +103,7 @@ var Field = function (x, y, width, height, columns, control)
 				}
 			}
 		}
-	
+
 		return nextArray;
 	};
 
@@ -134,8 +134,8 @@ var Field = function (x, y, width, height, columns, control)
 		var width = _activeBlock.getWidth();
 		var height = _activeBlock.getHeight();
 		return (
-			(_isAtRightEdge() || 
-			(pos.x < 0) || 
+			(_isAtRightEdge() ||
+			(pos.x < 0) ||
 			(isColliding(_activeBlock))));
 		};
 
@@ -160,20 +160,20 @@ var Field = function (x, y, width, height, columns, control)
 		for (var i = 0; i < _rows; ++i)
 		{
 			var lineSum = 0;
-			
+
 			for (var j = 0; j < _columns; ++j)
 			{
 				if (_fieldArray[i][j][0] > 0) lineSum++;
 			}
 
-			if (lineSum === _columns) 
+			if (lineSum === _columns)
 			{
 				_removeLine(i);
-				linesRemoved += 1;	
-			}  
+				linesRemoved += 1;
+			}
 		}
 		var bonus = 100;
-		for (var i = 0; i < linesRemoved; i++) 
+		for (var i = 0; i < linesRemoved; i++)
 		{
 			_score.addScore(bonus);
 			bonus *= 2;
@@ -214,7 +214,7 @@ var Field = function (x, y, width, height, columns, control)
 		else {
 			_clock.setLimit(_baseClockLimit - _linesCleared);
 		}
-		
+
 	};
 
 
@@ -227,8 +227,8 @@ var Field = function (x, y, width, height, columns, control)
 				ctx.fillStyle = 'white';
 				ctx.font = '5pt Helvetica';
 				ctx.fillText(
-					_fieldArray[i][j][0], 
-					_x + _unitSize*j + _unitSize/2 - 2, 
+					_fieldArray[i][j][0],
+					_x + _unitSize*j + _unitSize/2 - 2,
 					_y + _unitSize*i + _unitSize/2 + 2
 				);
 				ctx.fillStyle = old;
@@ -268,8 +268,8 @@ var Field = function (x, y, width, height, columns, control)
 					_nextField(_activeBlock);
 					_activeBlock = _nextBlock;
 					_nextBlock = fieldManager.getNewBlock(
-						_unitSize, 
-						_x, _y, 
+						_unitSize,
+						_x, _y,
 						Math.floor(_columns/2)
 					);
 					_checkForLine();
@@ -334,8 +334,8 @@ var Field = function (x, y, width, height, columns, control)
 			_score.render(ctx);
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
-			
-			if(_gameover){	
+
+			if(_gameover){
 				var oldstyle = ctx.fillStyle;
 				var oldalpha = ctx.globalAlpha;
 				ctx.globalAlpha = 1;
