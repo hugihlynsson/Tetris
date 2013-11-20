@@ -84,6 +84,8 @@ function renderSimulation(ctx) {
 
     fieldManager.render(ctx);
 
+    if (g_isUpdatePaused) menus.drawPause(ctx);
+
     if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
