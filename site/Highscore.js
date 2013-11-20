@@ -25,13 +25,15 @@ var Highscore = function (){
 
     // Public methods:
     return {
-		addScore : function (newScore) {
+		add : function (newScore) {
 			var isHighscore = true;
 			for (var i = 0; i < 5; i++) {
-				if (newScore > _score[i]) {
+				if (newScore > _scores[i]) {
 					isHighscore = true;
-					for (var j = 5; j < i; j++) {
-						_scores[j] = _scores[j+1];
+					console.log(i);
+					for (var j = 4; j > i; j--) {
+						_scores[j] = _scores[j-1];
+						console.log('Copying from and to: ' + j-1 + ' ' + j)
 					}
 					_scores[i] = newScore;
 					break;
