@@ -4,21 +4,6 @@
 
 "use strict";
 
-
-// // ====================
-// // CREATE INITIAL SHIPS
-// // ====================
-
-// =============
-// GATHER INPUTS
-// =============
-
-function gatherInputs() {
-    // Nothing to do here!
-    // The event handlers do everything we need for now.
-}
-
-
 // =================
 // UPDATE SIMULATION
 // =================
@@ -35,7 +20,6 @@ function updateSimulation(du) {
 
     processDiagnostics();
     fieldManager.update(du);
-
 }
 
 // GAME-SPECIFIC DIAGNOSTICS
@@ -74,9 +58,9 @@ function processDiagnostics() {
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
 
     if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
-    
+
     if (eatKey(KEY_DEBUG_NUMS)) g_renderDebugNums = !g_renderDebugNums;
-    
+
     if (eatKey(KEY_EASE)) g_easeBrick = !g_easeBrick;
 
 }
@@ -126,3 +110,7 @@ function preloadDone() {
 }
 main.init();
 fieldManager.init();
+
+var sounds = new SoundManager();
+sounds.add('tetris', 'sounds/tetris_song_halldor.m4a');
+sounds.play('tetris', true);
