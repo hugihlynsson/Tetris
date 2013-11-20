@@ -28,14 +28,13 @@ function menu(ctx){
     }
 
 
-
    if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
-        g_gamestyle = 1;
+        g_gamestate = 1;
         fieldManager.init();
     }
 
     if(eatKey(KEY_2) || (clickbutton[1] && g_button)){
-        g_gamestyle = 2;
+        g_gamestate = 2;
         fieldManager.init();
     }
 
@@ -52,7 +51,7 @@ function gameover(ctx){
     ctx.fillText(g_winningscore[0], g_canvas.width/2, g_canvas.height/2 + 50);
     ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 + 100);
     if(g_button){
-        g_gamestyle = 0;
+        g_gamestate = 0;
         g_button = false;
     }
 }
@@ -103,6 +102,26 @@ function drawTetrisLogo(ctx) {
 }
 
 
+/*function smallbuttons(ctx){
+    buttony = boxstarty;
+
+    for(var i = 0; i < nr; i++){
+
+        var boxWidth = 160;
+        // Render a small shadow on the 'button':
+        util.fillRoundedBox(ctx,  50, buttony+2, boxWidth/3, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  boxstartx, buttony, boxWidth/3, 30, 5, g_color.red);
+        ctx.fillStyle = "white";
+        ctx.font = "100 5px Helvetica";
+        ctx.textAlign = "center";
+        ctx.fillText(name[i], boxstartx + boxWidth/2, buttony+20);
+
+        buttony += 50;
+
+    }
+
+}
+*/
 
 function buttons(ctx, nr, name){
 
