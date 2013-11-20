@@ -14,13 +14,6 @@ function menu(ctx){
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
 
-    util.fillRoundedBox(ctx, boxstartx-10, buttony-20, 200, 10, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx, boxstartx-10, buttony-20, 200, 10, 5, g_color.red);
-        ctx.fillStyle = "white";
-        ctx.font = "100 20px Helvetica";
-        ctx.textAlign = "center";
-        ctx.fillText("Tetris");
-
     buttons(ctx, buttonnr, buttonname);
 
 
