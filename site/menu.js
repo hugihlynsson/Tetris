@@ -1,12 +1,15 @@
-var boxstartx = g_canvas.width/2-75;
+var boxstartx = g_canvas.width/2-80;
 var boxstarty = g_canvas.height/2 - 50;
 var boxheight = 30;
-var boxwidth = 150;
+var boxWidth = 160;
 var buttonnr = 2;
 var buttonname = ["single player", "two player"];
 var clickbutton = [0, 0];
 
 function menu(ctx){
+
+    var oldstyle = ctx.fillStyle;
+
 
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
@@ -15,8 +18,9 @@ function menu(ctx){
     highscores.render(ctx, g_canvas.width/2, 400);
 
     buttons(ctx, buttonnr, buttonname);
+    smallbuttons(ctx);
 
-
+    ctx.fillStyle = oldstyle;
     var buttony = boxstarty;
 
     for(var i = 0; i < buttonnr; i++){
@@ -26,12 +30,12 @@ function menu(ctx){
     }
 
    if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
-        g_gamestate = 1;
+        g_gamestate = "single_player";
         fieldManager.init();
     }
 
     if(eatKey(KEY_2) || (clickbutton[1] && g_button)){
-        g_gamestate = 2;
+        g_gamestate = "two_player";
         fieldManager.init();
     }
 
@@ -40,6 +44,8 @@ function menu(ctx){
 function gameover(ctx){
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
+
+    var oldstyle = ctx.fillStyle;
     ctx.fillStyle = g_color.red;
     ctx.font = "100 80px Helvetica";
     ctx.textAlign = "center";
@@ -47,8 +53,9 @@ function gameover(ctx){
     ctx.font = "100 40px Helvetica";
     ctx.fillText(g_winningscore[0], g_canvas.width/2, g_canvas.height/2 + 50);
     ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 + 100);
+    ctx.fillStyle = oldstyle;
     if(g_button){
-        g_gamestate = 0;
+        g_gamestate = "menu";
         g_button = false;
     }
 }
@@ -99,34 +106,51 @@ function drawTetrisLogo(ctx) {
 }
 
 
-/*function smallbuttons(ctx){
-    buttony = boxstarty;
+function smallbuttons(ctx){
 
-    for(var i = 0; i < nr; i++){
+    var box_x =  80;
+    var box_y = boxstarty;
+    boxWidth = 35;
+    var betweenboxes_x = 45;
+    var betweenboxes_y = 50;
+    var button_instruction = ["W", "A","S" ,"D" ,"I" ,"J" ,"K" ,"L"];
+    var j = 0;
+    ctx.fillStyle = "white";
+    ctx.font = "100 20px Helvetica";
+    ctx.textAlign = "center";
 
-        var boxWidth = 160;
-        // Render a small shadow on the 'button':
-        util.fillRoundedBox(ctx,  50, buttony+2, boxWidth/3, 30, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx,  boxstartx, buttony, boxWidth/3, 30, 5, g_color.red);
-        ctx.fillStyle = "white";
-        ctx.font = "100 5px Helvetica";
-        ctx.textAlign = "center";
-        ctx.fillText(name[i], boxstartx + boxWidth/2, buttony+20);
 
-        buttony += 50;
+    for(var i = 0; i < 2; i++){
+        util.fillRoundedBox(ctx,  box_x, box_y + 2, boxWidth, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  box_x, box_y, boxWidth, 30, 5, g_color.red);
 
+        util.fillRoundedBox(ctx,  box_x - betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  box_x - betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
+
+        util.fillRoundedBox(ctx,  box_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  box_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
+
+        util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
+        util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
+
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 );
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2  - betweenboxes_x, box_y + 20 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 20 + betweenboxes_y);
+        ctx.fillText(button_instruction[j++], box_x + boxWidth/2 + betweenboxes_x, box_y + 20 + betweenboxes_y);
+
+        box_x += 400;
     }
+    boxWidth = 160;
 
 }
-*/
+
 
 function buttons(ctx, nr, name){
 
-    buttony = boxstarty;
-
+    var buttony = boxstarty;
+    boxWidth = 160;
     for(var i = 0; i < nr; i++){
 
-        var boxWidth = 160;
         // Render a small shadow on the 'button':
         util.fillRoundedBox(ctx,  boxstartx, buttony+2, boxWidth, 30, 5, g_color.redShadow);
         util.fillRoundedBox(ctx,  boxstartx, buttony, boxWidth, 30, 5, g_color.red);
@@ -143,7 +167,7 @@ function buttons(ctx, nr, name){
 
 
 function buttonclick(boxstarty){
-    if(((g_mouseX >= boxstartx) && (g_mouseX <= boxstartx+boxwidth)) &&
+    if(((g_mouseX >= boxstartx) && (g_mouseX <= boxstartx+boxWidth)) &&
         ((g_mouseY >= boxstarty) && (g_mouseY <= boxstarty+boxheight))){
             return 1;
     }
