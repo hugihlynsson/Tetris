@@ -166,6 +166,7 @@ function buttonclick(button_y){
 // Define callable object (because all above functions are in global scope which is not too smooth):
 var menus = {
     drawPause: function (ctx) {
+    util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, 'rgba(0,0,0,0.8)');
         ctx.fillText('Game paused', g_canvas.width/2,  g_canvas.height/2);
     },
 }
