@@ -241,6 +241,8 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _renderNextBlock = function (ctx) {
+        ctx.font = "100 16px Helvetica";
+        ctx.textAlign = "left"
 		ctx.fillStyle = _nextBlock.getColor();
 		ctx.fillText('NEXT:', _x, _y - _unitSize*3 - 7);
 		_nextBlock.render(ctx, 
