@@ -3,7 +3,7 @@ var boxstarty = g_canvas.height/2 - 50;
 var boxheight = 30;
 var boxWidth = 160;
 var buttonnr = 3;
-var buttonname = ["single player", "two player", "High Score Reset"];
+var buttonname = ["single player", "two player", "reset highscore"];
 var clickbutton = [0, 0, 0];
 
 function menu(ctx){
@@ -18,7 +18,9 @@ function menu(ctx){
     highscores.render(ctx, g_canvas.width/2, 410);
 
     buttons(ctx, buttonnr, buttonname);
-    smallbuttons(ctx);
+
+    drawWASD(ctx, 35, 250);
+    drawWASD(ctx, 434, 250, ['I', 'J', 'K', 'L']);
 
     ctx.fillStyle = oldstyle;
     var buttony = boxstarty;
@@ -26,7 +28,6 @@ function menu(ctx){
     for(var i = 0; i < buttonnr; i++){
         clickbutton[i] = buttonclick(buttony);
         buttony += 50;
-
     }
 
    if(clickbutton[0] && g_button){
@@ -39,7 +40,7 @@ function menu(ctx){
     }
     if(clickbutton[2] && g_button){
         console.log("herna");
-       highscores.reset(); 
+       highscores.reset();
     }
 
 }
@@ -119,43 +120,17 @@ function drawTetrisLogo(ctx) {
 
 }
 
+function drawWASD (ctx, x, y, buttons) {
 
-function smallbuttons(ctx){
+    var buttons = buttons || ['W', 'A', 'S', 'D'];
 
-    var box_x =  80;
-    var box_y = boxstarty;
-    boxWidth = 35;
-    var betweenboxes_x = 45;
-    var betweenboxes_y = 50;
-    var button_instruction = ["W", "A","S" ,"D" ,"I" ,"J" ,"K" ,"L"];
-    var j = 0;
-    ctx.fillStyle = "white";
-    ctx.font = "100 20px Helvetica";
-    ctx.textAlign = "center";
+    var xDist = 44;
+    var yDist = 50;
 
-
-    for(var i = 0; i < 2; i++){
-        util.fillRoundedBox(ctx,  box_x, box_y + 2, boxWidth, 30, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx,  box_x, box_y, boxWidth, 30, 5, g_color.red);
-
-        util.fillRoundedBox(ctx,  box_x - betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx,  box_x - betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
-
-        util.fillRoundedBox(ctx,  box_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx,  box_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
-
-        util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + 2 + betweenboxes_y, boxWidth, 30, 5, g_color.redShadow);
-        util.fillRoundedBox(ctx,  box_x + betweenboxes_x, box_y + betweenboxes_y, boxWidth, 30, 5, g_color.red);
-
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 22 );
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2  - betweenboxes_x, box_y + 22 + betweenboxes_y);
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2, box_y + 22 + betweenboxes_y);
-        ctx.fillText(button_instruction[j++], box_x + boxWidth/2 + betweenboxes_x, box_y + 22 + betweenboxes_y);
-
-        box_x += 400;
-    }
-    boxWidth = 160;
-
+    util.drawButton(ctx, x + xDist  , y        , buttons[0], 'small'); // W
+    util.drawButton(ctx, x          , y + yDist, buttons[1], 'small'); // A
+    util.drawButton(ctx, x + xDist  , y + yDist, buttons[2], 'small'); // S
+    util.drawButton(ctx, x + xDist*2, y + yDist, buttons[3], 'small'); // D
 }
 
 
