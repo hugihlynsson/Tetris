@@ -337,12 +337,16 @@ var Field = function (x, y, width, height, columns, control)
 
 			if(_gameover){
 				var oldstyle = ctx.fillStyle;
+				var oldfont = ctx.font;
+				var oldalign = ctx.textAlign;
 				ctx.globalAlpha = 1;
 				ctx.fillStyle = g_color.yellow;
 			    ctx.font = "100 20px Helvetica";
 			    ctx.textAlign = "center";
 			    ctx.fillText("Game Over", x + (width/2), height/2);
 			    ctx.fillStyle = oldstyle;
+			    ctx.font = oldfont;
+			    ctx.textAlign = oldalign;
 			}
 		},
 		isgameover : function () {
