@@ -15,19 +15,33 @@ var Highscore = function (){
 
     console.log(_scores);
 
-    // window.localStorage.getItem();
-    // window.localStorage.setItem();
+    var _saveScores = function () {
+    	console.log(_scores);
+    	for (var i = 0; i < 5; i++) {
+    		window.localStorage.setItem('highscore' + i, _scores[i]);
+    	}
+    	console.log('Scores saved to localStorage');
+    }
 
     // Public methods:
     return {
 		addScore : function (newScore) {
-			var isHighscore = false;
-
-			for (var i = 4; i >= 0; i--) {
+			var isHighscore = true;
+			for (var i = 0; i < 5; i++) {
 				if (newScore > _score[i]) {
 					isHighscore = true;
+					for (var j = 5; j < i; j++) {
+						_scores[j] = _scores[j+1];
+					}
+					_scores[i] = newScore;
+					break;
 				}
 			}
+
+			if (isHighscore) {
+				_saveScores();
+			}
+
 
 			return isHighscore;
 		},
