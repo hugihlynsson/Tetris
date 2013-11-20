@@ -14,6 +14,7 @@ function menu(ctx){
 
 
     drawTetrisLogo(ctx);
+    highscores.render(ctx, g_canvas.width/2, 400);
 
     buttons(ctx, buttonnr, buttonname);
 
