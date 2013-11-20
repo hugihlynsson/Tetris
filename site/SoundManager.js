@@ -6,20 +6,22 @@
 var SoundManager = function (){
     // Private variables and methods:
     //var _sounds = {};
-    var mainSound = new Audio('sounds/tetris_song_halldor.m4a')
+    var _sounds = new Audio('sounds/tetris_song_halldor.m4a')
     // Public methods:
     return {
-        addSound : function (name, file){
-            _sounds[name] = new Audio(file) ;
-            
+        add: function (name, file){
+            _sounds[name] = new Audio(file);
             console.log('Added: ' + _sounds[name]);
         },
 
-        playSound : function (){
-           this.mainSound.play();
+        play: function (name, doLoop){
+            var sound = _sounds[name];
+            sound.loop = doLoop;
+            sound.play();
         },
-        stopSound : function (name) {
-                    },
-       
+        stop: function (name) {
+            _sounds[name].play(false);
+        },
+
     };
 };
