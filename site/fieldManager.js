@@ -64,13 +64,13 @@ var fieldManager = {
     _fields : null,
 
     init : function () {
-        if (g_gamestate === 1)
+        if (g_gamestate === "single_player")
         {
             this._fields = [
                 new Field(200, 80, 200, 400, 10, this._control1)
             ];
         }
-        if (g_gamestate === 2)
+        if (g_gamestate === "two_player")
         {
             this._fields = [
                 new Field(0, 80, 200, 400, 10, this._control1),
@@ -81,73 +81,46 @@ var fieldManager = {
 
     update: function (du) {
 
-        if(g_gamestate === 1){
-            this._fields[0].update(du);
-            if(this._fields[0].isgameover()){
-                g_winningscore[0] = "Your Score";
-                g_winningscore[1] = this._fields[0].getscore();
-                g_gamestate = 5;
-            }
-        }
-        else if(g_gamestate === 2){
-            for (var i in this._fields) this._fields[i].update(du);
-            if(this._fields[0].isgameover()){
-                g_winningscore[0] = "DRAW";
-                g_winningscore[1] = this._fields[0].getscore();
-                g_gamestate = 4;
-            }
-            else if(this._fields[1].isgameover()){
-                g_winningscore[0] = "DRAW";
-                g_winningscore[1] = this._fields[1].getscore();
-                g_gamestate = 3;
-            }
-        }
-        else if(g_gamestate === 3){
-            this._fields[0].update(du);
-            if(this._fields[0].isgameover()){
-                if(this._fields[0].getscore() > g_winningscore[1]){
-                    g_winningscore[0] = "Player One WON";
-                    g_winningscore[1] = this._fields[0].getscore();
+        if(g_gamestate != "menu" && g_gamestate != "gameover"){
+            for (var i in this._fields){
+                if(!this._fields[i].isgameover()){
+                    this._fields[i].update(du);
                 }
-                g_gamestate = 5;
-            }
-        }
-        else if(g_gamestate === 4){
-            this._fields[1].update(du);
-            if(this._fields[1].isgameover()){
-                if(this._fields[1].getscore() > g_winningscore[1]){
-                    g_winningscore[0] = "Player Two WON";
-                    g_winningscore[1] = this._fields[1].getscore();
+                if(this._fields[i].isgameover() && g_gamestate === "single_player"){
+                    g_gamestate = "gameover";
+                    g_winningscore[0] = "YOUR SCORE";
+                    g_winningscore[1] = this._fields[i].getscore();
                 }
-                g_gamestate = 5;
-            }
+           }
+           if(g_gamestate === "two_player"){
+                if (this._fields[0].isgameover() && this._fields[1].isgameover()){
+                    if(this._fields[0].getscore() > this._fields[1].getscore()){
+                        g_winningscore[0] = "Player One WON";
+                        g_winningscore[1] = this._fields[0].getscore();
+                    }
+                    else if (this._fields[0].getscore() < this._fields[1].getscore()){
+                        g_winningscore[0] = "Player Two WON";
+                        g_winningscore[1] = this._fields[1].getscore();
+                    }
+                    else{
+                        g_winningscore[0] = "Draw";
+                        g_winningscore[1] = this._fields[0].getscore();
+                    }
+                    g_gamestate = "gameover";
+                }
+           }
         }
     },
 
     render: function (ctx) {
-        if (g_gamestate === 0){
+        if (g_gamestate === "menu"){
             menu(ctx);
         }
-        else if(g_gamestate === 1){
-            this._fields[0].render(ctx);
-        }
-        else if(g_gamestate === 2){
-             for (var i in this._fields) this._fields[i].render(ctx);
-        }
-        else if(g_gamestate === 3){
-            this._fields[0].render(ctx);
-            ctx.globalAlpha = 0.2;
-            this._fields[1].render(ctx);
-            ctx.globalAlpha = 1;
-        }
-        else if(g_gamestate === 4){
-            this._fields[1].render(ctx);
-            ctx.globalAlpha = 0.2;
-            this._fields[0].render(ctx);
-            ctx.globalAlpha = 1;
-        }
-        else if (g_gamestate === 5){
+        else if (g_gamestate === "gameover"){
             gameover(ctx);
+        }
+        else{
+             for (var i in this._fields) this._fields[i].render(ctx);
         }
     },
 

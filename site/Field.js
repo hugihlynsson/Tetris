@@ -305,7 +305,7 @@ var Field = function (x, y, width, height, columns, control)
 			}
 		},
 		render : function (ctx) {
-
+			if(_gameover)ctx.globalAlpha = 0.2;
 			// Draw field background:
 			util.fillBox(ctx, _x, _y, _width, _height, g_color.fieldBg);
 
@@ -337,14 +337,12 @@ var Field = function (x, y, width, height, columns, control)
 
 			if(_gameover){
 				var oldstyle = ctx.fillStyle;
-				var oldalpha = ctx.globalAlpha;
 				ctx.globalAlpha = 1;
 				ctx.fillStyle = g_color.yellow;
 			    ctx.font = "100 20px Helvetica";
 			    ctx.textAlign = "center";
 			    ctx.fillText("Game Over", x + (width/2), height/2);
 			    ctx.fillStyle = oldstyle;
-			    ctx.globalAlpha = oldalpha;
 			}
 		},
 		isgameover : function () {

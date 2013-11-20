@@ -30,12 +30,12 @@ function menu(ctx){
 
 
    if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
-        g_gamestate = 1;
+        g_gamestate = "single_player";
         fieldManager.init();
     }
 
     if(eatKey(KEY_2) || (clickbutton[1] && g_button)){
-        g_gamestate = 2;
+        g_gamestate = "two_player";
         fieldManager.init();
     }
 
@@ -54,7 +54,7 @@ function gameover(ctx){
     ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 + 100);
     ctx.fillStyle = oldstyle; 
     if(g_button){
-        g_gamestate = 0;
+        g_gamestate = "menu";
         g_button = false;
     }
 }
@@ -139,6 +139,7 @@ function smallbuttons(ctx){
 
         box_x += 400;
     }
+    boxWidth = 160;
 
 }
 
