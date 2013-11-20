@@ -134,10 +134,16 @@ var fieldManager = {
              for (var i in this._fields) this._fields[i].render(ctx);  
         }
         else if(g_gamestyle === 3){
-            this._fields[0].render(ctx);   
+            this._fields[0].render(ctx);  
+            ctx.globalAlpha = 0.2;
+            this._fields[1].render(ctx);  
+            ctx.globalAlpha = 1; 
         }
         else if(g_gamestyle === 4){
             this._fields[1].render(ctx);
+            ctx.globalAlpha = 0.2;
+            this._fields[0].render(ctx);  
+            ctx.globalAlpha = 1;
         }
         else if (g_gamestyle === 5){
             gameover(ctx);

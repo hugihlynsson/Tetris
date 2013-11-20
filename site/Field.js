@@ -334,6 +334,18 @@ var Field = function (x, y, width, height, columns, control)
 			_score.render(ctx);
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
+			
+			if(_gameover){	
+				var oldstyle = ctx.fillStyle;
+				var oldalpha = ctx.globalAlpha;
+				ctx.globalAlpha = 1;
+				ctx.fillStyle = g_color.yellow;
+			    ctx.font = "100 20px Helvetica";
+			    ctx.textAlign = "center";
+			    ctx.fillText("Game Over", width/2, height/2);
+			    ctx.fillStyle = oldstyle;
+			    ctx.globalAlpha = oldalpha;
+			}
 		},
 		isgameover : function () {
 
