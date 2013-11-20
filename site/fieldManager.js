@@ -54,6 +54,7 @@ var fieldManager = {
         rotate: keyCode('W'),
         fast: keyCode('S')
     },
+
     _control2 : {
         left: keyCode('J'),
         right: keyCode('L'),
@@ -81,28 +82,37 @@ var fieldManager = {
 
     update: function (du) {
 
-        if(g_gamestate != "menu" && g_gamestate != "gameover"){
-            for (var i in this._fields){
-                if(!this._fields[i].isgameover()){
+        if(g_gamestate != "menu" && g_gamestate != "gameover")
+        {
+            for (var i in this._fields)
+            {
+                if(!this._fields[i].isgameover())
+                {
                     this._fields[i].update(du);
                 }
-                if(this._fields[i].isgameover() && g_gamestate === "single_player"){
+                if(this._fields[i].isgameover() && g_gamestate === "single_player")
+                {
                     g_gamestate = "gameover";
                     g_winningscore[0] = "YOUR SCORE";
                     g_winningscore[1] = this._fields[i].getscore();
                 }
            }
-           if(g_gamestate === "two_player"){
-                if (this._fields[0].isgameover() && this._fields[1].isgameover()){
-                    if(this._fields[0].getscore() > this._fields[1].getscore()){
+           if(g_gamestate === "two_player")
+           {
+                if (this._fields[0].isgameover() && this._fields[1].isgameover())
+                {
+                    if(this._fields[0].getscore() > this._fields[1].getscore())
+                    {
                         g_winningscore[0] = "Player One WON";
                         g_winningscore[1] = this._fields[0].getscore();
                     }
-                    else if (this._fields[0].getscore() < this._fields[1].getscore()){
+                    else if (this._fields[0].getscore() < this._fields[1].getscore())
+                    {
                         g_winningscore[0] = "Player Two WON";
                         g_winningscore[1] = this._fields[1].getscore();
                     }
-                    else{
+                    else
+                    {
                         g_winningscore[0] = "Draw";
                         g_winningscore[1] = this._fields[0].getscore();
                     }
@@ -113,13 +123,16 @@ var fieldManager = {
     },
 
     render: function (ctx) {
-        if (g_gamestate === "menu"){
+        if (g_gamestate === "menu")
+        {
             menu(ctx);
         }
-        else if (g_gamestate === "gameover"){
+        else if (g_gamestate === "gameover")
+        {
             gameover(ctx);
         }
-        else{
+        else
+        {
              for (var i in this._fields) this._fields[i].render(ctx);
         }
     },

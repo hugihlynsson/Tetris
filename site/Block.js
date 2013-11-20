@@ -1,6 +1,7 @@
 // ===========
 // BLOCK CLASS
 // ===========
+"use strict";
 
 var Block = function (size, fieldX, fieldY, column, form, color)
 {
@@ -47,16 +48,6 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		console.log(rotated);
 		
 		return rotated;
-	};
-
-	// TODO: Finish this function:
-	var _rotateLeft = function () {
-		// Broken code:
-		// _block.rotation = (_block.rotation - 1) % 4;
-		// for(var i = 0; i < 3; ++i)
-		// {
-		//  _form = _rotateRight();
-		// }
 	};
 
 	// Public methods:

@@ -1,4 +1,6 @@
+//==================
 // GENERIC RENDERING
+//==================
 
 var g_doClear = true;
 var g_doBox = false;

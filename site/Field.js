@@ -24,6 +24,7 @@ var Field = function (x, y, width, height, columns, control)
 	var _nextBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
+
 	var _activeBlock = fieldManager.getNewBlock(
 		_unitSize, _x, _y, Math.floor(_columns/2)
 	);
@@ -38,13 +39,16 @@ var Field = function (x, y, width, height, columns, control)
 		return {
 			tick : function (x) {
 				_count += (x) ? x : 1;
-				if (_count > _limit) {
+				if (_count > _limit) 
+				{
 					_count = 0;
 					_hasFinished = true;
 				}
 			},
+
 			hasFinished : function () {
-				if (_hasFinished) {
+				if (_hasFinished) 
+				{
 					_hasFinished = false;
 					return true;
 				};
@@ -71,7 +75,6 @@ var Field = function (x, y, width, height, columns, control)
 			_fieldArray[i][j][0] = 0;
 		}
 	}
-
 
 	var _shouldUpdate = false;
 
@@ -148,7 +151,8 @@ var Field = function (x, y, width, height, columns, control)
 	var _checkForGameOver = function () {
 		for (var j = 0; j < _columns; ++j)
 		{
-			if (_fieldArray[0][j][0] > 0) {
+			if (_fieldArray[0][j][0] > 0) 
+			{
 				_gameover = true;
 				highscores.add(_score.getScore());
 			}
@@ -239,9 +243,10 @@ var Field = function (x, y, width, height, columns, control)
 	var _renderNextBlock = function (ctx) {
 		ctx.fillStyle = _nextBlock.getColor();
 		ctx.fillText('NEXT:', _x, _y - _unitSize*3 - 7);
-		_nextBlock.render(ctx, _x + _width - _unitSize*4, _y - _unitSize*4);
+		_nextBlock.render(ctx, 
+						  _x + _width - _unitSize*4, 
+						  _y - _unitSize*4);
 	};
-
 
 	// Public methods:
 	return {
@@ -254,10 +259,7 @@ var Field = function (x, y, width, height, columns, control)
 
 			if (_clock.hasFinished())
 			{
-				// TODO: implement better _blockClock updating/abstraction with
-				// less hardcoded values.
-				// Update blockClock according to score:
-
+			
 				// Move the block down
 				_activeBlock.moveDown();
 
@@ -304,6 +306,7 @@ var Field = function (x, y, width, height, columns, control)
 				}
 			}
 		},
+
 		render : function (ctx) {
 			if(_gameover)ctx.globalAlpha = 0.2;
 			// Draw field background:
@@ -323,9 +326,9 @@ var Field = function (x, y, width, height, columns, control)
 					if ( _fieldArray[i][j][0])
 					{
 						ctx.fillStyle = _fieldArray[i][j][1];
-						ctx.fillRect(
-							_x + _unitSize*j, _y + _unitSize*i,
-							_unitSize, _unitSize
+						ctx.fillRect(_x + _unitSize*j,
+									 _y + _unitSize*i,
+									 _unitSize, _unitSize
 						);
 					}
 				}
@@ -357,26 +360,4 @@ var Field = function (x, y, width, height, columns, control)
 		}
 	};
 };
-
-
-// Collision function that takes a tetris object
-// and adds it to the current playfield, and returns
-// true if the object is colliding with the
-// playfield
-
-// A tetris object should hold a two dimensional array
-// of 1s and 0s representing the form of the object
-
-// It should also have top left placement coordinates
-// and values holding representational information,
-// like color, dropshadow, sprite goodness etc.
-
-// e.g.
-// {
-//	form :  [[0,1,0],
-//			[1,1,1]],
-//	posX:   0,
-//	posY:   4,
-//	color:  'blue'
-// }
 

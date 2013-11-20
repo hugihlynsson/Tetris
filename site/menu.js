@@ -1,3 +1,7 @@
+// ==========
+// MENU CLASS
+// ==========
+
 var boxstartx = g_canvas.width/2-80;
 var boxstarty = g_canvas.height/2 - 50;
 var boxheight = 30;
