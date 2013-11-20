@@ -133,6 +133,15 @@ fillRoundedBox: function (ctx, x, y, w, h, r, style) {
     // Bottom right:
     this.fillCircle(ctx, x+w-r, y+h-r, r);
     ctx.fillStyle = oldStyle;
-}
+},
+
+drawButton: function (ctx, x, y, text) {
+    this.fillRoundedBox(ctx,  x, y + 2, 150, 30, 5, g_color.redShadow);
+    this.fillRoundedBox(ctx,  x, y    , 150, 30, 5, g_color.red);
+    ctx.fillStyle = "white";
+    ctx.font = "100 20px Helvetica";
+    ctx.textAlign = "center";
+    ctx.fillText(text, x + 75, y + 20);
+},
 
 };

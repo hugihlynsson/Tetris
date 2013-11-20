@@ -8,10 +8,8 @@ var clickbutton = [0, 0];
 
 function menu(ctx){
 
-
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
-
 
     drawTetrisLogo(ctx);
     highscores.render(ctx, g_canvas.width/2, 400);
@@ -26,7 +24,6 @@ function menu(ctx){
         buttony += 50;
 
     }
-
 
    if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
         g_gamestate = 1;
@@ -43,7 +40,7 @@ function menu(ctx){
 function gameover(ctx){
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = g_color.red;
     ctx.font = "100 80px Helvetica";
     ctx.textAlign = "center";
     ctx.fillText("Game Over", g_canvas.width/2, g_canvas.height/2);
