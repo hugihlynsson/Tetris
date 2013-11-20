@@ -57,6 +57,8 @@ var g_isUpdatePaused = false;
 
 function shouldSkipUpdate() {
     if (eatKey(KEY_PAUSE)) {
+        if (g_isUpdatePaused) sounds.play('tetris', true);
+        else                  sounds.pause('tetris');
         g_isUpdatePaused = !g_isUpdatePaused;
     }
     return g_isUpdatePaused && !eatKey(KEY_STEP);

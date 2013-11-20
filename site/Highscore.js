@@ -53,7 +53,7 @@ var Highscore = function (){
 			ctx.fillText('Highscores:', cx, y);
 			if (_scores)
 	        for (var i = 0; i < 5; i++) {
-				ctx.fillText(_scores[i], cx, y += 30);
+				ctx.fillText(_scores[i], cx, y += 28);
                 if (_scores[i] == 0) break; // Should be == to compare to falsy
 	        }
 		},
