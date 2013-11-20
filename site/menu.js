@@ -15,7 +15,7 @@ function menu(ctx){
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
     drawTetrisLogo(ctx);
-    highscores.render(ctx, g_canvas.width/2, 410);
+    highscores.render(ctx, g_canvas.width/2, 430);
 
     buttons(ctx, buttonnr, buttonname);
 
@@ -39,7 +39,6 @@ function menu(ctx){
         fieldManager.init();
     }
     if(clickbutton[2] && g_button){
-        console.log("herna");
        highscores.reset();
     }
 
@@ -100,11 +99,10 @@ function drawTetrisLogo(ctx) {
     // R
     var rColor = g_color.green;
     util.fillBox(ctx, x + unit*17, y, unit, unit*5, rColor);
-    util.fillBox(ctx, x + unit*20, y, unit, unit*3, rColor);
     util.fillBox(ctx, x + unit*18, y, unit*2, unit, rColor);
-    util.fillBox(ctx, x + unit*18, y + unit*2, unit*2, unit, rColor);
-    util.fillBox(ctx, x + unit*19, y + unit*3, unit, unit, rColor);
-    util.fillBox(ctx, x + unit*19, y + unit*4, unit*2, unit, rColor);
+    util.fillBox(ctx, x + unit*20, y + unit, unit, unit*2, rColor);
+    util.fillBox(ctx, x + unit*18, y + unit*3, unit*2, unit, rColor);
+    util.fillBox(ctx, x + unit*20, y + unit*4, unit, unit*1, rColor);
 
     // I
     var iColor = g_color.pink;
@@ -167,6 +165,9 @@ function buttonclick(button_y){
 var menus = {
     drawPause: function (ctx) {
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, 'rgba(0,0,0,0.8)');
+        ctx.fillStyle = "white";
+        ctx.font = "100 20px Helvetica";
+        ctx.textAlign = "center"
         ctx.fillText('Game paused', g_canvas.width/2,  g_canvas.height/2);
     },
 }
