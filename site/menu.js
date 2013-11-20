@@ -102,7 +102,7 @@ function drawTetrisLogo(ctx) {
 }
 
 
-function smallbuttons(ctx){
+/*function smallbuttons(ctx){
     buttony = boxstarty;
 
     for(var i = 0; i < nr; i++){
@@ -121,7 +121,7 @@ function smallbuttons(ctx){
     }
 
 }
-
+*/
 
 function buttons(ctx, nr, name){
 
