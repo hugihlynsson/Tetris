@@ -2,9 +2,9 @@ var boxstartx = g_canvas.width/2-80;
 var boxstarty = g_canvas.height/2 - 50;
 var boxheight = 30;
 var boxWidth = 160;
-var buttonnr = 2;
-var buttonname = ["single player", "two player"];
-var clickbutton = [0, 0];
+var buttonnr = 3;
+var buttonname = ["single player", "two player", "High Score Reset"];
+var clickbutton = [0, 0, 0];
 
 function menu(ctx){
 
@@ -15,7 +15,7 @@ function menu(ctx){
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
     drawTetrisLogo(ctx);
-    highscores.render(ctx, g_canvas.width/2, 400);
+    highscores.render(ctx, g_canvas.width/2, 410);
 
     buttons(ctx, buttonnr, buttonname);
     smallbuttons(ctx);
@@ -29,14 +29,17 @@ function menu(ctx){
 
     }
 
-   if(eatKey(KEY_1) || (clickbutton[0] && g_button)){
+   if(clickbutton[0] && g_button){
         g_gamestate = "single_player";
         fieldManager.init();
     }
-
-    if(eatKey(KEY_2) || (clickbutton[1] && g_button)){
+    if(clickbutton[1] && g_button){
         g_gamestate = "two_player";
         fieldManager.init();
+    }
+    if(clickbutton[2] && g_button){
+        console.log("herna");
+       highscores.reset(); 
     }
 
 }
@@ -46,14 +49,25 @@ function gameover(ctx){
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
     var oldstyle = ctx.fillStyle;
-    ctx.fillStyle = g_color.red;
+    ctx.fillStyle = g_color.gray;
     ctx.font = "100 80px Helvetica";
     ctx.textAlign = "center";
-    ctx.fillText("Game Over", g_canvas.width/2, g_canvas.height/2);
+    ctx.fillText("Game Over", g_canvas.width/2, g_canvas.height/2 - 150);
     ctx.font = "100 40px Helvetica";
-    ctx.fillText(g_winningscore[0], g_canvas.width/2, g_canvas.height/2 + 50);
-    ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 + 100);
+    ctx.fillText(g_winningscore[0], g_canvas.width/2, g_canvas.height/2 - 100);
+    ctx.fillText(g_winningscore[1], g_canvas.width/2, g_canvas.height/2 - 50);
     ctx.fillStyle = oldstyle;
+
+    util.fillRoundedBox(ctx,  g_canvas.width/2 - 80, g_canvas.height/2 + 2, boxWidth, 30, 5, g_color.redShadow);
+    util.fillRoundedBox(ctx,  g_canvas.width/2 - 80, g_canvas.height/2, boxWidth, 30, 5, g_color.red);
+    ctx.fillStyle = "white";
+    ctx.font = "100 20px Helvetica";
+    ctx.textAlign = "center";
+    ctx.fillText("Menu", g_canvas.width/2 - 80 + boxWidth/2, g_canvas.height/2+20);
+    ctx.fillStyle = oldstyle;
+
+
+
     if(g_button){
         g_gamestate = "menu";
         g_button = false;
@@ -158,17 +172,15 @@ function buttons(ctx, nr, name){
         ctx.font = "100 20px Helvetica";
         ctx.textAlign = "center";
         ctx.fillText(name[i], boxstartx + boxWidth/2, buttony+20);
-
         buttony += 50;
-
     }
 
 }
 
 
-function buttonclick(boxstarty){
+function buttonclick(button_y){
     if(((g_mouseX >= boxstartx) && (g_mouseX <= boxstartx+boxWidth)) &&
-        ((g_mouseY >= boxstarty) && (g_mouseY <= boxstarty+boxheight))){
+        ((g_mouseY >= button_y) && (g_mouseY <= button_y+boxheight))){
             return 1;
     }
     else return 0;
