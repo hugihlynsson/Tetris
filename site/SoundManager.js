@@ -5,6 +5,9 @@
 var SoundManager = function () {
 
     // Private variables and methods:
+
+    // _sounds is a dictionary and contains name of the sounds as keys and
+    // the file locations as values:
     var _sounds = {};
 
     // Public methods:
@@ -16,35 +19,35 @@ var SoundManager = function () {
 
         play: function (name, doLoop) {
 
-            if (!_sounds[name])
+            var sound = _sounds[name];
+            if (!sound)
             {
                 console.log('Soundmanager: Tried to play sound ' + name + ' that does not exist!')
                 return;
             }
-            var sound = _sounds[name];
             sound.loop = doLoop;
             sound.play();
         },
 
         pause: function (name) {
-
-            if (!_sounds[name]) 
+            var sound = _sounds[name];
+            if (!sound)
             {
                 console.log('Soundmanager: Tried to pause sound ' + name + ' that does not exist!')
                 return;
             }
-            _sounds[name].pause();
+            sound.pause();
         },
 
         stop: function (name) {
-
-            if (!_sounds[name]) 
+            var sound = _sounds[name];
+            if (!sound)
             {
                 console.log('Soundmanager: Tried to stop sound ' + name + ' that does not exist!')
                 return;
             }
-            _sounds[name].pause();
-            _sounds[name].currentTime = 0;
+            sound.pause();
+            sound.currentTime = 0;
         },
 
     };
