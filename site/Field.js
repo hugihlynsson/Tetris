@@ -3,8 +3,8 @@
 // ===========
 
 // A field 'class'
-var Field = function (x, y, width, height, columns, control)
-{
+var Field = function (x, y, width, height, columns, control){
+	
 	// Private variables and methods:
 
 	// Initialize instance variables:
@@ -32,6 +32,7 @@ var Field = function (x, y, width, height, columns, control)
 	var _linesCleared = 0;
 
 	var Clock = function (limit) {
+
 		var _limit = limit;
 		var _count = 0;
 		var _hasFinished = false;
@@ -47,6 +48,7 @@ var Field = function (x, y, width, height, columns, control)
 			},
 
 			hasFinished : function () {
+
 				if (_hasFinished) 
 				{
 					_hasFinished = false;
@@ -55,6 +57,7 @@ var Field = function (x, y, width, height, columns, control)
 				return false;
 			},
 			setLimit : function (limit) {
+
 				_limit = limit;
 			}
 		};
@@ -79,6 +82,7 @@ var Field = function (x, y, width, height, columns, control)
 	var _shouldUpdate = false;
 
 	var _nextField = function (block) {
+
 		if (block === null) return _fieldArray;
 
 		var form = block.getForm();
@@ -111,6 +115,7 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var isColliding = function (block) {
+
 		var form = block.getForm();
 		var width = block.getWidth();
 		var height = block.getHeight();
@@ -133,6 +138,7 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _outOfBounds = function () {
+
 		var pos = _activeBlock.getPos();
 		var width = _activeBlock.getWidth();
 		var height = _activeBlock.getHeight();
@@ -143,12 +149,14 @@ var Field = function (x, y, width, height, columns, control)
 		};
 
 	var _isAtRightEdge = function () {
+
 		var pos = _activeBlock.getPos();
 		var width = _activeBlock.getWidth();
 		return (_columns < (pos.x + width));
 	};
 
 	var _checkForGameOver = function () {
+
 		for (var j = 0; j < _columns; ++j)
 		{
 			if (_fieldArray[0][j][0] > 0) 
@@ -160,6 +168,7 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _checkForLine = function () {
+
 		var linesRemoved = 0;
 		for (var i = 0; i < _rows; ++i)
 		{
@@ -189,7 +198,6 @@ var Field = function (x, y, width, height, columns, control)
 		for (var i = _rows-1; i > 1; --i)
 		{
 			_fieldArray[i] = _fieldArray[i];
-
 			if (i <= lineNumber)
 			{
 				for (var j = 0; j < _columns; ++j)
@@ -223,6 +231,7 @@ var Field = function (x, y, width, height, columns, control)
 
 
 	var _renderDebugNums = function (ctx) {
+
 		for (var i = 0; i < _rows; ++i)
 		{
 			for (var j = 0; j < _columns; ++j)
@@ -241,6 +250,7 @@ var Field = function (x, y, width, height, columns, control)
 	};
 
 	var _renderNextBlock = function (ctx) {
+
         ctx.font = "100 16px Helvetica";
         ctx.textAlign = "left"
 		ctx.fillStyle = _nextBlock.getColor();
@@ -261,7 +271,6 @@ var Field = function (x, y, width, height, columns, control)
 
 			if (_clock.hasFinished())
 			{
-			
 				// Move the block down
 				_activeBlock.moveDown();
 
@@ -279,7 +288,6 @@ var Field = function (x, y, width, height, columns, control)
 					_checkForLine();
 					_checkForGameOver();
 				}
-
 				_shouldUpdate = false;
 			}
 
@@ -333,6 +341,7 @@ var Field = function (x, y, width, height, columns, control)
 		},
 
 		render : function (ctx) {
+
 			if(_gameover)ctx.globalAlpha = 0.2;
 			// Draw field background:
 			util.fillBox(ctx, _x, _y, _width, _height, g_color.fieldBg);
@@ -363,7 +372,8 @@ var Field = function (x, y, width, height, columns, control)
 
 			if (g_renderDebugNums) _renderDebugNums(ctx);
 
-			if(_gameover){
+			if(_gameover)
+			{
 				var oldstyle = ctx.fillStyle;
 				var oldfont = ctx.font;
 				var oldalign = ctx.textAlign;
@@ -378,9 +388,11 @@ var Field = function (x, y, width, height, columns, control)
 			}
 		},
 		isgameover : function () {
+
 			return _gameover;
 		},
 		getscore : function () {
+
 			return _score.getScore();
 		}
 	};

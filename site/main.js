@@ -3,25 +3,12 @@
 // ========
 /*
 
-The mainloop is one big object with a fairly small public interface
-(e.g. init, iter, gameOver), and a bunch of private internal helper methods.
-
-The "private" members are identified as such purely by the naming convention
-of having them begin with a leading underscore. A more robust form of privacy,
-with genuine name-hiding *is* possible in JavaScript (via closures), but I
-haven't adopted it here.
-
-*/
-
-"use strict";
-
 /* jshint browser: true, devel: true, globalstrict: true */
 
 /*
 0        1         2         3         4         5         6         7         8
 12345678901234567890123456789012345678901234567890123456789012345678901234567890
 */
-
 
 var main = {
 
@@ -72,6 +59,7 @@ main._iterCore = function (dt) {
 main._isGameOver = false;
 
 main.gameOver = function () {
+
     this._isGameOver = true;
     console.log("gameOver: quitting...");
 };
@@ -80,6 +68,7 @@ main.gameOver = function () {
 //
 var KEY_QUIT = 'Q'.charCodeAt(0);
 function requestedQuit() {
+
     return keys[KEY_QUIT];
 }
 
@@ -91,10 +80,12 @@ window.requestAnimationFrame =
 
 // This needs to be a "global" function, for the "window" APIs to callback to
 function mainIterFrame(frameTime) {
+
     main.iter(frameTime);
 }
 
 main._requestNextIteration = function () {
+
     window.requestAnimationFrame(mainIterFrame);
 };
 
@@ -119,17 +110,7 @@ main._debugRender = function (ctx) {
 
 main.init = function () {
 
-    // Grabbing focus is good, but it sometimes screws up jsfiddle,
-    // so it's a risky option during "development"
-    //
-    // window.focus(true);
-
-    // We'll be working on a black background here,
-    // so let's use a fillStyle which works against that...
-    //
     g_ctx.fillStyle = "white";
-
     console.log('All systems online.')
-
     this._requestNextIteration();
 };

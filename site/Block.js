@@ -1,10 +1,10 @@
 // ===========
 // BLOCK CLASS
 // ===========
-"use strict";
 
-var Block = function (size, fieldX, fieldY, column, form, color)
-{
+
+var Block = function (size, fieldX, fieldY, column, form, color){
+	
 	// Private variables and methods:
 
 	// Initialize instance variables:
@@ -19,10 +19,13 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 	var _shouldEase = true;
 
 	var _rotate = function () {
+
+		_rotation = (_rotation + 1) % 4;
 		_form = _rotateRight();
 	};
 
 	var _rotateLeft = function () {
+
 		for(var i = 0; i < 3; ++i)
 		{
 			_form = _rotateRight();
@@ -75,6 +78,7 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		// Override x and y are optional and can be used to render
 		// block at a specific position.
 		render: function (ctx, overrideX, overrideY) {
+
 			var width = _form[0].length;
 			var height = _form.length;
 
