@@ -52,20 +52,22 @@ var fieldManager = {
         left: keyCode('A'),
         right: keyCode('D'),
         rotate: keyCode('W'),
-        fast: keyCode('S')
+        fast: keyCode('S'),
+        drop: keyCode('X'),
     },
 
     _control2 : {
         left: keyCode('J'),
         right: keyCode('L'),
         rotate: keyCode('I'),
-        fast: keyCode('K')
+        fast: keyCode('K'),
+        drop: keyCode('M'),
     },
 
     _fields : null,
 
     init : function () {
-        
+
         if (g_gamestate === "single_player")
         {
             this._fields = [

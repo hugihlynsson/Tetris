@@ -22,10 +22,8 @@ var g_renderSpatialDebug = false;
 var g_renderDebugNums = false;
 var g_easeBrick = false;
 
-var KEY_MIXED   = keyCode('M');;
 var KEY_GRAVITY = keyCode('G');
 var KEY_AVE_VEL = keyCode('V');
-var KEY_SPATIAL = keyCode('X');
 
 var KEY_HALT  = keyCode('H');
 var KEY_RESET = keyCode('R');
@@ -42,13 +40,9 @@ var KEY_EASE = keyCode('E');
 
 function processDiagnostics() {
 
-    if (eatKey(KEY_MIXED)) g_allowMixedActions = !g_allowMixedActions;
-
     if (eatKey(KEY_GRAVITY)) g_useGravity = !g_useGravity;
 
     if (eatKey(KEY_AVE_VEL)) g_useAveVel = !g_useAveVel;
-
-    if (eatKey(KEY_SPATIAL)) g_renderSpatialDebug = !g_renderSpatialDebug;
 
     if (eatKey(KEY_DEBUG_NUMS)) g_renderDebugNums = !g_renderDebugNums;
 
@@ -67,8 +61,6 @@ function renderSimulation(ctx) {
     fieldManager.render(ctx);
 
     if (g_isUpdatePaused) menus.drawPause(ctx);
-
-    if (g_renderSpatialDebug) spatialManager.render(ctx);
 }
 
 // =============

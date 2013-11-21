@@ -292,7 +292,7 @@ var Field = function (x, y, width, height, columns, control){
 	return {
 		update : function (du) {
 
-			if (eatKey(_control.fast)) {
+			if (eatKey(_control.drop)) {
 				sounds.play('drop');
 				while(_moveActiveBrickDown());
 			}
