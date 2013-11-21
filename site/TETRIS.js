@@ -85,5 +85,7 @@ fieldManager.init();
 var sounds = new SoundManager();
 sounds.add('tetris', 'sounds/tetris_song_halldor.m4a');
 //sounds.add('explosion', sounds/nameofthesong);
+//sounds.add('drop', sounds/nameofthesong);
+//sounds.add('gameOver', sounds/nameofthesong);
 sounds.play('tetris', true);
 var highscores = new Highscore();
