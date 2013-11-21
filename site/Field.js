@@ -269,27 +269,33 @@ var Field = function (x, y, width, height, columns, control){
 						  _y - _unitSize*4);
 	};
 
+	var _moveActiveBrickDown = function (ctx) {
+		_activeBlock.moveDown();
+		if (isColliding(_activeBlock)) {
+			_activeBlock.moveUp();
+			_nextField(_activeBlock);
+			_activeBlock = _nextBlock;
+			_nextBlock = fieldManager.getNewBlock(
+				_unitSize,
+				_x, _y,
+				Math.floor(_columns/2)
+			);
+			_checkForLine();
+			_checkForGameOver();
+			return false;
+		}
+		return true;
+	};
+
 	// Public methods:
 	return {
 		update : function (du) {
 
 			if (eatKey(_control.fast)) {
-				while (!isColliding(_activeBlock)) {
-					_activeBlock.moveDown();
-				}
-				_activeBlock.moveUp();
-				_nextField(_activeBlock);
-				_activeBlock = _nextBlock;
-				_nextBlock = fieldManager.getNewBlock(
-					_unitSize,
-					_x, _y,
-					Math.floor(_columns/2)
-				);
-				_checkForLine();
-				_checkForGameOver();
+				while(_moveActiveBrickDown());
 			}
 
-	        var speed = (eatKey(_control.fast)) ? 10 : 1;
+	        var speed = 1;
 	        _clock.tick(speed * du);
 
 			// Check if we're updating. Tetris moves are in a rather discrete
@@ -298,22 +304,7 @@ var Field = function (x, y, width, height, columns, control){
 			if (_clock.hasFinished())
 			{
 				// Move the block down
-				_activeBlock.moveDown();
-
-				if (isColliding(_activeBlock))
-				{
-					_activeBlock.moveUp();
-					// Make a new block
-					_nextField(_activeBlock);
-					_activeBlock = _nextBlock;
-					_nextBlock = fieldManager.getNewBlock(
-						_unitSize,
-						_x, _y,
-						Math.floor(_columns/2)
-					);
-					_checkForLine();
-					_checkForGameOver();
-				}
+				_moveActiveBrickDown();
 
 				_shouldUpdate = false;
 			}
