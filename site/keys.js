@@ -28,5 +28,9 @@ function keyCode(keyChar) {
     return keyChar.charCodeAt(0);
 }
 
+function keyIsDown(keyChar) {
+    return keys[keyChar];
+}
+
 window.addEventListener("keydown", handleKeydown);
 window.addEventListener("keyup", handleKeyup);
