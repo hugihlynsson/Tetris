@@ -4,7 +4,7 @@
 
 // A field 'class'
 var Field = function (x, y, width, height, columns, control){
-	
+
 	// Private variables and methods:
 
 	// Initialize instance variables:
@@ -41,7 +41,7 @@ var Field = function (x, y, width, height, columns, control){
 		return {
 			tick : function (x) {
 				_count += (x) ? x : 1;
-				if (_count > _limit) 
+				if (_count > _limit)
 				{
 					_count = 0;
 					_hasFinished = true;
@@ -50,7 +50,7 @@ var Field = function (x, y, width, height, columns, control){
 
 			hasFinished : function () {
 
-				if (_hasFinished) 
+				if (_hasFinished)
 				{
 					_hasFinished = false;
 					return true;
@@ -164,7 +164,7 @@ var Field = function (x, y, width, height, columns, control){
 
 		for (var j = 0; j < _columns; ++j)
 		{
-			if (_fieldArray[0][j][0] > 0) 
+			if (_fieldArray[0][j][0] > 0)
 			{
 				_gameover = true;
 				highscores.add(_score.getScore());
@@ -262,14 +262,30 @@ var Field = function (x, y, width, height, columns, control){
         ctx.textAlign = "left"
 		ctx.fillStyle = _nextBlock.getColor();
 		ctx.fillText('NEXT:', _x, _y - _unitSize*3 - 7);
-		_nextBlock.render(ctx, 
-						  _x + _width - _unitSize*4, 
+		_nextBlock.render(ctx,
+						  _x + _width - _unitSize*4,
 						  _y - _unitSize*4);
 	};
 
 	// Public methods:
 	return {
 		update : function (du) {
+
+			if (eatKey(_control.fast)) {
+				while (!isColliding(_activeBlock)) {
+					_activeBlock.moveDown();
+				}
+				_activeBlock.moveUp();
+				_nextField(_activeBlock);
+				_activeBlock = _nextBlock;
+				_nextBlock = fieldManager.getNewBlock(
+					_unitSize,
+					_x, _y,
+					Math.floor(_columns/2)
+				);
+				_checkForLine();
+				_checkForGameOver();
+			}
 
 	        var speed = (eatKey(_control.fast)) ? 10 : 1;
 	        _clock.tick(speed * du);
@@ -318,7 +334,7 @@ var Field = function (x, y, width, height, columns, control){
 			{
 				// Rotate block. If illegal, then block must be on right
 				// side of playing field, so block is nudged to the left
-				
+
 				var nudgeCount = 0;
 
 				_activeBlock.rotate();
