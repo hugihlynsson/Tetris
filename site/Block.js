@@ -54,13 +54,9 @@ var Block = function (size, fieldX, fieldY, column, form, color){
 		return rotated;
 	};
 
-	// Public methods:
-	// TODO: Maybe make some direct mapping to functions indirect
-	//       to get a better understanding of what is happening?
-	//       Setters and getters should propably not be private functions.
 	return {
 		// Getters and setters:
-		getForm: function () { return _form; },
+		getForm: function () {return _form;	},
 		getHeight: function () { return _form.length; },
 		getWidth: function () { return _form[0].length; },
 		getColor: function () { return _color; },
@@ -72,9 +68,7 @@ var Block = function (size, fieldX, fieldY, column, form, color){
 		// Actual methods:
 		rotate: _rotate,
 		rotateLeft : _rotateLeft,
-		update: function () { 
-			//TODO: do something or remove
-		},
+	
 		// Override x and y are optional and can be used to render
 		// block at a specific position.
 		render: function (ctx, overrideX, overrideY) {

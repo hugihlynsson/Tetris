@@ -2,9 +2,8 @@
 // SCORE CLASS
 // ===========
 
-"use strict";
-
 var SoundManager = function () {
+
     // Private variables and methods:
     var _sounds = {};
 
@@ -16,7 +15,9 @@ var SoundManager = function () {
         },
 
         play: function (name, doLoop) {
-            if (!_sounds[name]) {
+
+            if (!_sounds[name])
+            {
                 console.log('Soundmanager: Tried to play sound ' + name + ' that does not exist!')
                 return;
             }
@@ -26,7 +27,9 @@ var SoundManager = function () {
         },
 
         pause: function (name) {
-            if (!_sounds[name]) {
+
+            if (!_sounds[name]) 
+            {
                 console.log('Soundmanager: Tried to pause sound ' + name + ' that does not exist!')
                 return;
             }
@@ -34,7 +37,9 @@ var SoundManager = function () {
         },
 
         stop: function (name) {
-            if (!_sounds[name]) {
+
+            if (!_sounds[name]) 
+            {
                 console.log('Soundmanager: Tried to stop sound ' + name + ' that does not exist!')
                 return;
             }

@@ -1,18 +1,13 @@
 // util.js
 //
-// A module of utility functions, with no private elements to hide.
-// An easy case; just return an object containing the public stuff.
-
-"use strict";
-
 
 var util = {
-
 
 // RANGES
 // ======
 
 clampRange: function(value, lowBound, highBound) {
+
     if (value < lowBound) {
 	value = lowBound;
     } else if (value > highBound) {
@@ -22,6 +17,7 @@ clampRange: function(value, lowBound, highBound) {
 },
 
 wrapRange: function(value, lowBound, highBound) {
+
     while (value < lowBound) {
 	value += (highBound - lowBound);
     }
@@ -32,6 +28,7 @@ wrapRange: function(value, lowBound, highBound) {
 },
 
 isBetween: function(value, lowBound, highBound) {
+
     if (value < lowBound) { return false; }
     if (value > highBound) { return false; }
     return true;
@@ -41,6 +38,7 @@ isBetween: function(value, lowBound, highBound) {
 // ===========
 
 getKeys: function (object) {
+
     var keys = [];
     for(var i in object)
     {
@@ -57,6 +55,7 @@ getKeys: function (object) {
 // ==========
 
 randRange: function(min, max) {
+
     return (min + Math.random() * (max - min));
 },
 
@@ -65,6 +64,7 @@ randRange: function(min, max) {
 // ====
 
 square: function(x) {
+
     return x*x;
 },
 
@@ -73,17 +73,21 @@ square: function(x) {
 // =========
 
 distSq: function(x1, y1, x2, y2) {
+
     return this.square(x2-x1) + this.square(y2-y1);
 },
 
 wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
+
     var dx = Math.abs(x2-x1),
 	dy = Math.abs(y2-y1);
-    if (dx > xWrap/2) {
-	dx = xWrap - dx;
+    if (dx > xWrap/2) 
+    {
+	   dx = xWrap - dx;
     };
-    if (dy > yWrap/2) {
-	dy = yWrap - dy;
+    if (dy > yWrap/2) 
+    {
+	   dy = yWrap - dy;
     }
     return this.square(dx) + this.square(dy);
 },
@@ -93,6 +97,7 @@ wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
 // ==========
 
 clearCanvas: function (ctx) {
+
     var prevfillStyle = ctx.fillStyle;
     ctx.fillStyle = g_color.bg;
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -100,18 +105,21 @@ clearCanvas: function (ctx) {
 },
 
 strokeCircle: function (ctx, x, y, r) {
+
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.stroke();
 },
 
 fillCircle: function (ctx, x, y, r) {
+
     ctx.beginPath();
     ctx.arc(x, y, r, 0, Math.PI * 2);
     ctx.fill();
 },
 
 fillBox: function (ctx, x, y, w, h, style) {
+
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = style;
     ctx.fillRect(x, y, w, h);
@@ -119,6 +127,7 @@ fillBox: function (ctx, x, y, w, h, style) {
 },
 
 fillRoundedBox: function (ctx, x, y, w, h, r, style) {
+
     var oldStyle = ctx.fillStyle;
     ctx.fillStyle = style;
     // Draw two boxes that fill all but the corners:
@@ -136,6 +145,7 @@ fillRoundedBox: function (ctx, x, y, w, h, r, style) {
 },
 
 drawButton: function (ctx, x, y, text, isSmall) {
+    
     var width = (isSmall) ? 36 : 150;
     this.fillRoundedBox(ctx,  x, y + 2, width, 30, 5, g_color.redShadow);
     this.fillRoundedBox(ctx,  x, y    , width, 30, 5, g_color.red);

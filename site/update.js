@@ -1,4 +1,6 @@
+//=====================
 // GENERIC UPDATE LOGIC
+//=====================
 
 // The "nominal interval" is the one that all of our time-based units are
 // calibrated to e.g. a velocity unit is "pixels per nominal interval"
@@ -56,6 +58,7 @@ var KEY_STEP  = 'O'.charCodeAt(0);
 var g_isUpdatePaused = false;
 
 function shouldSkipUpdate() {
+    
     if (eatKey(KEY_PAUSE)) {
         if (g_isUpdatePaused) sounds.play('tetris', true);
         else                  sounds.pause('tetris');

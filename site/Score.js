@@ -3,8 +3,8 @@
 // ===========
 
 // A field 'class'
-var Score = function (x, y, color, fontSize, font)
-{
+var Score = function (x, y, color, fontSize, font){
+	
 	// Private variables and methods:
 	var _x = x;
 	var _y = y;
