@@ -200,7 +200,7 @@ var Field = function (x, y, width, height, columns, control){
 
 	var _removeLine = function (lineNumber) {
 
-		drop.play();
+		sounds.play('explosion');
 		for(var i = 0; i < 10; i++){
 			_createExplosion(x + _unitSize/2 + _unitSize * i, y +_unitSize/2 + _unitSize * lineNumber );
 		}
@@ -293,6 +293,7 @@ var Field = function (x, y, width, height, columns, control){
 		update : function (du) {
 
 			if (eatKey(_control.fast)) {
+				sounds.play('drop');
 				while(_moveActiveBrickDown());
 			}
 
