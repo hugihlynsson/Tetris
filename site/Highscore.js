@@ -6,35 +6,37 @@ var Highscore = function (){
 
     // Private variables and methods:
 
-    // Get scores from Localstorage if exist:
+    // _scores should always be an array with 5 values with _scores[0] being
+    // the highest one, the next one lower or qual and so on:
     var _scores = [];
-    for (var i = 0; i < 5; i++) 
+
+    // On initialization get scores from Localstorage if exist, else zero out:
+    for (var i = 0; i < 5; i++)
     {
 		_scores[i] = window.localStorage.getItem('highscore' + i) || 0;
     }
 
-    console.log(_scores);
-
+    // Store the score in localStorage:
     var _saveScores = function () {
-
-        console.log(_scores);
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 5; i++)
+        {
             window.localStorage.setItem('highscore' + i, _scores[i]);
         }
-        console.log('Scores saved to localStorage');
     };
 
     // Public methods:
     return {
 		add: function (newScore) {
+
 			var isHighscore = true;
-			for (var i = 0; i < 5; i++) 
+
+			for (var i = 0; i < 5; i++)
 			{
-				if (newScore > _scores[i]) 
+				if (newScore > _scores[i])
 				{
 					isHighscore = true;
 					console.log(i);
-                    for (var j = 4; j > i; j--) 
+                    for (var j = 4; j > i; j--)
                     {
 						_scores[j] = _scores[j-1];
 					}
@@ -43,10 +45,7 @@ var Highscore = function (){
 				}
 			}
 
-			if (isHighscore) {
-				_saveScores();
-			}
-
+			if (isHighscore) _saveScores();
 
 			return isHighscore;
 		},
@@ -57,7 +56,7 @@ var Highscore = function (){
 	        ctx.font = '100 20px Helvetica';
 	        ctx.textAlign = 'center';
 			ctx.fillText('Highscores:', cx, y);
-	        for (var i = 0; i < 5; i++) 
+	        for (var i = 0; i < 5; i++)
 	        {
 				ctx.fillText(_scores[i], cx, y += 28);
                 if (_scores[i] == 0) break; // Should be == to compare to falsy
@@ -65,10 +64,7 @@ var Highscore = function (){
 		},
 
         reset: function () {
-
-            for (var i in _scores) {
-                _scores[i] = 0;
-            }
+            for (var i in _scores) _scores[i] = 0;
             _saveScores();
         }
     };
