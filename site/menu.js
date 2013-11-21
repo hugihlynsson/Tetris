@@ -54,7 +54,7 @@ function menu(ctx){
 
 function gameover(ctx){
 
-    gameOver.play();
+    sounds.play('gameOver');
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
