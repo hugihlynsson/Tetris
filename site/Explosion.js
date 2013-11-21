@@ -1,4 +1,5 @@
 function Explosion(start_x, start_y){
+
 	var _particles = [];
 	// A random color for this particular explosion.
 	// We like pastel-y colours, as everyone should.

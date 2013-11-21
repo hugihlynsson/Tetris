@@ -200,8 +200,7 @@ var Field = function (x, y, width, height, columns, control){
 
 	var _removeLine = function (lineNumber) {
 
-
-
+		drop.play();
 		_createExplosion(x + width/2, y +_unitSize/2 + _unitSize * lineNumber );
 
 		for (var i = _rows-1; i > 1; --i)
