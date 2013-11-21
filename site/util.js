@@ -1,97 +1,5 @@
-// util.js
-//
 
 var util = {
-
-// RANGES
-// ======
-
-clampRange: function(value, lowBound, highBound) {
-
-    if (value < lowBound) {
-	value = lowBound;
-    } else if (value > highBound) {
-	value = highBound;
-    }
-    return value;
-},
-
-wrapRange: function(value, lowBound, highBound) {
-
-    while (value < lowBound) {
-	value += (highBound - lowBound);
-    }
-    while (value > highBound) {
-	value -= (highBound - lowBound);
-    }
-    return value;
-},
-
-isBetween: function(value, lowBound, highBound) {
-
-    if (value < lowBound) { return false; }
-    if (value > highBound) { return false; }
-    return true;
-},
-
-// OBJECT KEYS
-// ===========
-
-getKeys: function (object) {
-
-    var keys = [];
-    for(var i in object)
-    {
-        if(object.hasOwnProperty(i))
-        {
-            keys.push(i)
-        }
-    }
-    return keys;
-},
-
-
-// RANDOMNESS
-// ==========
-
-randRange: function(min, max) {
-
-    return (min + Math.random() * (max - min));
-},
-
-
-// MISC
-// ====
-
-square: function(x) {
-
-    return x*x;
-},
-
-
-// DISTANCES
-// =========
-
-distSq: function(x1, y1, x2, y2) {
-
-    return this.square(x2-x1) + this.square(y2-y1);
-},
-
-wrappedDistSq: function(x1, y1, x2, y2, xWrap, yWrap) {
-
-    var dx = Math.abs(x2-x1),
-	dy = Math.abs(y2-y1);
-    if (dx > xWrap/2) 
-    {
-	   dx = xWrap - dx;
-    };
-    if (dy > yWrap/2) 
-    {
-	   dy = yWrap - dy;
-    }
-    return this.square(dx) + this.square(dy);
-},
-
 
 // CANVAS OPS
 // ==========
@@ -145,7 +53,7 @@ fillRoundedBox: function (ctx, x, y, w, h, r, style) {
 },
 
 drawButton: function (ctx, x, y, text, isSmall) {
-    
+
     var width = (isSmall) ? 36 : 150;
     this.fillRoundedBox(ctx,  x, y + 2, width, 30, 5, g_color.redShadow);
     this.fillRoundedBox(ctx,  x, y    , width, 30, 5, g_color.red);
@@ -172,7 +80,7 @@ randomColor: function (from, to) {
         colString += Math.floor(from + (Math.random() * (to-from)));
         if (j !== 2) colString += ", ";
     }
-    
+
     return colString;
 }
 
