@@ -20,7 +20,7 @@ var Block = function (size, fieldX, fieldY, column, form, color){
 
 	var _rotate = function () {
 
-		_rotation = (_rotation + 1) % 4;
+		var _rotation = (_rotation + 1) % 4;
 		_form = _rotateRight();
 	};
 
