@@ -155,4 +155,25 @@ drawButton: function (ctx, x, y, text, isSmall) {
     ctx.fillText(text, x + width/2, y + 22);
 },
 
+// Generates a random color value triple
+randomColor: function (from, to) {
+    var colString = "";
+
+    if(from > to)
+    {
+        var temp = from;
+        from = to;
+        to = temp;
+    }
+
+    for(var j = 0; j < 3; j++)
+    {
+        // Random value in range
+        colString += Math.floor(from + (Math.random() * (to-from)));
+        if (j !== 2) colString += ", ";
+    }
+    
+    return colString;
+}
+
 };

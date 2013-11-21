@@ -16,6 +16,7 @@ var Field = function (x, y, width, height, columns, control){
 	var _control = control;
 	var _unitSize = Math.round(_width / _columns);
 	var _rows = Math.round(_height / _unitSize);
+	var _explosions = [];
 
 	var _gameover = false;
 
@@ -114,6 +115,10 @@ var Field = function (x, y, width, height, columns, control){
 		return nextArray;
 	};
 
+	var _createExplosion = function (x, y) {
+		_explosions.push(new Explosion(x, y));
+	};
+
 	var isColliding = function (block) {
 
 		var form = block.getForm();
@@ -195,6 +200,8 @@ var Field = function (x, y, width, height, columns, control){
 
 	var _removeLine = function (lineNumber) {
 
+		_createExplosion(200, 80);
+
 		for (var i = _rows-1; i > 1; --i)
 		{
 			_fieldArray[i] = _fieldArray[i];
@@ -263,11 +270,12 @@ var Field = function (x, y, width, height, columns, control){
 	// Public methods:
 	return {
 		update : function (du) {
-			// Check if we're updating. Tetris moves are in a rather discrete
-			// time intervals so we will not be doing redundant updates.
 
 	        var speed = (eatKey(_control.fast)) ? 10 : 1;
 	        _clock.tick(speed * du);
+
+			// Check if we're updating. Tetris moves are in a rather discrete
+			// time intervals so we will not be doing redundant updates.
 
 			if (_clock.hasFinished())
 			{
@@ -288,6 +296,7 @@ var Field = function (x, y, width, height, columns, control){
 					_checkForLine();
 					_checkForGameOver();
 				}
+
 				_shouldUpdate = false;
 			}
 
@@ -338,6 +347,16 @@ var Field = function (x, y, width, height, columns, control){
 					_activeBlock.rotateLeft();
 				}
 			}
+
+			for(var i in _explosions)
+			{
+				var exp = _explosions[i].update(du);
+				if(!exp)
+				{
+					_explosions.splice(i, 1);
+					i--;
+				}
+			}
 		},
 
 		render : function (ctx) {
@@ -385,6 +404,11 @@ var Field = function (x, y, width, height, columns, control){
 			    ctx.fillStyle = oldstyle;
 			    ctx.font = oldfont;
 			    ctx.textAlign = oldalign;
+			}
+
+			for(var i in _explosions)
+			{
+				_explosions[i].render(ctx);
 			}
 		},
 		isgameover : function () {

@@ -65,7 +65,6 @@ var fieldManager = {
     _fields : null,
 
     init : function () {
-
         if (g_gamestate === "single_player")
         {
             this._fields = [
@@ -124,7 +123,6 @@ var fieldManager = {
     },
 
     render: function (ctx) {
-
         if (g_gamestate === "menu")
         {
             menu(ctx);
@@ -140,7 +138,6 @@ var fieldManager = {
     },
 
     getNewBlock: function (size, fieldX, fieldY, column) {
-        
         var formType = Math.floor(Math.random()*this._blockNum);
         var form = this._blockForms[formType];
         var color = this._blockFormColors[formType];
