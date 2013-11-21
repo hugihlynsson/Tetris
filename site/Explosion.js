@@ -31,10 +31,11 @@ var Explosion = function (start_x, start_y) {
 	}
 
 	var update = function (du) {
+
 		var p = _particles;
 
-		for(var i in p) {
-
+		for(var i in p) 
+		{
 			if(false)
 			{
 				p[i].velY += _gravity * du;
@@ -56,7 +57,8 @@ var Explosion = function (start_x, start_y) {
 			}
 		}
 
-		if(p.length === 0){
+		if(p.length === 0)
+		{
 			_alive = false;
 			return false;
 		}
@@ -67,6 +69,7 @@ var Explosion = function (start_x, start_y) {
 
 
 	var render = function (ctx) {
+		
 		var oldStyle = ctx.fillStyle;
 		var p = _particles;
 

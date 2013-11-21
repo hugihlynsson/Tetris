@@ -54,7 +54,6 @@ function menu(ctx){
 
 function gameover(ctx){
 
-    sounds.play('gameOver');
     util.clearCanvas(ctx);
     util.fillBox(ctx, 0, 0, g_canvas.width, g_canvas.height, g_color.bg);
 
@@ -104,6 +103,8 @@ function gameover(ctx){
         g_gamestate = "menu";
         g_button = false;
     }
+
+    sounds.play('gameOver');
 }
 
 function drawTetrisLogo(ctx) {
