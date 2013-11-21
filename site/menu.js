@@ -112,7 +112,7 @@ function drawTetrisLogo(ctx) {
     var unit = 20;
 
     // T
-    var tColor = g_color.red;
+    var tColor = g_color.pink;
     util.fillBox(ctx, x, y, unit*5, unit, tColor);
     util.fillBox(ctx, x+unit*2, y+unit, unit, unit*4, tColor);
 
@@ -137,7 +137,7 @@ function drawTetrisLogo(ctx) {
     util.fillBox(ctx, x + unit*20, y + unit*4, unit, unit*1, rColor);
 
     // I
-    var iColor = g_color.pink;
+    var iColor = g_color.red;
     util.fillBox(ctx, x + unit*22, y, unit, unit*5, iColor);
 
     // S
