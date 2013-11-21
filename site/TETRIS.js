@@ -87,5 +87,5 @@ sounds.add('tetris', 'sounds/tetris_song_halldor.m4a');
 sounds.add('explosion', 'sounds/clear_line.m4a');
 sounds.add('drop', 'sounds/blip.m4a');
 sounds.add('gameOver', 'sounds/game_over.m4a');
-sounds.play('tetris', true);
+sounds.play('tetris', 'loop', 0.7);
 var highscores = new Highscore();

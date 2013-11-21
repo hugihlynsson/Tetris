@@ -17,7 +17,7 @@ var SoundManager = function () {
             console.log('Added: ' + _sounds[name]);
         },
 
-        play: function (name, doLoop) {
+        play: function (name, doLoop, volume) {
 
             var sound = _sounds[name];
             if (!sound)
@@ -26,6 +26,7 @@ var SoundManager = function () {
                 return;
             }
             sound.loop = doLoop;
+            sound.volume = volume || 1;
             sound.play();
         },
 
