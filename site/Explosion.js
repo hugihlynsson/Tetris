@@ -1,4 +1,4 @@
-function Explosion(start_x, start_y){
+var Explosion = function (start_x, start_y) {
 
 	var _particles = [];
 	// A random color for this particular explosion.
@@ -8,9 +8,9 @@ function Explosion(start_x, start_y){
 	var _alive = true;
 	var _startVelX = 3;
 	var _startVelY = 3;
-	var _maxLife = 100;
+	var _maxLife = 50;
 	var _gravity = 0.12;
-	var _particleCount = 20;
+	var _particleCount = 10;
 
 	for(var i = 0; i < _particleCount; i++)
 	{
@@ -85,5 +85,5 @@ function Explosion(start_x, start_y){
 	return {
 		update: update,
 		render: render
-	}
-}
+	};
+};

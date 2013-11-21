@@ -63,37 +63,37 @@ function gameover(ctx){
     ctx.font = "100 80px Helvetica";
     ctx.textAlign = "center";
 
-    ctx.fillText("Game Over",  
-                 g_canvas.width/2, 
+    ctx.fillText("Game Over",
+                 g_canvas.width/2,
                  g_canvas.height/2 - 150);
 
     ctx.font = "100 40px Helvetica";
 
-    ctx.fillText(g_winningscore[0], 
-                 g_canvas.width/2, 
+    ctx.fillText(g_winningscore[0],
+                 g_canvas.width/2,
                  g_canvas.height/2 - 100);
 
     ctx.fillText(g_winningscore[1],
-                 g_canvas.width/2, 
+                 g_canvas.width/2,
                  g_canvas.height/2 - 50);
 
     ctx.fillStyle = oldstyle;
 
-    util.fillRoundedBox(ctx,  
-                        g_canvas.width/2 - 80, 
-                        g_canvas.height/2 + 2, 
+    util.fillRoundedBox(ctx,
+                        g_canvas.width/2 - 80,
+                        g_canvas.height/2 + 2,
                         boxWidth, 30, 5, g_color.redShadow);
 
-    util.fillRoundedBox(ctx,  
-                        g_canvas.width/2 - 80, 
-                        g_canvas.height/2, 
+    util.fillRoundedBox(ctx,
+                        g_canvas.width/2 - 80,
+                        g_canvas.height/2,
                         boxWidth, 30, 5, g_color.red);
-    
+
     ctx.fillStyle = "white";
     ctx.font = "100 20px Helvetica";
     ctx.textAlign = "center";
-    ctx.fillText("Menu", 
-                 g_canvas.width/2 - 80 + boxWidth/2, 
+    ctx.fillText("Menu",
+                 g_canvas.width/2 - 80 + boxWidth/2,
                  g_canvas.height/2+20);
     ctx.fillStyle = oldstyle;
 
