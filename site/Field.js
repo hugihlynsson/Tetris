@@ -299,10 +299,33 @@ var Field = function (x, y, width, height, columns, control)
 			{
 				// Rotate block. If illegal, then block must be on right
 				// side of playing field, so block is nudged to the left
+				
+				var nudgeCount = 0;
+
 				_activeBlock.rotate();
+
 				for (var i = 0; _isAtRightEdge() && i < 3; ++i)
 				{
+					// Nudge block until it's not on the screen's edge
 					_activeBlock.nudgeLeft();
+					nudgeCount++;
+				}
+
+				// At new block pos and rotation, check if we're
+				// colliding with playfield
+				if(isColliding(_activeBlock))
+				{
+					// Re-do our nudging and rotation,
+					// thus banning that move
+					for(var i = 0; i < nudgeCount; ++i)
+					{
+						_activeBlock.nudgeRight();
+					}
+				}
+
+				if(_outOfBounds())
+				{
+					_activeBlock.rotateLeft();
 				}
 			}
 		},

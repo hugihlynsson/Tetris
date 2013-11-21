@@ -13,14 +13,19 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 	var _column = column;
 	var _form = form;
 	var _color = color;
-	var _rotation = 0;
 	var _row = 0;
 
 	var _shouldEase = true;
 
 	var _rotate = function () {
-		_rotation = (_rotation + 1) % 4;
 		_form = _rotateRight();
+	};
+
+	var _rotateLeft = function () {
+		for(var i = 0; i < 3; ++i)
+		{
+			_form = _rotateRight();
+		}
 	};
 
 	var _rotateRight = function () {
@@ -33,9 +38,7 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 			rotated.push([]);
 		}
 
-		// old.dálkar = new.raðir
-		// rotated = [[], …, []]
-
+		// Array magic!
 		for (var i = 0; i < old.length; ++i)
 		{
 			for (var j = 0; j < old[0].length; ++j)
@@ -43,20 +46,8 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 				rotated[j][old.length - 1 -i] = old[i][j];
 			}
 		}
-
-		console.log(rotated);
 		
 		return rotated;
-	};
-
-	// TODO: Finish this function:
-	var _rotateLeft = function () {
-		// Broken code:
-		// _block.rotation = (_block.rotation - 1) % 4;
-		// for(var i = 0; i < 3; ++i)
-		// {
-		//  _form = _rotateRight();
-		// }
 	};
 
 	// Public methods:
@@ -76,6 +67,7 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		moveDown: function () { _row += 1; },
 		// Actual methods:
 		rotate: _rotate,
+		rotateLeft : _rotateLeft,
 		update: function () { 
 			//TODO: do something or remove
 		},
@@ -84,8 +76,8 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 		render: function (ctx, overrideX, overrideY) {
 			var width = _form[0].length;
 			var height = _form.length;
-			// Some easing, soon to be encapsulated
-			// in it's own functional premises
+
+			var ease = 0;
 
 			for (var i = 0; i < height; ++i)
 			{
@@ -94,18 +86,6 @@ var Block = function (size, fieldX, fieldY, column, form, color)
 					if (_form[i][j])
 					{
 						var oldStyle = ctx.fillStyle;
-						
-						var ease = 0;
-
-						if (_shouldEase)
-						{
-							//ease = clock/blockClock;
-							//ease = -(Math.cos((ease/2) * Math.PI)) * _size;
-						}
-						else
-						{
-							_shouldEase = true;
-						}
 
 						ctx.fillStyle = _color;
 						if (overrideX) 
