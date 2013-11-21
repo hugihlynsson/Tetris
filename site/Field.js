@@ -297,7 +297,7 @@ var Field = function (x, y, width, height, columns, control){
 				while(_moveActiveBrickDown());
 			}
 
-	        var speed = 1;
+	        var speed = (eatKey(_control.fast)) ? 10 : 1;
 	        _clock.tick(speed * du);
 
 			// Check if we're updating. Tetris moves are in a rather discrete
