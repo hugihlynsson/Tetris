@@ -1,6 +1,7 @@
 // ===========
 // BLOCK CLASS
 // ===========
+"use strict";
 
 var Block = function (size, fieldX, fieldY, column, form, color)
 {
