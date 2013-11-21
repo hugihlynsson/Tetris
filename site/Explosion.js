@@ -7,9 +7,9 @@ function Explosion(start_x, start_y){
 	var _alive = true;
 	var _startVelX = 3;
 	var _startVelY = 3;
-	var _maxLife = 210;
+	var _maxLife = 100;
 	var _gravity = 0.12;
-	var _particleCount = 140;
+	var _particleCount = 20;
 
 	for(var i = 0; i < _particleCount; i++)
 	{
@@ -17,7 +17,7 @@ function Explosion(start_x, start_y){
 		var direction = Math.random() * 2 * Math.PI;
 		var velX = Math.sin(direction) * _startVelX * Math.random();
 		var velY = -Math.cos(direction) * _startVelY * Math.random();
-		
+
 		_particles.push({
 			x : start_x,
 			y : start_y,
@@ -82,7 +82,7 @@ function Explosion(start_x, start_y){
 	};
 
 	return {
-		update: update, 
+		update: update,
 		render: render
 	}
 }

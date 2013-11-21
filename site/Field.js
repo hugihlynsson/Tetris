@@ -233,7 +233,7 @@ var Field = function (x, y, width, height, columns, control){
 			_clock.setLimit = topSpeed;
 		}
 		else {
-			_clock.setLimit(_baseClockLimit - _linesCleared);
+			_clock.setLimit(_baseClockLimit - _linesCleared/2);
 		}
 
 	};
