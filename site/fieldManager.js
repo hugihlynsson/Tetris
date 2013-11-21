@@ -65,6 +65,7 @@ var fieldManager = {
     _fields : null,
 
     init : function () {
+        
         if (g_gamestate === "single_player")
         {
             this._fields = [
@@ -123,7 +124,7 @@ var fieldManager = {
     },
 
     render: function (ctx) {
-        
+
         if (g_gamestate === "menu")
         {
             menu(ctx);
