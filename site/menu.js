@@ -24,7 +24,7 @@ function menu(ctx){
     buttons(ctx, buttonnr, buttonname);
 
     drawWASD(ctx, 35, 250);
-    drawWASD(ctx, 434, 250, ['I', 'J', 'K', 'L']);
+    drawWASD(ctx, 434, 250, ['I', 'J', 'K', 'L', 'M']);
 
     ctx.fillStyle = oldstyle;
     var buttony = boxstarty;
@@ -154,15 +154,16 @@ function drawTetrisLogo(ctx) {
 
 function drawWASD (ctx, x, y, buttons) {
 
-    var buttons = buttons || ['W', 'A', 'S', 'D'];
+    var buttons = buttons || ['W', 'A', 'S', 'D', 'X'];
 
     var xDist = 44;
     var yDist = 50;
 
-    util.drawButton(ctx, x + xDist  , y        , buttons[0], 'small'); // W
-    util.drawButton(ctx, x          , y + yDist, buttons[1], 'small'); // A
-    util.drawButton(ctx, x + xDist  , y + yDist, buttons[2], 'small'); // S
-    util.drawButton(ctx, x + xDist*2, y + yDist, buttons[3], 'small'); // D
+    util.drawButton(ctx, x + xDist  , y            , buttons[0], 'small'); // W
+    util.drawButton(ctx, x          , y + yDist    , buttons[1], 'small'); // A
+    util.drawButton(ctx, x + xDist  , y + yDist    , buttons[2], 'small'); // S
+    util.drawButton(ctx, x + xDist*2, y + yDist    , buttons[3], 'small'); // D
+    util.drawButton(ctx, x + xDist  , y + 2 * yDist, buttons[4], 'small'); // D
 }
 
 
