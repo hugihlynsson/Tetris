@@ -143,7 +143,7 @@ function drawTetrisLogo(ctx) {
     util.fillBox(ctx, x + unit*22, y, unit, unit*5, iColor);
 
     // S
-    var sColor = g_color.grey;
+    var sColor = g_color.gray;
     util.fillBox(ctx, x + unit*24, y, unit*4, unit, sColor);
     util.fillBox(ctx, x + unit*24, y + unit*2, unit*4, unit, sColor);
     util.fillBox(ctx, x + unit*24, y + unit*4, unit*4, unit, sColor);
