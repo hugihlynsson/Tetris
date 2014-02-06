@@ -1,11 +1,12 @@
 TETRIS
 ======
 
-Verkefni í Leikjaforritun við HÍ haustið 2013
+Tetris is a project in Game Programming at the University of Iceland autumn 2013. The game is playable at http://hugihlynsson.com/hi/tetris/. It is entierly in vanilla JavaScript using the canvas element. It builds on a base by Partrick Kerr, the course instructor. The sounds are made by Halldór.
+
+Copyright © 2014 Berglind Silja Aradóttir, Gestur Vagn Baldursson, Halldór Eldjárn, Hugi Hlynsson
 
 #License
 
-Copyright © 2014 Berglind Silja Aradóttir, Gestur Vagn Baldursson, Halldór Eldjárn, Hugi Hlynsson
 
 (The MIT License)
 
